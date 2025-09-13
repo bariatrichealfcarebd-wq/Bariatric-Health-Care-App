@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "12166217223",
+    "project_id": "bariatrichealfcare-c2d9c",
+    "storage_bucket": "bariatrichealfcare-c2d9c.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:12166217223:android:f9d8499f9d9569cd84f4a2",
+        "android_client_info": {
+          "package_name": "com.mycompany.bariatrichealfcare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "12166217223-jcagovn97fops11jnll2gcdnk3q1modn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.mycompany.bariatrichealfcare",
+            "certificate_hash": "9bbb3186b2189ef16d8f272bdab59362c395cbb4"
+          }
+        },
+        {
+          "client_id": "12166217223-ie90cg29egglc3dci2m8esveh74gmdk9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDA2olpSB7oiSMJZUBdBZ0nYkuemNBDaxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "12166217223-1654bfirdbnrf1ka7q99h71170jjh0ig.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "12166217223-4hl98ntjorqumbohuue9o3ses03k8o5i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.mycompany.bariatrichealfcare"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
