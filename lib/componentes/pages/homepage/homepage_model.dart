@@ -4,12 +4,14 @@ import 'homepage_widget.dart' show HomepageWidget;
 import 'package:flutter/material.dart';
 
 class HomepageModel extends FlutterFlowModel<HomepageWidget> {
+  ///  Local state fields for this page.
+
+  bool termosAceitos = false;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Checkbox widget.
-  bool? checkboxValue1;
-  // State field(s) for Checkbox widget.
-  bool? checkboxValue2;
+  bool? checkboxValue;
 
   @override
   void initState(BuildContext context) {}

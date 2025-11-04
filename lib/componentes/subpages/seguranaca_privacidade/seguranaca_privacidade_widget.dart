@@ -1,7 +1,9 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'seguranaca_privacidade_model.dart';
@@ -127,7 +129,7 @@ class _SeguranacaPrivacidadeWidgetState
                                 ),
                       ),
                       Text(
-                        'Para sua segurança, digite sua senha atual e escolha uma nova senha forte.',
+                        'Para sua segurança, digite sua senha atual e escolha uma nova senha.',
                         style: FlutterFlowTheme.of(context).bodyMedium.override(
                               font: GoogleFonts.inter(
                                 fontWeight: FlutterFlowTheme.of(context)
@@ -535,8 +537,35 @@ class _SeguranacaPrivacidadeWidgetState
                               ),
                             ),
                             FFButtonWidget(
-                              onPressed: () {
-                                print('Button pressed ...');
+                              onPressed: () async {
+                                Function() _navigate = () {};
+                                if (_model.senhaNovaTextController.text ==
+                                    _model.senhaNova2TextController.text) {
+                                  await authManager.updatePassword(
+                                    newPassword:
+                                        _model.senhaAtualTextController.text,
+                                    context: context,
+                                  );
+                                  safeSetState(() {});
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'senha esta diferente da nova senha',
+                                        style: TextStyle(
+                                          color: FlutterFlowTheme.of(context)
+                                              .primaryText,
+                                        ),
+                                      ),
+                                      duration: Duration(milliseconds: 4000),
+                                      backgroundColor:
+                                          FlutterFlowTheme.of(context)
+                                              .secondary,
+                                    ),
+                                  );
+                                }
+
+                                _navigate();
                               },
                               text: 'Alterar Senha',
                               options: FFButtonOptions(
@@ -652,33 +681,7 @@ class _SeguranacaPrivacidadeWidgetState
                                   ].divide(SizedBox(width: 8.0)),
                                 ),
                                 Text(
-                                  'Esta ação é irreversível. Todos os seus dados, incluindo perfil, histórico e configurações serão permanentemente removidos.',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: FlutterFlowTheme.of(context)
-                                            .secondaryText,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                Text(
-                                  '• Seus dados pessoais serão excluídos\n• Histórico de atividades será perdido\n• Não será possível recuperar a conta',
+                                  '• Seus dados pessoais serão excluídos;\n• Histórico de atividades será perdido;\n• Não será possível recuperar a conta;',
                                   style: FlutterFlowTheme.of(context)
                                       .bodySmall
                                       .override(
@@ -704,8 +707,11 @@ class _SeguranacaPrivacidadeWidgetState
                                       ),
                                 ),
                                 FFButtonWidget(
-                                  onPressed: () {
-                                    print('Button pressed ...');
+                                  onPressed: () async {
+                                    await authManager.deleteUser(context);
+
+                                    context.goNamedAuth(
+                                        LoginWidget.routeName, context.mounted);
                                   },
                                   text: 'Excluir Minha Conta',
                                   options: FFButtonOptions(

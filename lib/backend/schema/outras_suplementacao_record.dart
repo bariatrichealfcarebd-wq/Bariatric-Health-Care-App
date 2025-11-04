@@ -20,11 +20,6 @@ class OutrasSuplementacaoRecord extends FirestoreRecord {
   String get nome => _nome ?? '';
   bool hasNome() => _nome != null;
 
-  // "doseRecomendada" field.
-  String? _doseRecomendada;
-  String get doseRecomendada => _doseRecomendada ?? '';
-  bool hasDoseRecomendada() => _doseRecomendada != null;
-
   // "id_User" field.
   String? _idUser;
   String get idUser => _idUser ?? '';
@@ -35,11 +30,22 @@ class OutrasSuplementacaoRecord extends FirestoreRecord {
   DateTime? get dataMedic => _dataMedic;
   bool hasDataMedic() => _dataMedic != null;
 
+  // "anexo" field.
+  String? _anexo;
+  String get anexo => _anexo ?? '';
+  bool hasAnexo() => _anexo != null;
+
+  // "create_day" field.
+  DateTime? _createDay;
+  DateTime? get createDay => _createDay;
+  bool hasCreateDay() => _createDay != null;
+
   void _initializeFields() {
     _nome = snapshotData['nome'] as String?;
-    _doseRecomendada = snapshotData['doseRecomendada'] as String?;
     _idUser = snapshotData['id_User'] as String?;
     _dataMedic = snapshotData['dataMedic'] as DateTime?;
+    _anexo = snapshotData['anexo'] as String?;
+    _createDay = snapshotData['create_day'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -79,16 +85,18 @@ class OutrasSuplementacaoRecord extends FirestoreRecord {
 
 Map<String, dynamic> createOutrasSuplementacaoRecordData({
   String? nome,
-  String? doseRecomendada,
   String? idUser,
   DateTime? dataMedic,
+  String? anexo,
+  DateTime? createDay,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'nome': nome,
-      'doseRecomendada': doseRecomendada,
       'id_User': idUser,
       'dataMedic': dataMedic,
+      'anexo': anexo,
+      'create_day': createDay,
     }.withoutNulls,
   );
 
@@ -102,14 +110,15 @@ class OutrasSuplementacaoRecordDocumentEquality
   @override
   bool equals(OutrasSuplementacaoRecord? e1, OutrasSuplementacaoRecord? e2) {
     return e1?.nome == e2?.nome &&
-        e1?.doseRecomendada == e2?.doseRecomendada &&
         e1?.idUser == e2?.idUser &&
-        e1?.dataMedic == e2?.dataMedic;
+        e1?.dataMedic == e2?.dataMedic &&
+        e1?.anexo == e2?.anexo &&
+        e1?.createDay == e2?.createDay;
   }
 
   @override
   int hash(OutrasSuplementacaoRecord? e) => const ListEquality()
-      .hash([e?.nome, e?.doseRecomendada, e?.idUser, e?.dataMedic]);
+      .hash([e?.nome, e?.idUser, e?.dataMedic, e?.anexo, e?.createDay]);
 
   @override
   bool isValidKey(Object? o) => o is OutrasSuplementacaoRecord;

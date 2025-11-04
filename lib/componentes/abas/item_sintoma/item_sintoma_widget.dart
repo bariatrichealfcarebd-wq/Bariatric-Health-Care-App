@@ -150,6 +150,7 @@ class _ItemSintomaWidgetState extends State<ItemSintomaWidget>
                 idSintoma: widget.sintomaDoc?.reference.id,
                 cpfUsuario: valueOrDefault(currentUserDocument?.cpf, ''),
                 nomeSintoma: widget.sintomaDoc?.nome,
+                nomeUser: valueOrDefault(currentUserDocument?.nome, ''),
               ),
               ...mapToFirestore(
                 {
@@ -164,6 +165,7 @@ class _ItemSintomaWidgetState extends State<ItemSintomaWidget>
                 idSintoma: widget.sintomaDoc?.reference.id,
                 cpfUsuario: valueOrDefault(currentUserDocument?.cpf, ''),
                 nomeSintoma: widget.sintomaDoc?.nome,
+                nomeUser: valueOrDefault(currentUserDocument?.nome, ''),
               ),
               ...mapToFirestore(
                 {
@@ -188,7 +190,12 @@ class _ItemSintomaWidgetState extends State<ItemSintomaWidget>
           width: double.infinity,
           height: 80.0,
           decoration: BoxDecoration(
-            color: Color(0xFFF1F4F8),
+            color: valueOrDefault<Color>(
+              _model.ativo
+                  ? Color(0xFF7EC3BC)
+                  : FlutterFlowTheme.of(context).alternate,
+              FlutterFlowTheme.of(context).alternate,
+            ),
             borderRadius: BorderRadius.circular(8.0),
             border: Border.all(
               color: _model.ativo
@@ -200,6 +207,7 @@ class _ItemSintomaWidgetState extends State<ItemSintomaWidget>
             padding: EdgeInsetsDirectional.fromSTEB(12.0, 8.0, 12.0, 8.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Expanded(
                   child: Padding(
@@ -210,36 +218,65 @@ class _ItemSintomaWidgetState extends State<ItemSintomaWidget>
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          valueOrDefault<String>(
-                            widget.sintomaDoc?.nome,
-                            'nome',
-                          ),
-                          style:
-                              FlutterFlowTheme.of(context).bodyLarge.override(
-                                    font: GoogleFonts.plusJakartaSans(
-                                      fontWeight: FontWeight.w500,
-                                      fontStyle: FlutterFlowTheme.of(context)
-                                          .bodyLarge
-                                          .fontStyle,
-                                    ),
-                                    color: Color(0xFF14181B),
-                                    fontSize: 16.0,
-                                    letterSpacing: 0.0,
-                                    fontWeight: FontWeight.w500,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .bodyLarge
-                                        .fontStyle,
+                        Expanded(
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  valueOrDefault<String>(
+                                    widget.sintomaDoc?.nome,
+                                    'nomeSintoma',
                                   ),
+                                  textAlign: TextAlign.start,
+                                  maxLines: 2,
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.roboto(
+                                          fontWeight: FontWeight.w300,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        fontSize: 15.0,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w300,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                ),
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if (_model.ativo == false)
+                                    Icon(
+                                      Icons.add_box_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                  if (_model.ativo == true)
+                                    Icon(
+                                      Icons.indeterminate_check_box_rounded,
+                                      color: FlutterFlowTheme.of(context)
+                                          .secondaryText,
+                                      size: 24.0,
+                                    ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
                       ],
                     ),
                   ),
-                ),
-                Icon(
-                  Icons.add_box,
-                  color: Color(0xFF57636C),
-                  size: 24.0,
                 ),
               ],
             ),

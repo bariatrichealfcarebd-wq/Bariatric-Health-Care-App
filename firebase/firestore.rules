@@ -4,7 +4,7 @@ service cloud.firestore {
     match /Paciente/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if false;
+      allow write: if true;
       allow delete: if false;
     }
 
@@ -25,8 +25,8 @@ service cloud.firestore {
     match /ligacao_sintoma/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /suplementacao/{document} {
@@ -53,15 +53,50 @@ service cloud.firestore {
     match /relatorios_pdf/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if request.auth != null;
-      allow delete: if request.auth != null;
+      allow write: if false;
+      allow delete: if false;
     }
 
     match /Plano_Alimentacao/{document} {
       allow create: if true;
       allow read: if true;
-      allow write: if true;
-      allow delete: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /photos/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /relatorios_Questionario/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /Nutri_Paciente/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /notificacoes/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
+    }
+
+    match /Disponibilidade/{document} {
+      allow create: if true;
+      allow read: if true;
+      allow write: if false;
+      allow delete: if false;
     }
   }
 }

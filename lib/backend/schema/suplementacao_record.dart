@@ -15,11 +15,6 @@ class SuplementacaoRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "doserecomendada" field.
-  String? _doserecomendada;
-  String get doserecomendada => _doserecomendada ?? '';
-  bool hasDoserecomendada() => _doserecomendada != null;
-
   // "id_User" field.
   String? _idUser;
   String get idUser => _idUser ?? '';
@@ -30,10 +25,21 @@ class SuplementacaoRecord extends FirestoreRecord {
   DateTime? get data => _data;
   bool hasData() => _data != null;
 
+  // "Anexo" field.
+  String? _anexo;
+  String get anexo => _anexo ?? '';
+  bool hasAnexo() => _anexo != null;
+
+  // "create_day" field.
+  DateTime? _createDay;
+  DateTime? get createDay => _createDay;
+  bool hasCreateDay() => _createDay != null;
+
   void _initializeFields() {
-    _doserecomendada = snapshotData['doserecomendada'] as String?;
     _idUser = snapshotData['id_User'] as String?;
     _data = snapshotData['data'] as DateTime?;
+    _anexo = snapshotData['Anexo'] as String?;
+    _createDay = snapshotData['create_day'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -71,15 +77,17 @@ class SuplementacaoRecord extends FirestoreRecord {
 }
 
 Map<String, dynamic> createSuplementacaoRecordData({
-  String? doserecomendada,
   String? idUser,
   DateTime? data,
+  String? anexo,
+  DateTime? createDay,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
-      'doserecomendada': doserecomendada,
       'id_User': idUser,
       'data': data,
+      'Anexo': anexo,
+      'create_day': createDay,
     }.withoutNulls,
   );
 
@@ -92,14 +100,15 @@ class SuplementacaoRecordDocumentEquality
 
   @override
   bool equals(SuplementacaoRecord? e1, SuplementacaoRecord? e2) {
-    return e1?.doserecomendada == e2?.doserecomendada &&
-        e1?.idUser == e2?.idUser &&
-        e1?.data == e2?.data;
+    return e1?.idUser == e2?.idUser &&
+        e1?.data == e2?.data &&
+        e1?.anexo == e2?.anexo &&
+        e1?.createDay == e2?.createDay;
   }
 
   @override
   int hash(SuplementacaoRecord? e) =>
-      const ListEquality().hash([e?.doserecomendada, e?.idUser, e?.data]);
+      const ListEquality().hash([e?.idUser, e?.data, e?.anexo, e?.createDay]);
 
   @override
   bool isValidKey(Object? o) => o is SuplementacaoRecord;

@@ -6,7 +6,9 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'perfil_model.dart';
@@ -32,6 +34,13 @@ class _PerfilWidgetState extends State<PerfilWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => PerfilModel());
+
+    // On component load action.
+    SchedulerBinding.instance.addPostFrameCallback((_) async {
+      await queryPacienteRecordOnce(
+        singleRecord: true,
+      ).then((s) => s.firstOrNull);
+    });
 
     _model.nomeTextController ??= TextEditingController(
         text: valueOrDefault(currentUserDocument?.nome, ''));
@@ -84,153 +93,176 @@ class _PerfilWidgetState extends State<PerfilWidget> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 120.0,
-                      height: 120.0,
-                      child: Stack(
-                        children: [
-                          Container(
-                            width: 120.0,
-                            height: 120.0,
-                            decoration: BoxDecoration(
-                              color: FlutterFlowTheme.of(context).accent2,
-                              borderRadius: BorderRadius.circular(60.0),
-                            ),
-                            child: AuthUserStreamWidget(
-                              builder: (context) => InkWell(
-                                splashColor: Colors.transparent,
-                                focusColor: Colors.transparent,
-                                hoverColor: Colors.transparent,
-                                highlightColor: Colors.transparent,
-                                onTap: () async {
-                                  final selectedMedia =
-                                      await selectMediaWithSourceBottomSheet(
-                                    context: context,
-                                    allowPhoto: true,
-                                  );
-                                  if (selectedMedia != null &&
-                                      selectedMedia.every((m) =>
-                                          validateFileFormat(
-                                              m.storagePath, context))) {
-                                    safeSetState(() => _model
-                                        .isDataUploading_uploadDataKwu = true);
-                                    var selectedUploadedFiles =
-                                        <FFUploadedFile>[];
-
-                                    var downloadUrls = <String>[];
-                                    try {
-                                      selectedUploadedFiles = selectedMedia
-                                          .map((m) => FFUploadedFile(
-                                                name: m.storagePath
-                                                    .split('/')
-                                                    .last,
-                                                bytes: m.bytes,
-                                                height: m.dimensions?.height,
-                                                width: m.dimensions?.width,
-                                                blurHash: m.blurHash,
-                                              ))
-                                          .toList();
-
-                                      downloadUrls = (await Future.wait(
-                                        selectedMedia.map(
-                                          (m) async => await uploadData(
-                                              m.storagePath, m.bytes),
-                                        ),
-                                      ))
-                                          .where((u) => u != null)
-                                          .map((u) => u!)
-                                          .toList();
-                                    } finally {
-                                      _model.isDataUploading_uploadDataKwu =
-                                          false;
-                                    }
-                                    if (selectedUploadedFiles.length ==
-                                            selectedMedia.length &&
-                                        downloadUrls.length ==
-                                            selectedMedia.length) {
-                                      safeSetState(() {
-                                        _model.uploadedLocalFile_uploadDataKwu =
-                                            selectedUploadedFiles.first;
-                                        _model.uploadedFileUrl_uploadDataKwu =
-                                            downloadUrls.first;
-                                      });
-                                    } else {
-                                      safeSetState(() {});
-                                      return;
-                                    }
-                                  }
-
-                                  await currentUserReference!
-                                      .update(createPacienteRecordData(
-                                    photoUrl:
-                                        _model.uploadedFileUrl_uploadDataKwu,
-                                  ));
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(60.0),
+                Align(
+                  alignment: AlignmentDirectional(0.0, 0.0),
+                  child: Padding(
+                    padding: EdgeInsets.all(10.0),
+                    child: Stack(
+                      alignment: AlignmentDirectional(1.0, 1.0),
+                      children: [
+                        Container(
+                          width: 100.0,
+                          height: 100.0,
+                          decoration: BoxDecoration(
+                            color: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                          ),
+                          child: Builder(
+                            builder: (context) {
+                              if ((currentUserPhoto != '') &&
+                                  ((_model.uploadedLocalFile_avatarLocalUpload
+                                              .bytes?.isEmpty ??
+                                          true))) {
+                                return Container(
+                                  width: 200.0,
+                                  height: 200.0,
+                                  clipBehavior: Clip.antiAlias,
+                                  decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                  ),
                                   child: Image.network(
                                     currentUserPhoto,
-                                    width: 120.0,
-                                    height: 120.0,
                                     fit: BoxFit.cover,
                                   ),
-                                ),
-                              ),
-                            ),
+                                );
+                              } else if ((_model.uploadedLocalFile_avatarLocalUpload
+                                          .bytes?.isNotEmpty ??
+                                      false)) {
+                                return AuthUserStreamWidget(
+                                  builder: (context) => Container(
+                                    width: 200.0,
+                                    height: 200.0,
+                                    clipBehavior: Clip.antiAlias,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Image.memory(
+                                      _model.uploadedLocalFile_avatarLocalUpload
+                                              .bytes ??
+                                          Uint8List.fromList([]),
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                );
+                              } else {
+                                return Container(
+                                  width: 120.0,
+                                  height: 120.0,
+                                  child: Stack(
+                                    children: [
+                                      Container(
+                                        width: 120.0,
+                                        height: 120.0,
+                                        decoration: BoxDecoration(
+                                          color: FlutterFlowTheme.of(context)
+                                              .accent2,
+                                          borderRadius:
+                                              BorderRadius.circular(60.0),
+                                        ),
+                                        child: Icon(
+                                          Icons.person,
+                                          color: Colors.white,
+                                          size: 50.0,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                              }
+                            },
                           ),
-                          Align(
-                            alignment: AlignmentDirectional(0.8, 0.8),
-                            child: Container(
-                              width: 36.0,
-                              height: 36.0,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context).secondary,
-                                borderRadius: BorderRadius.circular(18.0),
-                              ),
-                              child: FlutterFlowIconButton(
-                                borderColor: Colors.transparent,
-                                borderRadius: 18.0,
-                                buttonSize: 36.0,
-                                icon: Icon(
-                                  Icons.camera_alt,
-                                  color: FlutterFlowTheme.of(context).alternate,
-                                  size: 18.0,
-                                ),
-                                onPressed: () {
-                                  print('IconButton pressed ...');
-                                },
-                              ),
-                            ),
+                        ),
+                        if (_model.editar == true)
+                          Builder(
+                            builder: (context) {
+                              if ((_model.uploadedLocalFile_avatarLocalUpload
+                                          .bytes?.isNotEmpty ??
+                                      false)) {
+                                return FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 18.0,
+                                  buttonSize: 40.0,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).success,
+                                  icon: Icon(
+                                    Icons.camera_alt,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    size: 25.0,
+                                  ),
+                                  onPressed: () async {
+                                    final selectedMedia =
+                                        await selectMediaWithSourceBottomSheet(
+                                      context: context,
+                                      allowPhoto: true,
+                                    );
+                                    if (selectedMedia != null &&
+                                        selectedMedia.every((m) =>
+                                            validateFileFormat(
+                                                m.storagePath, context))) {
+                                      safeSetState(() => _model
+                                              .isDataUploading_avatarLocalUpload =
+                                          true);
+                                      var selectedUploadedFiles =
+                                          <FFUploadedFile>[];
+
+                                      try {
+                                        selectedUploadedFiles = selectedMedia
+                                            .map((m) => FFUploadedFile(
+                                                  name: m.storagePath
+                                                      .split('/')
+                                                      .last,
+                                                  bytes: m.bytes,
+                                                  height: m.dimensions?.height,
+                                                  width: m.dimensions?.width,
+                                                  blurHash: m.blurHash,
+                                                ))
+                                            .toList();
+                                      } finally {
+                                        _model.isDataUploading_avatarLocalUpload =
+                                            false;
+                                      }
+                                      if (selectedUploadedFiles.length ==
+                                          selectedMedia.length) {
+                                        safeSetState(() {
+                                          _model.uploadedLocalFile_avatarLocalUpload =
+                                              selectedUploadedFiles.first;
+                                        });
+                                      } else {
+                                        safeSetState(() {});
+                                        return;
+                                      }
+                                    }
+                                  },
+                                );
+                              } else {
+                                return FlutterFlowIconButton(
+                                  borderColor: Colors.transparent,
+                                  borderRadius: 18.0,
+                                  buttonSize: 40.0,
+                                  fillColor: FlutterFlowTheme.of(context).error,
+                                  icon: Icon(
+                                    Icons.close_rounded,
+                                    color: FlutterFlowTheme.of(context)
+                                        .secondaryBackground,
+                                    size: 25.0,
+                                  ),
+                                  onPressed: () async {
+                                    safeSetState(() {
+                                      _model.isDataUploading_avatarLocalUpload =
+                                          false;
+                                      _model.uploadedLocalFile_avatarLocalUpload =
+                                          FFUploadedFile(
+                                              bytes: Uint8List.fromList([]));
+                                    });
+                                  },
+                                );
+                              }
+                            },
                           ),
-                        ],
-                      ),
+                      ],
                     ),
-                    Text(
-                      'Editar Foto',
-                      style: FlutterFlowTheme.of(context).labelLarge.override(
-                            font: GoogleFonts.inter(
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .labelLarge
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .labelLarge
-                                  .fontStyle,
-                            ),
-                            color: Color(0xFF449A7A),
-                            letterSpacing: 0.0,
-                            fontWeight: FlutterFlowTheme.of(context)
-                                .labelLarge
-                                .fontWeight,
-                            fontStyle: FlutterFlowTheme.of(context)
-                                .labelLarge
-                                .fontStyle,
-                          ),
-                    ),
-                  ].divide(SizedBox(height: 12.0)),
+                  ),
                 ),
                 Column(
                   mainAxisSize: MainAxisSize.min,
@@ -241,7 +273,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Nome Completo',
+                          'Nome completo',
                           style:
                               FlutterFlowTheme.of(context).labelMedium.override(
                                     font: GoogleFonts.inter(
@@ -272,7 +304,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                   autofocus: false,
                                   textCapitalization: TextCapitalization.words,
                                   textInputAction: TextInputAction.next,
-                                  readOnly: _model.editar == true,
+                                  readOnly: _model.editar == false,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'Digite seu nome',
@@ -410,10 +442,9 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                                 builder: (context) => TextFormField(
                                   controller: _model.dataTextController,
                                   focusNode: _model.dataFocusNode,
-                                  onFieldSubmitted: (_) async {},
                                   autofocus: false,
                                   textInputAction: TextInputAction.next,
-                                  readOnly: _model.editar == true,
+                                  readOnly: _model.editar == false,
                                   obscureText: false,
                                   decoration: InputDecoration(
                                     hintText: 'DD/MM/AAAA',
@@ -545,7 +576,7 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                           },
                           autofocus: false,
                           textInputAction: TextInputAction.next,
-                          readOnly: _model.editar == true,
+                          readOnly: _model.editar == false,
                           obscureText: false,
                           decoration: InputDecoration(
                             hintText: 'seu@email.com',
@@ -627,68 +658,6 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                         ),
                       ].divide(SizedBox(height: 8.0)),
                     ),
-                    InkWell(
-                      splashColor: Colors.transparent,
-                      focusColor: Colors.transparent,
-                      hoverColor: Colors.transparent,
-                      highlightColor: Colors.transparent,
-                      onTap: () async {
-                        _model.editar = !_model.editar;
-                        safeSetState(() {});
-                        if (_model.editar) {
-                          var confirmDialogResponse = await showDialog<bool>(
-                                context: context,
-                                builder: (alertDialogContext) {
-                                  return AlertDialog(
-                                    title: Text('Editar?'),
-                                    content: Text(
-                                        'Quer mesmo editar suas informações'),
-                                    actions: [
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, false),
-                                        child: Text('Não'),
-                                      ),
-                                      TextButton(
-                                        onPressed: () => Navigator.pop(
-                                            alertDialogContext, true),
-                                        child: Text('Sim'),
-                                      ),
-                                    ],
-                                  );
-                                },
-                              ) ??
-                              false;
-                          if (confirmDialogResponse) {
-                            return;
-                          }
-
-                          _model.editar = false;
-                          safeSetState(() {});
-                          return;
-                        } else {
-                          return;
-                        }
-                      },
-                      child: Text(
-                        'Editar dados',
-                        style:
-                            FlutterFlowTheme.of(context).labelMedium.override(
-                                  font: GoogleFonts.inter(
-                                    fontWeight: FontWeight.w300,
-                                    fontStyle: FlutterFlowTheme.of(context)
-                                        .labelMedium
-                                        .fontStyle,
-                                  ),
-                                  color: Color(0xFF416D4E),
-                                  letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w300,
-                                  fontStyle: FlutterFlowTheme.of(context)
-                                      .labelMedium
-                                      .fontStyle,
-                                ),
-                      ),
-                    ),
                   ].divide(SizedBox(height: 16.0)),
                 ),
                 Row(
@@ -697,9 +666,9 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                   children: [
                     FFButtonWidget(
                       onPressed: () async {
-                        context.safePop();
+                        Navigator.pop(context);
                       },
-                      text: 'Cancelar',
+                      text: 'Fechar',
                       options: FFButtonOptions(
                         width: 140.0,
                         height: 48.0,
@@ -737,15 +706,78 @@ class _PerfilWidgetState extends State<PerfilWidget> {
                     if (_model.editar == true)
                       FFButtonWidget(
                         onPressed: () async {
-                          await currentUserReference!
-                              .update(createPacienteRecordData(
-                            email: _model.emailTextController.text,
-                            dataOperacao: _model.dataTextController.text,
-                            nome: _model.nomeTextController.text,
-                            senha: '',
-                            cpf: '',
-                            photoUrl: _model.uploadedFileUrl_uploadDataKwu,
-                          ));
+                          if ((_model.uploadedLocalFile_avatarLocalUpload.bytes
+                                      ?.isNotEmpty ??
+                                  false)) {
+                            {
+                              safeSetState(() => _model
+                                  .isDataUploading_uplaodImageFirestore = true);
+                              var selectedUploadedFiles = <FFUploadedFile>[];
+                              var selectedMedia = <SelectedFile>[];
+                              var downloadUrls = <String>[];
+                              try {
+                                selectedUploadedFiles = _model
+                                        .uploadedLocalFile_avatarLocalUpload
+                                        .bytes!
+                                        .isNotEmpty
+                                    ? [
+                                        _model
+                                            .uploadedLocalFile_avatarLocalUpload
+                                      ]
+                                    : <FFUploadedFile>[];
+                                selectedMedia = selectedFilesFromUploadedFiles(
+                                  selectedUploadedFiles,
+                                );
+                                downloadUrls = (await Future.wait(
+                                  selectedMedia.map(
+                                    (m) async => await uploadData(
+                                        m.storagePath, m.bytes),
+                                  ),
+                                ))
+                                    .where((u) => u != null)
+                                    .map((u) => u!)
+                                    .toList();
+                              } finally {
+                                _model.isDataUploading_uplaodImageFirestore =
+                                    false;
+                              }
+                              if (selectedUploadedFiles.length ==
+                                      selectedMedia.length &&
+                                  downloadUrls.length == selectedMedia.length) {
+                                safeSetState(() {
+                                  _model.uploadedLocalFile_uplaodImageFirestore =
+                                      selectedUploadedFiles.first;
+                                  _model.uploadedFileUrl_uplaodImageFirestore =
+                                      downloadUrls.first;
+                                });
+                              } else {
+                                safeSetState(() {});
+                                return;
+                              }
+                            }
+
+                            await currentUserReference!
+                                .update(createPacienteRecordData(
+                              photoUrl:
+                                  _model.uploadedFileUrl_uplaodImageFirestore,
+                              nome: _model.nomeTextController.text,
+                              email: _model.emailTextController.text,
+                              dataOperacao: _model.dataTextController.text,
+                            ));
+                            safeSetState(() {
+                              _model.isDataUploading_avatarLocalUpload = false;
+                              _model.uploadedLocalFile_avatarLocalUpload =
+                                  FFUploadedFile(bytes: Uint8List.fromList([]));
+                            });
+                          } else {
+                            await currentUserReference!
+                                .update(createPacienteRecordData(
+                              nome: '',
+                              email: '',
+                              dataOperacao: '',
+                            ));
+                            Navigator.pop(context);
+                          }
                         },
                         text: 'Salvar ',
                         options: FFButtonOptions(

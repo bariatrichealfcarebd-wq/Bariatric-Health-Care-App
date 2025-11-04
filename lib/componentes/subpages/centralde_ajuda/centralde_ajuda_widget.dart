@@ -202,7 +202,7 @@ class _CentraldeAjudaWidgetState extends State<CentraldeAjudaWidget> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Problemas Mais Comuns',
+                        'Dúvidas Frequentes:',
                         style: FlutterFlowTheme.of(context)
                             .titleMedium
                             .override(

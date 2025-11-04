@@ -57,3 +57,19 @@ bool validarCPF(String cpf) {
   return (int.parse(cpf[9]) == firstCheckDigit) &&
       (int.parse(cpf[10]) == secondCheckDigit);
 }
+
+List<String> gerarKeywords(
+  String nome,
+  String cpf,
+) {
+  // Junta o nome e o CPF num único texto
+  String textoCompleto = nome + " " + cpf;
+
+  // Converte para minúsculas e divide numa lista de palavras
+  List<String> palavrasChave = textoCompleto.toLowerCase().split(' ');
+
+  // Remove itens vazios da lista, caso haja espaços duplos
+  palavrasChave.removeWhere((item) => item.isEmpty);
+
+  return palavrasChave;
+}

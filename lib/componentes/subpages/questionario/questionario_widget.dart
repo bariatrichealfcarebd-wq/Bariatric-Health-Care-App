@@ -943,7 +943,8 @@ class _QuestionarioWidgetState extends State<QuestionarioWidget> {
                         _model.popupAlimentacao) {
                       await actions.gerarPDFparaStorage(
                         FFAppState().sintomasSelecionados.toList(),
-                        valueOrDefault(currentUserDocument?.cpf, ''),
+                        valueOrDefault(currentUserDocument?.nome, ''),
+                        currentUserUid,
                       );
                       _model.documentoParaApagar =
                           await queryLigacaoSintomaRecordOnce(

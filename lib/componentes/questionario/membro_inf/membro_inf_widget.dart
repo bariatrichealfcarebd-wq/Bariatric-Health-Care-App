@@ -119,7 +119,7 @@ class _MembroInfWidgetState extends State<MembroInfWidget>
                             ),
                           ),
                           Text(
-                            'Membros Inferiores',
+                            'Membros inferiores',
                             style: FlutterFlowTheme.of(context)
                                 .headlineSmall
                                 .override(
@@ -139,6 +139,29 @@ class _MembroInfWidgetState extends State<MembroInfWidget>
                                 ),
                           ),
                         ],
+                      ),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(8.0),
+                      child: Text(
+                        'Selecione apenas os sinais e sintomas manifestados:',
+                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                              font: GoogleFonts.inter(
+                                fontWeight: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontWeight,
+                                fontStyle: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .fontStyle,
+                              ),
+                              letterSpacing: 0.0,
+                              fontWeight: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontWeight,
+                              fontStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .fontStyle,
+                            ),
                       ),
                     ),
                     Expanded(

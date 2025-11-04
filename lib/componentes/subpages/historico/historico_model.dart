@@ -6,23 +6,15 @@ import 'package:flutter/material.dart';
 class HistoricoModel extends FlutterFlowModel<HistoricoWidget> {
   ///  Local state fields for this page.
 
-  List<dynamic> listaDePdfs = [];
-  void addToListaDePdfs(dynamic item) => listaDePdfs.add(item);
-  void removeFromListaDePdfs(dynamic item) => listaDePdfs.remove(item);
-  void removeAtIndexFromListaDePdfs(int index) => listaDePdfs.removeAt(index);
-  void insertAtIndexInListaDePdfs(int index, dynamic item) =>
-      listaDePdfs.insert(index, item);
-  void updateListaDePdfsAtIndex(int index, Function(dynamic) updateFn) =>
-      listaDePdfs[index] = updateFn(listaDePdfs[index]);
-
   bool confirmar = false;
+
+  DateTime? dataFiltrar;
 
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in Historico widget.
   PacienteRecord? pacienteData;
-  // Stores action output result for [Custom Action - listarPdfsDoPaciente] action in Historico widget.
-  List<dynamic>? resultadoDaBusca;
+  DateTime? datePicked;
 
   @override
   void initState(BuildContext context) {}

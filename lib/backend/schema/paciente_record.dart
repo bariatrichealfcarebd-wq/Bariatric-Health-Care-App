@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import '/backend/algolia/serialization_util.dart';
+import '/backend/algolia/algolia_manager.dart';
 import 'package:collection/collection.dart';
 
 import '/backend/schema/util/firestore_util.dart';
@@ -60,15 +62,45 @@ class PacienteRecord extends FirestoreRecord {
   String get dataOperacao => _dataOperacao ?? '';
   bool hasDataOperacao() => _dataOperacao != null;
 
-  // "IsADM" field.
-  bool? _isADM;
-  bool get isADM => _isADM ?? false;
-  bool hasIsADM() => _isADM != null;
-
   // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
+
+  // "searchKeywords" field.
+  List<String>? _searchKeywords;
+  List<String> get searchKeywords => _searchKeywords ?? const [];
+  bool hasSearchKeywords() => _searchKeywords != null;
+
+  // "admLess" field.
+  bool? _admLess;
+  bool get admLess => _admLess ?? false;
+  bool hasAdmLess() => _admLess != null;
+
+  // "isADM" field.
+  bool? _isADM;
+  bool get isADM => _isADM ?? false;
+  bool hasIsADM() => _isADM != null;
+
+  // "primeiroLoginRealizado" field.
+  bool? _primeiroLoginRealizado;
+  bool get primeiroLoginRealizado => _primeiroLoginRealizado ?? false;
+  bool hasPrimeiroLoginRealizado() => _primeiroLoginRealizado != null;
+
+  // "crn" field.
+  String? _crn;
+  String get crn => _crn ?? '';
+  bool hasCrn() => _crn != null;
+
+  // "especializacao" field.
+  String? _especializacao;
+  String get especializacao => _especializacao ?? '';
+  bool hasEspecializacao() => _especializacao != null;
+
+  // "telefone" field.
+  String? _telefone;
+  String get telefone => _telefone ?? '';
+  bool hasTelefone() => _telefone != null;
 
   void _initializeFields() {
     _nome = snapshotData['Nome'] as String?;
@@ -80,8 +112,14 @@ class PacienteRecord extends FirestoreRecord {
     _phoneNumber = snapshotData['phone_number'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
     _dataOperacao = snapshotData['Data_operacao'] as String?;
-    _isADM = snapshotData['IsADM'] as bool?;
     _photoUrl = snapshotData['photo_url'] as String?;
+    _searchKeywords = getDataList(snapshotData['searchKeywords']);
+    _admLess = snapshotData['admLess'] as bool?;
+    _isADM = snapshotData['isADM'] as bool?;
+    _primeiroLoginRealizado = snapshotData['primeiroLoginRealizado'] as bool?;
+    _crn = snapshotData['crn'] as String?;
+    _especializacao = snapshotData['especializacao'] as String?;
+    _telefone = snapshotData['telefone'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -104,6 +142,54 @@ class PacienteRecord extends FirestoreRecord {
     DocumentReference reference,
   ) =>
       PacienteRecord._(reference, mapFromFirestore(data));
+
+  static PacienteRecord fromAlgolia(AlgoliaObjectSnapshot snapshot) =>
+      PacienteRecord.getDocumentFromData(
+        {
+          'Nome': snapshot.data['Nome'],
+          'Senha': snapshot.data['Senha'],
+          'CPF': snapshot.data['CPF'],
+          'email': snapshot.data['email'],
+          'display_name': snapshot.data['display_name'],
+          'uid': snapshot.data['uid'],
+          'phone_number': snapshot.data['phone_number'],
+          'created_time': convertAlgoliaParam(
+            snapshot.data['created_time'],
+            ParamType.DateTime,
+            false,
+          ),
+          'Data_operacao': snapshot.data['Data_operacao'],
+          'photo_url': snapshot.data['photo_url'],
+          'searchKeywords': safeGet(
+            () => snapshot.data['searchKeywords'].toList(),
+          ),
+          'admLess': snapshot.data['admLess'],
+          'isADM': snapshot.data['isADM'],
+          'primeiroLoginRealizado': snapshot.data['primeiroLoginRealizado'],
+          'crn': snapshot.data['crn'],
+          'especializacao': snapshot.data['especializacao'],
+          'telefone': snapshot.data['telefone'],
+        },
+        PacienteRecord.collection.doc(snapshot.objectID),
+      );
+
+  static Future<List<PacienteRecord>> search({
+    String? term,
+    FutureOr<LatLng>? location,
+    int? maxResults,
+    double? searchRadiusMeters,
+    bool useCache = false,
+  }) =>
+      FFAlgoliaManager.instance
+          .algoliaQuery(
+            index: 'Paciente',
+            term: term,
+            maxResults: maxResults,
+            location: location,
+            searchRadiusMeters: searchRadiusMeters,
+            useCache: useCache,
+          )
+          .then((r) => r.map(fromAlgolia).toList());
 
   @override
   String toString() =>
@@ -128,8 +214,13 @@ Map<String, dynamic> createPacienteRecordData({
   String? phoneNumber,
   DateTime? createdTime,
   String? dataOperacao,
-  bool? isADM,
   String? photoUrl,
+  bool? admLess,
+  bool? isADM,
+  bool? primeiroLoginRealizado,
+  String? crn,
+  String? especializacao,
+  String? telefone,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -142,8 +233,13 @@ Map<String, dynamic> createPacienteRecordData({
       'phone_number': phoneNumber,
       'created_time': createdTime,
       'Data_operacao': dataOperacao,
-      'IsADM': isADM,
       'photo_url': photoUrl,
+      'admLess': admLess,
+      'isADM': isADM,
+      'primeiroLoginRealizado': primeiroLoginRealizado,
+      'crn': crn,
+      'especializacao': especializacao,
+      'telefone': telefone,
     }.withoutNulls,
   );
 
@@ -155,6 +251,7 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
 
   @override
   bool equals(PacienteRecord? e1, PacienteRecord? e2) {
+    const listEquality = ListEquality();
     return e1?.nome == e2?.nome &&
         e1?.senha == e2?.senha &&
         e1?.cpf == e2?.cpf &&
@@ -164,8 +261,14 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.createdTime == e2?.createdTime &&
         e1?.dataOperacao == e2?.dataOperacao &&
+        e1?.photoUrl == e2?.photoUrl &&
+        listEquality.equals(e1?.searchKeywords, e2?.searchKeywords) &&
+        e1?.admLess == e2?.admLess &&
         e1?.isADM == e2?.isADM &&
-        e1?.photoUrl == e2?.photoUrl;
+        e1?.primeiroLoginRealizado == e2?.primeiroLoginRealizado &&
+        e1?.crn == e2?.crn &&
+        e1?.especializacao == e2?.especializacao &&
+        e1?.telefone == e2?.telefone;
   }
 
   @override
@@ -179,8 +282,14 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e?.phoneNumber,
         e?.createdTime,
         e?.dataOperacao,
+        e?.photoUrl,
+        e?.searchKeywords,
+        e?.admLess,
         e?.isADM,
-        e?.photoUrl
+        e?.primeiroLoginRealizado,
+        e?.crn,
+        e?.especializacao,
+        e?.telefone
       ]);
 
   @override

@@ -25,9 +25,33 @@ class NutrientesRecord extends FirestoreRecord {
   String get sigla => _sigla ?? '';
   bool hasSigla() => _sigla != null;
 
+  // "email" field.
+  String? _email;
+  String get email => _email ?? '';
+  bool hasEmail() => _email != null;
+
+  // "uid" field.
+  String? _uid;
+  String get uid => _uid ?? '';
+  bool hasUid() => _uid != null;
+
+  // "tipousuario" field.
+  String? _tipousuario;
+  String get tipousuario => _tipousuario ?? '';
+  bool hasTipousuario() => _tipousuario != null;
+
+  // "telefone" field.
+  String? _telefone;
+  String get telefone => _telefone ?? '';
+  bool hasTelefone() => _telefone != null;
+
   void _initializeFields() {
     _nome = snapshotData['nome'] as String?;
     _sigla = snapshotData['sigla'] as String?;
+    _email = snapshotData['email'] as String?;
+    _uid = snapshotData['uid'] as String?;
+    _tipousuario = snapshotData['tipousuario'] as String?;
+    _telefone = snapshotData['telefone'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -67,11 +91,19 @@ class NutrientesRecord extends FirestoreRecord {
 Map<String, dynamic> createNutrientesRecordData({
   String? nome,
   String? sigla,
+  String? email,
+  String? uid,
+  String? tipousuario,
+  String? telefone,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'nome': nome,
       'sigla': sigla,
+      'email': email,
+      'uid': uid,
+      'tipousuario': tipousuario,
+      'telefone': telefone,
     }.withoutNulls,
   );
 
@@ -83,12 +115,17 @@ class NutrientesRecordDocumentEquality implements Equality<NutrientesRecord> {
 
   @override
   bool equals(NutrientesRecord? e1, NutrientesRecord? e2) {
-    return e1?.nome == e2?.nome && e1?.sigla == e2?.sigla;
+    return e1?.nome == e2?.nome &&
+        e1?.sigla == e2?.sigla &&
+        e1?.email == e2?.email &&
+        e1?.uid == e2?.uid &&
+        e1?.tipousuario == e2?.tipousuario &&
+        e1?.telefone == e2?.telefone;
   }
 
   @override
-  int hash(NutrientesRecord? e) =>
-      const ListEquality().hash([e?.nome, e?.sigla]);
+  int hash(NutrientesRecord? e) => const ListEquality()
+      .hash([e?.nome, e?.sigla, e?.email, e?.uid, e?.tipousuario, e?.telefone]);
 
   @override
   bool isValidKey(Object? o) => o is NutrientesRecord;

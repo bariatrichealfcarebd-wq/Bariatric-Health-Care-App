@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/componentes/abas/perfil/perfil_widget.dart';
+import '/components/dados_nutricionsta_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
@@ -8,13 +9,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'menu_model.dart';
 export 'menu_model.dart';
 
-/// Criar um componente que possua as seguintes botões:
-/// Perfil
-/// Segurança/Privacidade
-/// Central de Ajuda
-/// Documentos
-/// Log out
-///
 class MenuWidget extends StatefulWidget {
   const MenuWidget({super.key});
 
@@ -151,33 +145,52 @@ class _MenuWidgetState extends State<MenuWidget> {
                   ),
                 ),
               ),
-              Container(
-                width: double.infinity,
-                height: 56.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(
-                    color: Color(0xFFA7D2C7),
-                    width: 1.0,
+              InkWell(
+                splashColor: Colors.transparent,
+                focusColor: Colors.transparent,
+                hoverColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+                onTap: () async {
+                  context.pushNamed(SeguranacaPrivacidadeWidget.routeName);
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 56.0,
+                  decoration: BoxDecoration(
+                    color: FlutterFlowTheme.of(context).secondaryBackground,
+                    borderRadius: BorderRadius.circular(8.0),
+                    border: Border.all(
+                      color: Color(0xFFA7D2C7),
+                      width: 1.0,
+                    ),
                   ),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.security,
-                        color: Color(0xFFA7D2C7),
-                        size: 24.0,
-                      ),
-                      Text(
-                        'Segurança/Privacidade',
-                        style: FlutterFlowTheme.of(context).bodyLarge.override(
-                              font: GoogleFonts.inter(
+                  child: Padding(
+                    padding:
+                        EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Icon(
+                          Icons.security,
+                          color: Color(0xFFA7D2C7),
+                          size: 24.0,
+                        ),
+                        Text(
+                          'Segurança/Privacidade',
+                          style: FlutterFlowTheme.of(context)
+                              .bodyLarge
+                              .override(
+                                font: GoogleFonts.inter(
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .fontStyle,
+                                ),
+                                color: FlutterFlowTheme.of(context).primaryText,
+                                letterSpacing: 0.0,
                                 fontWeight: FlutterFlowTheme.of(context)
                                     .bodyLarge
                                     .fontWeight,
@@ -185,22 +198,95 @@ class _MenuWidgetState extends State<MenuWidget> {
                                     .bodyLarge
                                     .fontStyle,
                               ),
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontStyle,
-                            ),
+                        ),
+                        Icon(
+                          Icons.chevron_right,
+                          color: FlutterFlowTheme.of(context).secondaryText,
+                          size: 20.0,
+                        ),
+                      ].divide(SizedBox(width: 12.0)),
+                    ),
+                  ),
+                ),
+              ),
+              Builder(
+                builder: (context) => InkWell(
+                  splashColor: Colors.transparent,
+                  focusColor: Colors.transparent,
+                  hoverColor: Colors.transparent,
+                  highlightColor: Colors.transparent,
+                  onTap: () async {
+                    await showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return Dialog(
+                          elevation: 0,
+                          insetPadding: EdgeInsets.zero,
+                          backgroundColor: Colors.transparent,
+                          alignment: AlignmentDirectional(0.0, 0.0)
+                              .resolve(Directionality.of(context)),
+                          child: DadosNutricionstaWidget(),
+                        );
+                      },
+                    );
+
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 56.0,
+                    decoration: BoxDecoration(
+                      color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(8.0),
+                      border: Border.all(
+                        color: Color(0xFFA7D2C7),
+                        width: 1.0,
                       ),
-                      Icon(
-                        Icons.chevron_right,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 20.0,
+                    ),
+                    child: Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(
+                          16.0, 16.0, 16.0, 16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Icon(
+                            Icons.perm_contact_cal_sharp,
+                            color: Color(0xFFA7D2C7),
+                            size: 24.0,
+                          ),
+                          Text(
+                            'Dados do(a) Nutricionista',
+                            style: FlutterFlowTheme.of(context)
+                                .bodyLarge
+                                .override(
+                                  font: GoogleFonts.inter(
+                                    fontWeight: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontWeight,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyLarge
+                                        .fontStyle,
+                                  ),
+                                  color:
+                                      FlutterFlowTheme.of(context).primaryText,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .fontWeight,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyLarge
+                                      .fontStyle,
+                                ),
+                          ),
+                          Icon(
+                            Icons.chevron_right,
+                            color: FlutterFlowTheme.of(context).secondaryText,
+                            size: 20.0,
+                          ),
+                        ].divide(SizedBox(width: 12.0)),
                       ),
-                    ].divide(SizedBox(width: 12.0)),
+                    ),
                   ),
                 ),
               ),

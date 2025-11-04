@@ -31,16 +31,10 @@ class SintomasRecord extends FirestoreRecord {
   List<String> get categoria => _categoria ?? const [];
   bool hasCategoria() => _categoria != null;
 
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
-
   void _initializeFields() {
     _nome = snapshotData['nome'] as String?;
     _nutrientesAssociados = getDataList(snapshotData['nutrientes_associados']);
     _categoria = getDataList(snapshotData['categoria']);
-    _uid = snapshotData['uid'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -79,12 +73,10 @@ class SintomasRecord extends FirestoreRecord {
 
 Map<String, dynamic> createSintomasRecordData({
   String? nome,
-  String? uid,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'nome': nome,
-      'uid': uid,
     }.withoutNulls,
   );
 
@@ -100,13 +92,12 @@ class SintomasRecordDocumentEquality implements Equality<SintomasRecord> {
     return e1?.nome == e2?.nome &&
         listEquality.equals(
             e1?.nutrientesAssociados, e2?.nutrientesAssociados) &&
-        listEquality.equals(e1?.categoria, e2?.categoria) &&
-        e1?.uid == e2?.uid;
+        listEquality.equals(e1?.categoria, e2?.categoria);
   }
 
   @override
   int hash(SintomasRecord? e) => const ListEquality()
-      .hash([e?.nome, e?.nutrientesAssociados, e?.categoria, e?.uid]);
+      .hash([e?.nome, e?.nutrientesAssociados, e?.categoria]);
 
   @override
   bool isValidKey(Object? o) => o is SintomasRecord;

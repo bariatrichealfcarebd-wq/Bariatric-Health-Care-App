@@ -35,11 +35,17 @@ class LigacaoSintomaRecord extends FirestoreRecord {
   String get nomeSintoma => _nomeSintoma ?? '';
   bool hasNomeSintoma() => _nomeSintoma != null;
 
+  // "nome_User" field.
+  String? _nomeUser;
+  String get nomeUser => _nomeUser ?? '';
+  bool hasNomeUser() => _nomeUser != null;
+
   void _initializeFields() {
     _idNutriente = getDataList(snapshotData['id_nutriente']);
     _idSintoma = snapshotData['id_sintoma'] as String?;
     _cpfUsuario = snapshotData['cpf_usuario'] as String?;
     _nomeSintoma = snapshotData['nomeSintoma'] as String?;
+    _nomeUser = snapshotData['nome_User'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -80,12 +86,14 @@ Map<String, dynamic> createLigacaoSintomaRecordData({
   String? idSintoma,
   String? cpfUsuario,
   String? nomeSintoma,
+  String? nomeUser,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'id_sintoma': idSintoma,
       'cpf_usuario': cpfUsuario,
       'nomeSintoma': nomeSintoma,
+      'nome_User': nomeUser,
     }.withoutNulls,
   );
 
@@ -102,12 +110,18 @@ class LigacaoSintomaRecordDocumentEquality
     return listEquality.equals(e1?.idNutriente, e2?.idNutriente) &&
         e1?.idSintoma == e2?.idSintoma &&
         e1?.cpfUsuario == e2?.cpfUsuario &&
-        e1?.nomeSintoma == e2?.nomeSintoma;
+        e1?.nomeSintoma == e2?.nomeSintoma &&
+        e1?.nomeUser == e2?.nomeUser;
   }
 
   @override
-  int hash(LigacaoSintomaRecord? e) => const ListEquality()
-      .hash([e?.idNutriente, e?.idSintoma, e?.cpfUsuario, e?.nomeSintoma]);
+  int hash(LigacaoSintomaRecord? e) => const ListEquality().hash([
+        e?.idNutriente,
+        e?.idSintoma,
+        e?.cpfUsuario,
+        e?.nomeSintoma,
+        e?.nomeUser
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is LigacaoSintomaRecord;

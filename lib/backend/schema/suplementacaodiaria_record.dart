@@ -20,20 +20,26 @@ class SuplementacaodiariaRecord extends FirestoreRecord {
   String get tipoSuplementacao => _tipoSuplementacao ?? '';
   bool hasTipoSuplementacao() => _tipoSuplementacao != null;
 
-  // "doseRecomendada" field.
-  String? _doseRecomendada;
-  String get doseRecomendada => _doseRecomendada ?? '';
-  bool hasDoseRecomendada() => _doseRecomendada != null;
-
   // "id_User" field.
   String? _idUser;
   String get idUser => _idUser ?? '';
   bool hasIdUser() => _idUser != null;
 
+  // "anexo" field.
+  String? _anexo;
+  String get anexo => _anexo ?? '';
+  bool hasAnexo() => _anexo != null;
+
+  // "creat_day" field.
+  DateTime? _creatDay;
+  DateTime? get creatDay => _creatDay;
+  bool hasCreatDay() => _creatDay != null;
+
   void _initializeFields() {
     _tipoSuplementacao = snapshotData['tipoSuplementacao'] as String?;
-    _doseRecomendada = snapshotData['doseRecomendada'] as String?;
     _idUser = snapshotData['id_User'] as String?;
+    _anexo = snapshotData['anexo'] as String?;
+    _creatDay = snapshotData['creat_day'] as DateTime?;
   }
 
   static CollectionReference get collection =>
@@ -73,14 +79,16 @@ class SuplementacaodiariaRecord extends FirestoreRecord {
 
 Map<String, dynamic> createSuplementacaodiariaRecordData({
   String? tipoSuplementacao,
-  String? doseRecomendada,
   String? idUser,
+  String? anexo,
+  DateTime? creatDay,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'tipoSuplementacao': tipoSuplementacao,
-      'doseRecomendada': doseRecomendada,
       'id_User': idUser,
+      'anexo': anexo,
+      'creat_day': creatDay,
     }.withoutNulls,
   );
 
@@ -94,13 +102,14 @@ class SuplementacaodiariaRecordDocumentEquality
   @override
   bool equals(SuplementacaodiariaRecord? e1, SuplementacaodiariaRecord? e2) {
     return e1?.tipoSuplementacao == e2?.tipoSuplementacao &&
-        e1?.doseRecomendada == e2?.doseRecomendada &&
-        e1?.idUser == e2?.idUser;
+        e1?.idUser == e2?.idUser &&
+        e1?.anexo == e2?.anexo &&
+        e1?.creatDay == e2?.creatDay;
   }
 
   @override
   int hash(SuplementacaodiariaRecord? e) => const ListEquality()
-      .hash([e?.tipoSuplementacao, e?.doseRecomendada, e?.idUser]);
+      .hash([e?.tipoSuplementacao, e?.idUser, e?.anexo, e?.creatDay]);
 
   @override
   bool isValidKey(Object? o) => o is SuplementacaodiariaRecord;

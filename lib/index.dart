@@ -7,8 +7,6 @@ export '/componentes/homepages/questions_page/questions_page_widget.dart'
     show QuestionsPageWidget;
 export '/componentes/homepages/alimentacao_page/alimentacao_page_widget.dart'
     show AlimentacaoPageWidget;
-export '/componentes/homepages/dados_da_nutri/dados_da_nutri_widget.dart'
-    show DadosDaNutriWidget;
 export '/componentes/subpages/tipodesuplementodiario/tipodesuplementodiario_widget.dart'
     show TipodesuplementodiarioWidget;
 export '/componentes/subpages/suplementacao_cutanea/suplementacao_cutanea_widget.dart'
@@ -17,10 +15,9 @@ export '/componentes/subpages/outra_suplementacoes/outra_suplementacoes_widget.d
     show OutraSuplementacoesWidget;
 export '/componentes/subpages/historico/historico_widget.dart'
     show HistoricoWidget;
-export '/componentes/pages/cadastro/cadastro_widget.dart' show CadastroWidget;
-export '/componentes/subpages/recupera_pt1/recupera_pt1_widget.dart'
+export '/componentes/recupera_pt1/recupera_pt1_widget.dart'
     show RecuperaPt1Widget;
-export '/componentes/subpages/recuperar_pt2/recuperar_pt2_widget.dart'
+export '/componentes/recuperar_pt2/recuperar_pt2_widget.dart'
     show RecuperarPt2Widget;
 export '/componentes/subpages/centralde_ajuda/centralde_ajuda_widget.dart'
     show CentraldeAjudaWidget;
@@ -30,7 +27,12 @@ export '/componentes/homepages/paginado_nutricionista/paginado_nutricionista_wid
     show PaginadoNutricionistaWidget;
 export '/componentes/subpages/questionario/questionario_widget.dart'
     show QuestionarioWidget;
-export '/componentes/subpages/relatorio_alimentacao/relatorio_alimentacao_widget.dart'
-    show RelatorioAlimentacaoWidget;
-export '/componentes/pages/alimententacao_nutri/alimententacao_nutri_widget.dart'
+export '/componentes/alimententacao_nutri/alimententacao_nutri_widget.dart'
     show AlimententacaoNutriWidget;
+export '/componentes/subpages/historico_alimentao/historico_alimentao_widget.dart'
+    show HistoricoAlimentaoWidget;
+export '/componentes/historico_sup/historico_sup_widget.dart'
+    show HistoricoSupWidget;
+export '/componentes/pages/cadastro2/cadastro2_widget.dart'
+    show Cadastro2Widget;
+export '/agenda/agenda_widget.dart' show AgendaWidget;

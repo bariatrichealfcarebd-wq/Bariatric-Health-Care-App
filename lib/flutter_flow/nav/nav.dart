@@ -7,6 +7,7 @@ import '/backend/schema/structs/index.dart';
 
 import '/auth/base_auth_user_provider.dart';
 
+import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
 import '/index.dart';
@@ -116,11 +117,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AlimentacaoPageWidget(),
         ),
         FFRoute(
-          name: DadosDaNutriWidget.routeName,
-          path: DadosDaNutriWidget.routePath,
-          builder: (context, params) => DadosDaNutriWidget(),
-        ),
-        FFRoute(
           name: TipodesuplementodiarioWidget.routeName,
           path: TipodesuplementodiarioWidget.routePath,
           builder: (context, params) => TipodesuplementodiarioWidget(),
@@ -139,11 +135,6 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: HistoricoWidget.routeName,
           path: HistoricoWidget.routePath,
           builder: (context, params) => HistoricoWidget(),
-        ),
-        FFRoute(
-          name: CadastroWidget.routeName,
-          path: CadastroWidget.routePath,
-          builder: (context, params) => CadastroWidget(),
         ),
         FFRoute(
           name: RecuperaPt1Widget.routeName,
@@ -176,14 +167,34 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => QuestionarioWidget(),
         ),
         FFRoute(
-          name: RelatorioAlimentacaoWidget.routeName,
-          path: RelatorioAlimentacaoWidget.routePath,
-          builder: (context, params) => RelatorioAlimentacaoWidget(),
-        ),
-        FFRoute(
           name: AlimententacaoNutriWidget.routeName,
           path: AlimententacaoNutriWidget.routePath,
-          builder: (context, params) => AlimententacaoNutriWidget(),
+          builder: (context, params) => AlimententacaoNutriWidget(
+            pdfShow: params.getParam(
+              'pdfShow',
+              ParamType.String,
+            ),
+          ),
+        ),
+        FFRoute(
+          name: HistoricoAlimentaoWidget.routeName,
+          path: HistoricoAlimentaoWidget.routePath,
+          builder: (context, params) => HistoricoAlimentaoWidget(),
+        ),
+        FFRoute(
+          name: HistoricoSupWidget.routeName,
+          path: HistoricoSupWidget.routePath,
+          builder: (context, params) => HistoricoSupWidget(),
+        ),
+        FFRoute(
+          name: Cadastro2Widget.routeName,
+          path: Cadastro2Widget.routePath,
+          builder: (context, params) => Cadastro2Widget(),
+        ),
+        FFRoute(
+          name: AgendaWidget.routeName,
+          path: AgendaWidget.routePath,
+          builder: (context, params) => AgendaWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -371,9 +382,9 @@ class FFRoute {
               : builder(context, ffParams);
           final child = appStateNotifier.loading
               ? Container(
-                  color: Color(0xC0D2EAE7),
+                  color: FlutterFlowTheme.of(context).primaryBackground,
                   child: Image.asset(
-                    'assets/images/logo1000x1000.png',
+                    'assets/images/Esboo_logo_bariatricHealthcare_1000X1000.png',
                     fit: BoxFit.contain,
                   ),
                 )

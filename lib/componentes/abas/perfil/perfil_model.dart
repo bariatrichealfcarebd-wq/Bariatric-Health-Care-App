@@ -5,17 +5,16 @@ import 'package:flutter/material.dart';
 class PerfilModel extends FlutterFlowModel<PerfilWidget> {
   ///  Local state fields for this component.
 
-  bool editar = true;
+  bool editar = false;
 
   /// selecionar o dia e ele vai guardar
   DateTime? datee;
 
   ///  State fields for stateful widgets in this component.
 
-  bool isDataUploading_uploadDataKwu = false;
-  FFUploadedFile uploadedLocalFile_uploadDataKwu =
+  bool isDataUploading_avatarLocalUpload = false;
+  FFUploadedFile uploadedLocalFile_avatarLocalUpload =
       FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_uploadDataKwu = '';
 
   // State field(s) for nome widget.
   FocusNode? nomeFocusNode;
@@ -29,6 +28,10 @@ class PerfilModel extends FlutterFlowModel<PerfilWidget> {
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
+  bool isDataUploading_uplaodImageFirestore = false;
+  FFUploadedFile uploadedLocalFile_uplaodImageFirestore =
+      FFUploadedFile(bytes: Uint8List.fromList([]));
+  String uploadedFileUrl_uplaodImageFirestore = '';
 
   @override
   void initState(BuildContext context) {}

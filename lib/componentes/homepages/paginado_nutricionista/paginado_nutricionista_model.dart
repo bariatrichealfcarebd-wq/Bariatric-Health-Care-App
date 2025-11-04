@@ -1,4 +1,3 @@
-import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'paginado_nutricionista_widget.dart' show PaginadoNutricionistaWidget;
@@ -8,7 +7,24 @@ class PaginadoNutricionistaModel
     extends FlutterFlowModel<PaginadoNutricionistaWidget> {
   ///  Local state fields for this page.
 
-  String? nomeDoPaciente;
+  String nomePaciente = 'Aguardando paciente...';
+
+  String? searchText;
+
+  List<DocumentReference> pacienteResultados = [];
+  void addToPacienteResultados(DocumentReference item) =>
+      pacienteResultados.add(item);
+  void removeFromPacienteResultados(DocumentReference item) =>
+      pacienteResultados.remove(item);
+  void removeAtIndexFromPacienteResultados(int index) =>
+      pacienteResultados.removeAt(index);
+  void insertAtIndexInPacienteResultados(int index, DocumentReference item) =>
+      pacienteResultados.insert(index, item);
+  void updatePacienteResultadosAtIndex(
+          int index, Function(DocumentReference) updateFn) =>
+      pacienteResultados[index] = updateFn(pacienteResultados[index]);
+
+  DocumentReference? pacienteTemp;
 
   ///  State fields for stateful widgets in this page.
 
@@ -18,10 +34,8 @@ class PaginadoNutricionistaModel
   TextEditingController? campoCPFTextController;
   String? campoCPFSelectedOption;
   String? Function(BuildContext, String?)? campoCPFTextControllerValidator;
-  // Stores action output result for [Firestore Query - Query a collection] action in campoCPF widget.
-  PacienteRecord? pacienteNome;
-  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
-  PacienteRecord? pesquisaDoPaciente;
+  // Stores action output result for [Custom Action - buscarPacientesDoNutri] action in campoCPF widget.
+  List<DocumentReference>? refsPacientesDaBusca;
 
   @override
   void initState(BuildContext context) {}

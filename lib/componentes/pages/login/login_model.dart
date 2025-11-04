@@ -1,3 +1,4 @@
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'login_widget.dart' show LoginWidget;
@@ -15,6 +16,8 @@ class LoginModel extends FlutterFlowModel<LoginWidget> {
   TextEditingController? campoSenhaTextController;
   late bool campoSenhaVisibility;
   String? Function(BuildContext, String?)? campoSenhaTextControllerValidator;
+  // Stores action output result for [Cloud Function - onFirstPatientLogin] action in Button widget.
+  OnFirstPatientLoginCloudFunctionCallResponse? primeiroacesso;
 
   @override
   void initState(BuildContext context) {

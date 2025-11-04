@@ -154,6 +154,7 @@ class _CalendarioPopWidgetState extends State<CalendarioPopWidget>
                       FlutterFlowTheme.of(context).labelMedium.fontWeight,
                   fontStyle: FlutterFlowTheme.of(context).labelMedium.fontStyle,
                 ),
+            locale: FFLocalizations.of(context).languageCode,
           ),
         ),
       ).animateOnPageLoad(animationsMap['containerOnPageLoadAnimation']!),

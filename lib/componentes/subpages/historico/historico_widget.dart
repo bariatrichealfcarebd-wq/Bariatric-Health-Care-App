@@ -1,8 +1,8 @@
+import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
-import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -35,11 +35,6 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.pacienteData =
           await PacienteRecord.getDocumentOnce(FFAppState().pacientePesquisa!);
-      _model.resultadoDaBusca = await actions.listarPdfsDoPaciente(
-        _model.pacienteData!.cpf,
-      );
-      _model.listaDePdfs = _model.resultadoDaBusca!.toList().cast<dynamic>();
-      safeSetState(() {});
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -132,7 +127,7 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                 ),
                           ),
                           Text(
-                            'Faça upload de seus documentos médicos e baixe quando necessário',
+                            'Documentos médicos. Baixe quando necessário:',
                             style: FlutterFlowTheme.of(context)
                                 .bodyMedium
                                 .override(
@@ -153,6 +148,123 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                       .bodyMedium
                                       .fontStyle,
                                 ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.all(10.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  'Filtro por data',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        font: GoogleFonts.inter(
+                                          fontWeight:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontWeight,
+                                          fontStyle:
+                                              FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .fontStyle,
+                                        ),
+                                        color: Colors.black,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    _model.dataFiltrar = null;
+                                    safeSetState(() {});
+                                    final _datePickedDate =
+                                        await showDatePicker(
+                                      context: context,
+                                      initialDate: (_model.dataFiltrar ??
+                                          DateTime.now()),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2050),
+                                      builder: (context, child) {
+                                        return wrapInMaterialDatePickerTheme(
+                                          context,
+                                          child!,
+                                          headerBackgroundColor:
+                                              Color(0xF073B6AD),
+                                          headerForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          headerTextStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .headlineLarge
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                                fontSize: 32.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineLarge
+                                                        .fontStyle,
+                                              ),
+                                          pickerBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          pickerForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          selectedDateTimeBackgroundColor:
+                                              Color(0xF073B6AD),
+                                          selectedDateTimeForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          actionButtonForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          iconSize: 24.0,
+                                        );
+                                      },
+                                    );
+
+                                    if (_datePickedDate != null) {
+                                      safeSetState(() {
+                                        _model.datePicked = DateTime(
+                                          _datePickedDate.year,
+                                          _datePickedDate.month,
+                                          _datePickedDate.day,
+                                        );
+                                      });
+                                    } else if (_model.datePicked != null) {
+                                      safeSetState(() {
+                                        _model.datePicked = _model.dataFiltrar;
+                                      });
+                                    }
+                                    _model.dataFiltrar = _model.datePicked;
+                                    safeSetState(() {});
+                                  },
+                                  child: Icon(
+                                    Icons.calendar_month,
+                                    color: Colors.black,
+                                    size: 24.0,
+                                  ),
+                                ),
+                              ].divide(SizedBox(width: 5.0)),
+                            ),
                           ),
                           Container(
                             width: double.infinity,
@@ -194,20 +306,48 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                    Builder(
-                                      builder: (context) {
-                                        final itemPdfJson =
-                                            _model.listaDePdfs.toList();
+                                    StreamBuilder<List<RelatoriosPdfRecord>>(
+                                      stream: queryRelatoriosPdfRecord(
+                                        queryBuilder: (relatoriosPdfRecord) =>
+                                            relatoriosPdfRecord.where(
+                                          'user_cpf',
+                                          isEqualTo: currentUserUid,
+                                        ),
+                                      ),
+                                      builder: (context, snapshot) {
+                                        // Customize what your widget looks like when it's loading.
+                                        if (!snapshot.hasData) {
+                                          return Center(
+                                            child: SizedBox(
+                                              width: 50.0,
+                                              height: 50.0,
+                                              child: CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                        Color>(
+                                                  FlutterFlowTheme.of(context)
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                          );
+                                        }
+                                        List<RelatoriosPdfRecord>
+                                            listViewRelatoriosPdfRecordList =
+                                            snapshot.data!;
 
                                         return ListView.builder(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          itemCount: itemPdfJson.length,
+                                          itemCount:
+                                              listViewRelatoriosPdfRecordList
+                                                  .length,
                                           itemBuilder:
-                                              (context, itemPdfJsonIndex) {
-                                            final itemPdfJsonItem =
-                                                itemPdfJson[itemPdfJsonIndex];
+                                              (context, listViewIndex) {
+                                            final listViewRelatoriosPdfRecord =
+                                                listViewRelatoriosPdfRecordList[
+                                                    listViewIndex];
                                             return Material(
                                               color: Colors.transparent,
                                               elevation: 1.0,
@@ -272,11 +412,7 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                                                         190.0,
                                                                     height:
                                                                         24.0,
-                                                                    text:
-                                                                        getJsonField(
-                                                                      itemPdfJsonItem,
-                                                                      r'''$.nome''',
-                                                                    ).toString(),
+                                                                    text: '',
                                                                     textColor:
                                                                         Colors
                                                                             .black,
@@ -331,10 +467,8 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                                                   false;
                                                           if (confirmDialogResponse) {
                                                             await launchURL(
-                                                                getJsonField(
-                                                              itemPdfJsonItem,
-                                                              r'''$.url''',
-                                                            ).toString());
+                                                                FFAppState()
+                                                                    .pdfURL);
                                                           } else {
                                                             return;
                                                           }

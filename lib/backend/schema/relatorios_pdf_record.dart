@@ -30,10 +30,16 @@ class RelatoriosPdfRecord extends FirestoreRecord {
   DateTime? get createdAt => _createdAt;
   bool hasCreatedAt() => _createdAt != null;
 
+  // "nome_do_arquivo" field.
+  String? _nomeDoArquivo;
+  String get nomeDoArquivo => _nomeDoArquivo ?? '';
+  bool hasNomeDoArquivo() => _nomeDoArquivo != null;
+
   void _initializeFields() {
     _pdfUrl = snapshotData['pdf_url'] as String?;
     _userCpf = snapshotData['user_cpf'] as String?;
     _createdAt = snapshotData['created_at'] as DateTime?;
+    _nomeDoArquivo = snapshotData['nome_do_arquivo'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -74,12 +80,14 @@ Map<String, dynamic> createRelatoriosPdfRecordData({
   String? pdfUrl,
   String? userCpf,
   DateTime? createdAt,
+  String? nomeDoArquivo,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
       'pdf_url': pdfUrl,
       'user_cpf': userCpf,
       'created_at': createdAt,
+      'nome_do_arquivo': nomeDoArquivo,
     }.withoutNulls,
   );
 
@@ -94,12 +102,13 @@ class RelatoriosPdfRecordDocumentEquality
   bool equals(RelatoriosPdfRecord? e1, RelatoriosPdfRecord? e2) {
     return e1?.pdfUrl == e2?.pdfUrl &&
         e1?.userCpf == e2?.userCpf &&
-        e1?.createdAt == e2?.createdAt;
+        e1?.createdAt == e2?.createdAt &&
+        e1?.nomeDoArquivo == e2?.nomeDoArquivo;
   }
 
   @override
-  int hash(RelatoriosPdfRecord? e) =>
-      const ListEquality().hash([e?.pdfUrl, e?.userCpf, e?.createdAt]);
+  int hash(RelatoriosPdfRecord? e) => const ListEquality()
+      .hash([e?.pdfUrl, e?.userCpf, e?.createdAt, e?.nomeDoArquivo]);
 
   @override
   bool isValidKey(Object? o) => o is RelatoriosPdfRecord;
