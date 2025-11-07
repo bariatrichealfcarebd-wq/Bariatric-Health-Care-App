@@ -48,6 +48,11 @@ class FirebaseAuthManager extends AuthManager
         JwtSignInManager,
         GithubSignInManager,
         PhoneSignInManager {
+  FirebaseAuthManager({FirebaseAuth? firebaseAuth})
+      : _firebaseAuth = firebaseAuth ?? FirebaseAuth.instance;
+
+  final FirebaseAuth _firebaseAuth;
+
   // Set when using phone verification (after phone number is provided).
   String? _phoneAuthVerificationCode;
   // Set when using phone sign in in web mode (ignored otherwise).
@@ -56,7 +61,7 @@ class FirebaseAuthManager extends AuthManager
 
   @override
   Future signOut() {
-    return FirebaseAuth.instance.signOut();
+    return _firebaseAuth.signOut();
   }
 
   @override
@@ -130,7 +135,7 @@ class FirebaseAuthManager extends AuthManager
     required BuildContext context,
   }) async {
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+      await _firebaseAuth.sendPasswordResetEmail(email: email);
     } on FirebaseAuthException catch (e) {
       ScaffoldMessenger.of(context).hideCurrentSnackBar();
       ScaffoldMessenger.of(context).showSnackBar(
@@ -221,7 +226,7 @@ class FirebaseAuthManager extends AuthManager
     phoneAuthManager.update(() => phoneAuthManager.onCodeSent = onCodeSent);
     if (kIsWeb) {
       phoneAuthManager.webPhoneAuthConfirmationResult =
-          await FirebaseAuth.instance.signInWithPhoneNumber(phoneNumber);
+          await _firebaseAuth.signInWithPhoneNumber(phoneNumber);
       phoneAuthManager.update(() => phoneAuthManager.triggerOnCodeSent = true);
       return;
     }
@@ -231,12 +236,12 @@ class FirebaseAuthManager extends AuthManager
     // * For Android: https://firebase.google.com/docs/auth/android/phone-auth?authuser=0#enable-app-verification (SafetyNet set up)
     // * For iOS: https://firebase.google.com/docs/auth/ios/phone-auth?authuser=0#start-receiving-silent-notifications
     // * Finally modify verificationCompleted below as instructed.
-    await FirebaseAuth.instance.verifyPhoneNumber(
+    await _firebaseAuth.verifyPhoneNumber(
       phoneNumber: phoneNumber,
       timeout:
           Duration(seconds: 0), // Skips Android's default auto-verification
       verificationCompleted: (phoneAuthCredential) async {
-        await FirebaseAuth.instance.signInWithCredential(phoneAuthCredential);
+        await _firebaseAuth.signInWithCredential(phoneAuthCredential);
         phoneAuthManager.update(() {
           phoneAuthManager.triggerOnCodeSent = false;
           phoneAuthManager.phoneAuthError = null;
@@ -288,7 +293,7 @@ class FirebaseAuthManager extends AuthManager
       );
       return _signInOrCreateAccount(
         context,
-        () => FirebaseAuth.instance.signInWithCredential(authCredential),
+        () => _firebaseAuth.signInWithCredential(authCredential),
         'PHONE',
       );
     }

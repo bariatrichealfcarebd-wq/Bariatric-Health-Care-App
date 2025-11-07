@@ -9,7 +9,7 @@ import 'firebase_auth_manager.dart';
 
 export 'firebase_auth_manager.dart';
 
-final _authManager = FirebaseAuthManager();
+final _authManager = FirebaseAuthManager(firebaseAuth: FirebaseAuth.instance);
 FirebaseAuthManager get authManager => _authManager;
 
 String get currentUserEmail =>
