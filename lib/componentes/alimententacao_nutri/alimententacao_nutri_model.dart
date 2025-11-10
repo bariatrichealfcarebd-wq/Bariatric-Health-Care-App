@@ -31,13 +31,13 @@ class AlimententacaoNutriModel
   PacienteRecord? pacienteData;
   bool isDataUploading_uploadDataLd1 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd1 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   // Stores action output result for [Bottom Sheet - pdfChange] action in Container widget.
   String? arquivoNome;
   bool isDataUploading_uploadDataTp5 = false;
   FFUploadedFile uploadedLocalFile_uploadDataTp5 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataTp5 = '';
 
   @override

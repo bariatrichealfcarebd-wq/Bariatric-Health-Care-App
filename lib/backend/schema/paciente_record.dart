@@ -57,11 +57,6 @@ class PacienteRecord extends FirestoreRecord {
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "Data_operacao" field.
-  String? _dataOperacao;
-  String get dataOperacao => _dataOperacao ?? '';
-  bool hasDataOperacao() => _dataOperacao != null;
-
   // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
@@ -102,6 +97,16 @@ class PacienteRecord extends FirestoreRecord {
   String get telefone => _telefone ?? '';
   bool hasTelefone() => _telefone != null;
 
+  // "tipoOperacao" field.
+  String? _tipoOperacao;
+  String get tipoOperacao => _tipoOperacao ?? '';
+  bool hasTipoOperacao() => _tipoOperacao != null;
+
+  // "dataOperacao" field.
+  String? _dataOperacao;
+  String get dataOperacao => _dataOperacao ?? '';
+  bool hasDataOperacao() => _dataOperacao != null;
+
   void _initializeFields() {
     _nome = snapshotData['Nome'] as String?;
     _senha = snapshotData['Senha'] as String?;
@@ -111,7 +116,6 @@ class PacienteRecord extends FirestoreRecord {
     _uid = snapshotData['uid'] as String?;
     _phoneNumber = snapshotData['phone_number'] as String?;
     _createdTime = snapshotData['created_time'] as DateTime?;
-    _dataOperacao = snapshotData['Data_operacao'] as String?;
     _photoUrl = snapshotData['photo_url'] as String?;
     _searchKeywords = getDataList(snapshotData['searchKeywords']);
     _admLess = snapshotData['admLess'] as bool?;
@@ -120,6 +124,8 @@ class PacienteRecord extends FirestoreRecord {
     _crn = snapshotData['crn'] as String?;
     _especializacao = snapshotData['especializacao'] as String?;
     _telefone = snapshotData['telefone'] as String?;
+    _tipoOperacao = snapshotData['tipoOperacao'] as String?;
+    _dataOperacao = snapshotData['dataOperacao'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -158,7 +164,6 @@ class PacienteRecord extends FirestoreRecord {
             ParamType.DateTime,
             false,
           ),
-          'Data_operacao': snapshot.data['Data_operacao'],
           'photo_url': snapshot.data['photo_url'],
           'searchKeywords': safeGet(
             () => snapshot.data['searchKeywords'].toList(),
@@ -169,6 +174,8 @@ class PacienteRecord extends FirestoreRecord {
           'crn': snapshot.data['crn'],
           'especializacao': snapshot.data['especializacao'],
           'telefone': snapshot.data['telefone'],
+          'tipoOperacao': snapshot.data['tipoOperacao'],
+          'dataOperacao': snapshot.data['dataOperacao'],
         },
         PacienteRecord.collection.doc(snapshot.objectID),
       );
@@ -213,7 +220,6 @@ Map<String, dynamic> createPacienteRecordData({
   String? uid,
   String? phoneNumber,
   DateTime? createdTime,
-  String? dataOperacao,
   String? photoUrl,
   bool? admLess,
   bool? isADM,
@@ -221,6 +227,8 @@ Map<String, dynamic> createPacienteRecordData({
   String? crn,
   String? especializacao,
   String? telefone,
+  String? tipoOperacao,
+  String? dataOperacao,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -232,7 +240,6 @@ Map<String, dynamic> createPacienteRecordData({
       'uid': uid,
       'phone_number': phoneNumber,
       'created_time': createdTime,
-      'Data_operacao': dataOperacao,
       'photo_url': photoUrl,
       'admLess': admLess,
       'isADM': isADM,
@@ -240,6 +247,8 @@ Map<String, dynamic> createPacienteRecordData({
       'crn': crn,
       'especializacao': especializacao,
       'telefone': telefone,
+      'tipoOperacao': tipoOperacao,
+      'dataOperacao': dataOperacao,
     }.withoutNulls,
   );
 
@@ -260,7 +269,6 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e1?.uid == e2?.uid &&
         e1?.phoneNumber == e2?.phoneNumber &&
         e1?.createdTime == e2?.createdTime &&
-        e1?.dataOperacao == e2?.dataOperacao &&
         e1?.photoUrl == e2?.photoUrl &&
         listEquality.equals(e1?.searchKeywords, e2?.searchKeywords) &&
         e1?.admLess == e2?.admLess &&
@@ -268,7 +276,9 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e1?.primeiroLoginRealizado == e2?.primeiroLoginRealizado &&
         e1?.crn == e2?.crn &&
         e1?.especializacao == e2?.especializacao &&
-        e1?.telefone == e2?.telefone;
+        e1?.telefone == e2?.telefone &&
+        e1?.tipoOperacao == e2?.tipoOperacao &&
+        e1?.dataOperacao == e2?.dataOperacao;
   }
 
   @override
@@ -281,7 +291,6 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e?.uid,
         e?.phoneNumber,
         e?.createdTime,
-        e?.dataOperacao,
         e?.photoUrl,
         e?.searchKeywords,
         e?.admLess,
@@ -289,7 +298,9 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e?.primeiroLoginRealizado,
         e?.crn,
         e?.especializacao,
-        e?.telefone
+        e?.telefone,
+        e?.tipoOperacao,
+        e?.dataOperacao
       ]);
 
   @override

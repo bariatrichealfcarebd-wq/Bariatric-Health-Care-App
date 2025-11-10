@@ -34,8 +34,36 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.pacienteData =
-          await PacienteRecord.getDocumentOnce(FFAppState().pacientePesquisa!);
+      if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||
+          (valueOrDefault<bool>(currentUserDocument?.admLess, false) == true)) {
+        _model.pacienteData = await PacienteRecord.getDocumentOnce(
+            FFAppState().pacientePesquisa!);
+        _model.filtronutri = await queryRelatoriosPdfRecordOnce(
+          queryBuilder: (relatoriosPdfRecord) => relatoriosPdfRecord.where(
+            'user_cpf',
+            isEqualTo: _model.pacienteData?.uid,
+          ),
+        );
+        _model.listadePdfs = _model.filtronutri!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+        safeSetState(() {});
+      } else {
+        _model.filtroteste2 = await queryRelatoriosPdfRecordOnce(
+          queryBuilder: (relatoriosPdfRecord) => relatoriosPdfRecord.where(
+            'user_cpf',
+            isEqualTo: currentUserUid,
+          ),
+        );
+        _model.listadePdfs = _model.filtroteste2!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+        safeSetState(() {});
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -158,42 +186,53 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                               children: [
                                 Container(
                                   decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.0),
+                                    borderRadius: BorderRadius.circular(10.0),
                                     border: Border.all(
                                       color:
                                           FlutterFlowTheme.of(context).success,
                                       width: 2.0,
                                     ),
                                   ),
-                                  child: InkWell(
-                                    splashColor: Colors.transparent,
-                                    focusColor: Colors.transparent,
-                                    hoverColor: Colors.transparent,
-                                    highlightColor: Colors.transparent,
-                                    onTap: () async {
-                                      _model.dataFiltrar = null;
-                                      safeSetState(() {});
-                                      final _datePickedDate =
-                                          await showDatePicker(
-                                        context: context,
-                                        initialDate: (_model.dataFiltrar ??
-                                            DateTime.now()),
-                                        firstDate: DateTime(1900),
-                                        lastDate: DateTime(2050),
-                                        builder: (context, child) {
-                                          return wrapInMaterialDatePickerTheme(
-                                            context,
-                                            child!,
-                                            headerBackgroundColor:
-                                                Color(0xF073B6AD),
-                                            headerForegroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .info,
-                                            headerTextStyle: FlutterFlowTheme
-                                                    .of(context)
-                                                .headlineLarge
-                                                .override(
-                                                  font: GoogleFonts.interTight(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        final _datePickedDate =
+                                            await showDatePicker(
+                                          context: context,
+                                          initialDate: (_model.dataFiltrar ??
+                                              DateTime.now()),
+                                          firstDate: DateTime(1900),
+                                          lastDate: DateTime(2050),
+                                          builder: (context, child) {
+                                            return wrapInMaterialDatePickerTheme(
+                                              context,
+                                              child!,
+                                              headerBackgroundColor:
+                                                  Color(0xF073B6AD),
+                                              headerForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              headerTextStyle: FlutterFlowTheme
+                                                      .of(context)
+                                                  .headlineLarge
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.interTight(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineLarge
+                                                              .fontStyle,
+                                                    ),
+                                                    fontSize: 32.0,
+                                                    letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w600,
                                                     fontStyle:
                                                         FlutterFlowTheme.of(
@@ -201,94 +240,151 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                                                             .headlineLarge
                                                             .fontStyle,
                                                   ),
-                                                  fontSize: 32.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .headlineLarge
-                                                          .fontStyle,
-                                                ),
-                                            pickerBackgroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .secondaryBackground,
-                                            pickerForegroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            selectedDateTimeBackgroundColor:
-                                                Color(0xF073B6AD),
-                                            selectedDateTimeForegroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .info,
-                                            actionButtonForegroundColor:
-                                                FlutterFlowTheme.of(context)
-                                                    .primaryText,
-                                            iconSize: 24.0,
-                                          );
-                                        },
-                                      );
+                                              pickerBackgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              pickerForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              selectedDateTimeBackgroundColor:
+                                                  Color(0xF073B6AD),
+                                              selectedDateTimeForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              actionButtonForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              iconSize: 24.0,
+                                            );
+                                          },
+                                        );
 
-                                      if (_datePickedDate != null) {
-                                        safeSetState(() {
-                                          _model.datePicked = DateTime(
-                                            _datePickedDate.year,
-                                            _datePickedDate.month,
-                                            _datePickedDate.day,
+                                        if (_datePickedDate != null) {
+                                          safeSetState(() {
+                                            _model.datePicked = DateTime(
+                                              _datePickedDate.year,
+                                              _datePickedDate.month,
+                                              _datePickedDate.day,
+                                            );
+                                          });
+                                        } else if (_model.datePicked != null) {
+                                          safeSetState(() {
+                                            _model.datePicked =
+                                                _model.dataFiltrar;
+                                          });
+                                        }
+                                        if ((valueOrDefault<bool>(
+                                                    currentUserDocument?.isADM,
+                                                    false) ==
+                                                true) ||
+                                            (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.admLess,
+                                                    false) ==
+                                                true)) {
+                                          _model.dataFiltrar =
+                                              _model.datePicked;
+                                          safeSetState(() {});
+                                          _model.filtronutridata =
+                                              await queryRelatoriosPdfRecordOnce(
+                                            queryBuilder:
+                                                (relatoriosPdfRecord) =>
+                                                    relatoriosPdfRecord
+                                                        .where(
+                                                          'user_cpf',
+                                                          isEqualTo: _model
+                                                              .pacienteData
+                                                              ?.uid,
+                                                        )
+                                                        .where(
+                                                          'created_at',
+                                                          isGreaterThanOrEqualTo:
+                                                              _model
+                                                                  .dataFiltrar,
+                                                        ),
                                           );
-                                        });
-                                      } else if (_model.datePicked != null) {
-                                        safeSetState(() {
-                                          _model.datePicked =
-                                              _model.dataFiltrar;
-                                        });
-                                      }
-                                      _model.dataFiltrar = _model.datePicked;
-                                      safeSetState(() {});
-                                    },
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.all(2.0),
-                                          child: Text(
-                                            'Filtro por data',
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  font: GoogleFonts.inter(
-                                                    fontWeight:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontWeight,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .bodyMedium
-                                                            .fontStyle,
-                                                  ),
-                                                  color: Colors.black,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontWeight,
-                                                  fontStyle:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMedium
-                                                          .fontStyle,
-                                                ),
+                                          _model.listadePdfs = _model
+                                              .filtronutridata!
+                                              .map((e) => e.reference)
+                                              .toList()
+                                              .cast<DocumentReference>();
+                                          safeSetState(() {});
+                                        } else {
+                                          _model.dataFiltrar =
+                                              _model.datePicked;
+                                          safeSetState(() {});
+                                          _model.filtrotestdata =
+                                              await queryRelatoriosPdfRecordOnce(
+                                            queryBuilder:
+                                                (relatoriosPdfRecord) =>
+                                                    relatoriosPdfRecord
+                                                        .where(
+                                                          'user_cpf',
+                                                          isEqualTo:
+                                                              currentUserUid,
+                                                        )
+                                                        .where(
+                                                          'created_at',
+                                                          isGreaterThanOrEqualTo:
+                                                              _model
+                                                                  .dataFiltrar,
+                                                        ),
+                                          );
+                                          _model.listadePdfs = _model
+                                              .filtrotestdata!
+                                              .map((e) => e.reference)
+                                              .toList()
+                                              .cast<DocumentReference>();
+                                          safeSetState(() {});
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Padding(
+                                            padding: EdgeInsets.all(2.0),
+                                            child: Text(
+                                              'Filtro por data',
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        color: Colors.black,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                            ),
                                           ),
-                                        ),
-                                        Icon(
-                                          Icons.calendar_month,
-                                          color: Colors.black,
-                                          size: 24.0,
-                                        ),
-                                      ],
+                                          Icon(
+                                            Icons.calendar_month,
+                                            color: Colors.black,
+                                            size: 24.0,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -335,271 +431,212 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                    StreamBuilder<List<NutriPacienteRecord>>(
-                                      stream: queryNutriPacienteRecord(
-                                        queryBuilder: (nutriPacienteRecord) =>
-                                            nutriPacienteRecord.where(Filter.or(
-                                          Filter(
-                                            'uid_Paciente',
-                                            isEqualTo: currentUserUid,
-                                          ),
-                                          Filter(
-                                            'uid_Nutri',
-                                            isEqualTo: currentUserUid,
-                                          ),
-                                        )),
-                                        singleRecord: true,
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<NutriPacienteRecord>
-                                            conditionalBuilderNutriPacienteRecordList =
-                                            snapshot.data!;
-                                        // Return an empty Container when the item does not exist.
-                                        if (snapshot.data!.isEmpty) {
-                                          return Container();
-                                        }
-                                        final conditionalBuilderNutriPacienteRecord =
-                                            conditionalBuilderNutriPacienteRecordList
-                                                    .isNotEmpty
-                                                ? conditionalBuilderNutriPacienteRecordList
-                                                    .first
-                                                : null;
+                                    Builder(
+                                      builder: (context) {
+                                        final pdfItem =
+                                            _model.listadePdfs.toList();
 
-                                        return Builder(
-                                          builder: (context) {
-                                            if ((valueOrDefault<bool>(
-                                                        currentUserDocument
-                                                            ?.isADM,
-                                                        false) ==
-                                                    true) ||
-                                                (valueOrDefault<bool>(
-                                                        currentUserDocument
-                                                            ?.admLess,
-                                                        false) ==
-                                                    true)) {
-                                              return StreamBuilder<
-                                                  List<RelatoriosPdfRecord>>(
-                                                stream:
-                                                    queryRelatoriosPdfRecord(
-                                                  queryBuilder:
-                                                      (relatoriosPdfRecord) =>
-                                                          relatoriosPdfRecord
-                                                              .where(
-                                                    'user_cpf',
-                                                    isEqualTo:
-                                                        conditionalBuilderNutriPacienteRecord
-                                                            ?.uidPaciente,
-                                                  ),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                          ),
+                                        return ListView.builder(
+                                          padding: EdgeInsets.zero,
+                                          shrinkWrap: true,
+                                          scrollDirection: Axis.vertical,
+                                          itemCount: pdfItem.length,
+                                          itemBuilder: (context, pdfItemIndex) {
+                                            final pdfItemItem =
+                                                pdfItem[pdfItemIndex];
+                                            return StreamBuilder<
+                                                RelatoriosPdfRecord>(
+                                              stream: RelatoriosPdfRecord
+                                                  .getDocument(pdfItemItem),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
                                                         ),
                                                       ),
-                                                    );
-                                                  }
-                                                  List<RelatoriosPdfRecord>
-                                                      listViewRelatoriosPdfRecordList =
-                                                      snapshot.data!;
+                                                    ),
+                                                  );
+                                                }
 
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    itemCount:
-                                                        listViewRelatoriosPdfRecordList
-                                                            .length,
-                                                    itemBuilder: (context,
-                                                        listViewIndex) {
-                                                      final listViewRelatoriosPdfRecord =
-                                                          listViewRelatoriosPdfRecordList[
-                                                              listViewIndex];
-                                                      return Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 1.0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 50.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        12.0,
-                                                                        12.0,
-                                                                        12.0),
-                                                            child: Row(
+                                                final containerRelatoriosPdfRecord =
+                                                    snapshot.data!;
+
+                                                return Material(
+                                                  color: Colors.transparent,
+                                                  elevation: 1.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
+                                                  ),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 50.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  12.0,
+                                                                  12.0,
+                                                                  12.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Flex(
+                                                              direction:
+                                                                  Axis.vertical,
                                                               mainAxisSize:
                                                                   MainAxisSize
                                                                       .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
                                                               crossAxisAlignment:
                                                                   CrossAxisAlignment
-                                                                      .center,
+                                                                      .start,
                                                               children: [
                                                                 Expanded(
                                                                   flex: 1,
-                                                                  child: Flex(
-                                                                    direction: Axis
-                                                                        .vertical,
+                                                                  child: Row(
                                                                     mainAxisSize:
                                                                         MainAxisSize
-                                                                            .max,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
+                                                                            .min,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
                                                                             .start,
                                                                     children: [
-                                                                      Expanded(
-                                                                        flex: 1,
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.min,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.start,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.picture_as_pdf_rounded,
-                                                                              color: Color(0xFFFF5963),
-                                                                              size: 24.0,
-                                                                            ),
-                                                                            Container(
-                                                                              width: 170.0,
-                                                                              height: 24.0,
-                                                                              child: custom_widgets.MarqueeText(
-                                                                                width: 170.0,
-                                                                                height: 24.0,
-                                                                                text: '${listViewRelatoriosPdfRecord.nomeDoArquivo}',
-                                                                                textColor: Colors.black,
-                                                                              ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
+                                                                      Icon(
+                                                                        Icons
+                                                                            .picture_as_pdf_rounded,
+                                                                        color: Color(
+                                                                            0xFFFF5963),
+                                                                        size:
+                                                                            24.0,
+                                                                      ),
+                                                                      Container(
+                                                                        width:
+                                                                            170.0,
+                                                                        height:
+                                                                            24.0,
+                                                                        child: custom_widgets
+                                                                            .MarqueeText(
+                                                                          width:
+                                                                              170.0,
+                                                                          height:
+                                                                              24.0,
+                                                                          text:
+                                                                              '${containerRelatoriosPdfRecord.nomeDoArquivo}',
+                                                                          textColor:
+                                                                              Colors.black,
                                                                         ),
                                                                       ),
-                                                                    ],
+                                                                    ].divide(SizedBox(
+                                                                        width:
+                                                                            8.0)),
                                                                   ),
                                                                 ),
-                                                                FlutterFlowIconButton(
-                                                                  buttonSize:
-                                                                      40.0,
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .download_sharp,
-                                                                    color: Color(
-                                                                        0xFF4B986C),
-                                                                    size: 24.0,
-                                                                  ),
-                                                                  onPressed:
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          FlutterFlowIconButton(
+                                                            buttonSize: 40.0,
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .download_sharp,
+                                                              color: Color(
+                                                                  0xFF4B986C),
+                                                              size: 24.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              var confirmDialogResponse =
+                                                                  await showDialog<
+                                                                          bool>(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text('Fazer o download?'),
+                                                                            content:
+                                                                                Text('Tem a certeza de que pretende baixar este documento?'),
+                                                                            actions: [
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                child: Text('Não'),
+                                                                              ),
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                child: Text('Sim'),
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        },
+                                                                      ) ??
+                                                                      false;
+                                                              if (confirmDialogResponse) {
+                                                                await launchURL(
+                                                                    containerRelatoriosPdfRecord
+                                                                        .pdfUrl);
+                                                              } else {
+                                                                return;
+                                                              }
+                                                            },
+                                                          ),
+                                                          if (valueOrDefault<
+                                                                      bool>(
+                                                                  currentUserDocument
+                                                                      ?.isADM,
+                                                                  false) ==
+                                                              true)
+                                                            Align(
+                                                              alignment:
+                                                                  AlignmentDirectional(
+                                                                      0.0, 1.0),
+                                                              child:
+                                                                  AuthUserStreamWidget(
+                                                                builder:
+                                                                    (context) =>
+                                                                        InkWell(
+                                                                  splashColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  focusColor: Colors
+                                                                      .transparent,
+                                                                  hoverColor: Colors
+                                                                      .transparent,
+                                                                  highlightColor:
+                                                                      Colors
+                                                                          .transparent,
+                                                                  onTap:
                                                                       () async {
                                                                     var confirmDialogResponse =
                                                                         await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Fazer o download?'),
-                                                                                  content: Text('Tem a certeza de que pretende baixar este documento?'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: Text('Não'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: Text('Sim'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
-                                                                    if (confirmDialogResponse) {
-                                                                      await launchURL(
-                                                                          listViewRelatoriosPdfRecord
-                                                                              .pdfUrl);
-                                                                    } else {
-                                                                      return;
-                                                                    }
-                                                                  },
-                                                                ),
-                                                                if (valueOrDefault<
-                                                                            bool>(
-                                                                        currentUserDocument
-                                                                            ?.isADM,
-                                                                        false) ==
-                                                                    true)
-                                                                  Align(
-                                                                    alignment:
-                                                                        AlignmentDirectional(
-                                                                            0.0,
-                                                                            1.0),
-                                                                    child:
-                                                                        InkWell(
-                                                                      splashColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      focusColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      hoverColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      highlightColor:
-                                                                          Colors
-                                                                              .transparent,
-                                                                      onTap:
-                                                                          () async {
-                                                                        var confirmDialogResponse = await showDialog<bool>(
                                                                               context: context,
                                                                               builder: (alertDialogContext) {
                                                                                 return AlertDialog(
@@ -619,223 +656,73 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                                                                               },
                                                                             ) ??
                                                                             false;
-                                                                        if (confirmDialogResponse) {
-                                                                          await listViewRelatoriosPdfRecord
-                                                                              .reference
-                                                                              .delete();
-                                                                        }
-                                                                      },
-                                                                      child:
-                                                                          Icon(
-                                                                        Icons
-                                                                            .delete_forever,
-                                                                        color: FlutterFlowTheme.of(context)
-                                                                            .error,
-                                                                        size:
-                                                                            24.0,
-                                                                      ),
-                                                                    ),
-                                                                  ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            } else {
-                                              return StreamBuilder<
-                                                  List<RelatoriosPdfRecord>>(
-                                                stream:
-                                                    queryRelatoriosPdfRecord(
-                                                  queryBuilder:
-                                                      (relatoriosPdfRecord) =>
-                                                          relatoriosPdfRecord
-                                                              .where(
-                                                    'user_cpf',
-                                                    isEqualTo:
-                                                        conditionalBuilderNutriPacienteRecord
-                                                            ?.uidNutri,
-                                                  ),
-                                                ),
-                                                builder: (context, snapshot) {
-                                                  // Customize what your widget looks like when it's loading.
-                                                  if (!snapshot.hasData) {
-                                                    return Center(
-                                                      child: SizedBox(
-                                                        width: 50.0,
-                                                        height: 50.0,
-                                                        child:
-                                                            CircularProgressIndicator(
-                                                          valueColor:
-                                                              AlwaysStoppedAnimation<
-                                                                  Color>(
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .primary,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    );
-                                                  }
-                                                  List<RelatoriosPdfRecord>
-                                                      listViewRelatoriosPdfRecordList =
-                                                      snapshot.data!;
-
-                                                  return ListView.builder(
-                                                    padding: EdgeInsets.zero,
-                                                    shrinkWrap: true,
-                                                    scrollDirection:
-                                                        Axis.vertical,
-                                                    itemCount:
-                                                        listViewRelatoriosPdfRecordList
-                                                            .length,
-                                                    itemBuilder: (context,
-                                                        listViewIndex) {
-                                                      final listViewRelatoriosPdfRecord =
-                                                          listViewRelatoriosPdfRecordList[
-                                                              listViewIndex];
-                                                      return Material(
-                                                        color:
-                                                            Colors.transparent,
-                                                        elevation: 1.0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      8.0),
-                                                        ),
-                                                        child: Container(
-                                                          width:
-                                                              double.infinity,
-                                                          height: 50.0,
-                                                          decoration:
-                                                              BoxDecoration(
-                                                            color: Colors.white,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8.0),
-                                                          ),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        12.0,
-                                                                        12.0,
-                                                                        12.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .spaceBetween,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .center,
-                                                              children: [
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Flex(
-                                                                    direction: Axis
-                                                                        .vertical,
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .max,
-                                                                    crossAxisAlignment:
-                                                                        CrossAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Expanded(
-                                                                        flex: 1,
-                                                                        child:
-                                                                            Row(
-                                                                          mainAxisSize:
-                                                                              MainAxisSize.min,
-                                                                          mainAxisAlignment:
-                                                                              MainAxisAlignment.start,
-                                                                          children:
-                                                                              [
-                                                                            Icon(
-                                                                              Icons.picture_as_pdf_rounded,
-                                                                              color: Color(0xFFFF5963),
-                                                                              size: 24.0,
-                                                                            ),
-                                                                            Text(
-                                                                              listViewRelatoriosPdfRecord.nomeDoArquivo,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    font: GoogleFonts.inter(
-                                                                                      fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                      fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                    ),
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FlutterFlowTheme.of(context).bodyMedium.fontWeight,
-                                                                                    fontStyle: FlutterFlowTheme.of(context).bodyMedium.fontStyle,
-                                                                                  ),
-                                                                            ),
-                                                                          ].divide(SizedBox(width: 8.0)),
-                                                                        ),
-                                                                      ),
-                                                                    ],
-                                                                  ),
-                                                                ),
-                                                                FlutterFlowIconButton(
-                                                                  buttonSize:
-                                                                      40.0,
-                                                                  icon: Icon(
-                                                                    Icons
-                                                                        .download_rounded,
-                                                                    color: Color(
-                                                                        0xFF4B986C),
-                                                                    size: 20.0,
-                                                                  ),
-                                                                  onPressed:
-                                                                      () async {
-                                                                    var confirmDialogResponse =
-                                                                        await showDialog<bool>(
-                                                                              context: context,
-                                                                              builder: (alertDialogContext) {
-                                                                                return AlertDialog(
-                                                                                  title: Text('Fazer o download?'),
-                                                                                  content: Text('Tem a certeza de que pretende baixar este documento?'),
-                                                                                  actions: [
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                      child: Text('Não'),
-                                                                                    ),
-                                                                                    TextButton(
-                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                      child: Text('Sim'),
-                                                                                    ),
-                                                                                  ],
-                                                                                );
-                                                                              },
-                                                                            ) ??
-                                                                            false;
                                                                     if (confirmDialogResponse) {
-                                                                      await launchURL(
-                                                                          listViewRelatoriosPdfRecord
-                                                                              .pdfUrl);
-                                                                    } else {
-                                                                      return;
+                                                                      await containerRelatoriosPdfRecord
+                                                                          .reference
+                                                                          .delete();
+                                                                      if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) ==
+                                                                              true) ||
+                                                                          (valueOrDefault<bool>(currentUserDocument?.admLess, false) ==
+                                                                              true)) {
+                                                                        _model.filtronutri3 =
+                                                                            await queryRelatoriosPdfRecordOnce(
+                                                                          queryBuilder: (relatoriosPdfRecord) =>
+                                                                              relatoriosPdfRecord.where(
+                                                                            'user_cpf',
+                                                                            isEqualTo:
+                                                                                _model.pacienteData?.uid,
+                                                                          ),
+                                                                        );
+                                                                        _model.listadePdfs = _model
+                                                                            .filtronutri!
+                                                                            .map((e) =>
+                                                                                e.reference)
+                                                                            .toList()
+                                                                            .cast<DocumentReference>();
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      } else {
+                                                                        _model.filtroteste3 =
+                                                                            await queryRelatoriosPdfRecordOnce(
+                                                                          queryBuilder: (relatoriosPdfRecord) =>
+                                                                              relatoriosPdfRecord.where(
+                                                                            'user_cpf',
+                                                                            isEqualTo:
+                                                                                currentUserUid,
+                                                                          ),
+                                                                        );
+                                                                        _model.listadePdfs = _model
+                                                                            .filtroteste2!
+                                                                            .map((e) =>
+                                                                                e.reference)
+                                                                            .toList()
+                                                                            .cast<DocumentReference>();
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      }
                                                                     }
+
+                                                                    safeSetState(
+                                                                        () {});
                                                                   },
+                                                                  child: Icon(
+                                                                    Icons
+                                                                        .delete_forever,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .error,
+                                                                    size: 24.0,
+                                                                  ),
                                                                 ),
-                                                              ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                        ),
-                                                      );
-                                                    },
-                                                  );
-                                                },
-                                              );
-                                            }
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
+                                            );
                                           },
                                         );
                                       },

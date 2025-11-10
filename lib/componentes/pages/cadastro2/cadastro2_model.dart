@@ -39,9 +39,18 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode5;
   TextEditingController? textController5;
+  late MaskTextInputFormatter textFieldMask5;
   String? Function(BuildContext, String?)? textController5Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode6;
+  TextEditingController? textController6;
+  String? Function(BuildContext, String?)? textController6Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode7;
+  TextEditingController? textController7;
+  String? Function(BuildContext, String?)? textController7Validator;
+  // State field(s) for TextField widget.
+  FocusNode? textFieldFocusNode8;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
   // State field(s) for TextFieldSenha widget.
@@ -51,7 +60,7 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
   String? Function(BuildContext, String?)?
       textFieldSenhaTextControllerValidator;
   // State field(s) for TextField widget.
-  FocusNode? textFieldFocusNode7;
+  FocusNode? textFieldFocusNode9;
   TextEditingController? confirmPasswordTextController;
   late bool passwordVisibility;
   String? Function(BuildContext, String?)?
@@ -91,12 +100,18 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
     textController5?.dispose();
 
     textFieldFocusNode6?.dispose();
+    textController6?.dispose();
+
+    textFieldFocusNode7?.dispose();
+    textController7?.dispose();
+
+    textFieldFocusNode8?.dispose();
     emailTextController?.dispose();
 
     textFieldSenhaFocusNode?.dispose();
     textFieldSenhaTextController?.dispose();
 
-    textFieldFocusNode7?.dispose();
+    textFieldFocusNode9?.dispose();
     confirmPasswordTextController?.dispose();
   }
 }

@@ -533,6 +533,8 @@ class _SuplementacaoCutaneaWidgetState
                                                                     .split('/')
                                                                     .last,
                                                                 bytes: m.bytes,
+                                                                originalFilename:
+                                                                    m.originalFilename,
                                                               ))
                                                       .toList();
                                             } finally {
@@ -579,115 +581,123 @@ class _SuplementacaoCutaneaWidgetState
                                     child: AuthUserStreamWidget(
                                       builder: (context) => FFButtonWidget(
                                         onPressed: () async {
-                                          if ((valueOrDefault<bool>(
-                                                      currentUserDocument
-                                                          ?.isADM,
-                                                      false) ==
-                                                  true) ||
-                                              (valueOrDefault<bool>(
-                                                      currentUserDocument
-                                                          ?.admLess,
-                                                      false) ==
-                                                  true)) {
-                                            {
-                                              safeSetState(() => _model
-                                                      .isDataUploading_uploadDataP6v =
-                                                  true);
-                                              var selectedUploadedFiles =
-                                                  <FFUploadedFile>[];
-                                              var selectedFiles =
-                                                  <SelectedFile>[];
-                                              var downloadUrls = <String>[];
-                                              try {
-                                                selectedUploadedFiles = _model
-                                                        .ficheiroCarregado!
-                                                        .bytes!
-                                                        .isNotEmpty
-                                                    ? [
-                                                        _model
-                                                            .ficheiroCarregado!
-                                                      ]
-                                                    : <FFUploadedFile>[];
-                                                selectedFiles =
-                                                    selectedFilesFromUploadedFiles(
-                                                  selectedUploadedFiles,
-                                                );
-                                                downloadUrls =
-                                                    (await Future.wait(
-                                                  selectedFiles.map(
-                                                    (f) async =>
-                                                        await uploadData(
-                                                            f.storagePath,
-                                                            f.bytes),
-                                                  ),
-                                                ))
-                                                        .where((u) => u != null)
-                                                        .map((u) => u!)
-                                                        .toList();
-                                              } finally {
-                                                _model.isDataUploading_uploadDataP6v =
-                                                    false;
+                                          if (currentUserReference != null) {
+                                            if ((valueOrDefault<bool>(
+                                                        currentUserDocument
+                                                            ?.isADM,
+                                                        false) ==
+                                                    true) ||
+                                                (valueOrDefault<bool>(
+                                                        currentUserDocument
+                                                            ?.admLess,
+                                                        false) ==
+                                                    true)) {
+                                              {
+                                                safeSetState(() => _model
+                                                        .isDataUploading_uploadDataP6v =
+                                                    true);
+                                                var selectedUploadedFiles =
+                                                    <FFUploadedFile>[];
+                                                var selectedFiles =
+                                                    <SelectedFile>[];
+                                                var downloadUrls = <String>[];
+                                                try {
+                                                  selectedUploadedFiles = _model
+                                                          .ficheiroCarregado!
+                                                          .bytes!
+                                                          .isNotEmpty
+                                                      ? [
+                                                          _model
+                                                              .ficheiroCarregado!
+                                                        ]
+                                                      : <FFUploadedFile>[];
+                                                  selectedFiles =
+                                                      selectedFilesFromUploadedFiles(
+                                                    selectedUploadedFiles,
+                                                  );
+                                                  downloadUrls =
+                                                      (await Future.wait(
+                                                    selectedFiles.map(
+                                                      (f) async =>
+                                                          await uploadData(
+                                                              f.storagePath,
+                                                              f.bytes),
+                                                    ),
+                                                  ))
+                                                          .where(
+                                                              (u) => u != null)
+                                                          .map((u) => u!)
+                                                          .toList();
+                                                } finally {
+                                                  _model.isDataUploading_uploadDataP6v =
+                                                      false;
+                                                }
+                                                if (selectedUploadedFiles
+                                                            .length ==
+                                                        selectedFiles.length &&
+                                                    downloadUrls.length ==
+                                                        selectedFiles.length) {
+                                                  safeSetState(() {
+                                                    _model.uploadedLocalFile_uploadDataP6v =
+                                                        selectedUploadedFiles
+                                                            .first;
+                                                    _model.uploadedFileUrl_uploadDataP6v =
+                                                        downloadUrls.first;
+                                                  });
+                                                } else {
+                                                  safeSetState(() {});
+                                                  return;
+                                                }
                                               }
-                                              if (selectedUploadedFiles
-                                                          .length ==
-                                                      selectedFiles.length &&
-                                                  downloadUrls.length ==
-                                                      selectedFiles.length) {
-                                                safeSetState(() {
-                                                  _model.uploadedLocalFile_uploadDataP6v =
-                                                      selectedUploadedFiles
-                                                          .first;
-                                                  _model.uploadedFileUrl_uploadDataP6v =
-                                                      downloadUrls.first;
-                                                });
-                                              } else {
-                                                safeSetState(() {});
-                                                return;
-                                              }
+
+                                              await NutriPacienteRecord
+                                                  .collection
+                                                  .doc()
+                                                  .set(
+                                                      createNutriPacienteRecordData(
+                                                    uidPaciente: _model
+                                                        .uploadedLocalFile_uploadDataLd3
+                                                        .height
+                                                        ?.toString(),
+                                                  ));
+
+                                              await SuplementacaoRecord
+                                                  .collection
+                                                  .doc()
+                                                  .set(
+                                                      createSuplementacaoRecordData(
+                                                    idUser: _model
+                                                        .pacienteData?.uid,
+                                                    data:
+                                                        _model.dataSelecionada,
+                                                    anexo: _model
+                                                        .uploadedFileUrl_uploadDataP6v,
+                                                    createDay:
+                                                        getCurrentTimestamp,
+                                                  ));
                                             }
-
-                                            await NutriPacienteRecord.collection
-                                                .doc()
-                                                .set(
-                                                    createNutriPacienteRecordData(
-                                                  uidPaciente: _model
-                                                      .uploadedLocalFile_uploadDataLd3
-                                                      .height
-                                                      ?.toString(),
-                                                ));
-
-                                            await SuplementacaoRecord.collection
-                                                .doc()
-                                                .set(
-                                                    createSuplementacaoRecordData(
-                                                  idUser:
-                                                      _model.pacienteData?.uid,
-                                                  data: _model.dataSelecionada,
-                                                  anexo: _model
-                                                      .uploadedFileUrl_uploadDataP6v,
-                                                  createDay:
-                                                      getCurrentTimestamp,
-                                                ));
+                                          } else {
+                                            await showDialog(
+                                              context: context,
+                                              builder: (alertDialogContext) {
+                                                return AlertDialog(
+                                                  title: Text(
+                                                      'Paciente não selecionado'),
+                                                  content: Text(
+                                                      'Selecione um paciente'),
+                                                  actions: [
+                                                    TextButton(
+                                                      onPressed: () =>
+                                                          Navigator.pop(
+                                                              alertDialogContext),
+                                                      child: Text('Ok'),
+                                                    ),
+                                                  ],
+                                                );
+                                              },
+                                            );
+                                            context.safePop();
                                           }
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(
-                                            SnackBar(
-                                              content: Text(
-                                                'Adicionado',
-                                                style: TextStyle(
-                                                  color: FlutterFlowTheme.of(
-                                                          context)
-                                                      .primaryText,
-                                                ),
-                                              ),
-                                              duration:
-                                                  Duration(milliseconds: 4000),
-                                              backgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondary,
-                                            ),
-                                          );
-                                          safeSetState(() {});
                                         },
                                         text: 'Salvar',
                                         options: FFButtonOptions(

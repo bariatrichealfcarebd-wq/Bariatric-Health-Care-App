@@ -28,11 +28,11 @@ class SuplementacaoCutaneaModel
   DateTime? selectedDate;
   bool isDataUploading_uploadDataLd3 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd3 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadDataP6v = false;
   FFUploadedFile uploadedLocalFile_uploadDataP6v =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataP6v = '';
 
   @override

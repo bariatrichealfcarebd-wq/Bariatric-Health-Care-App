@@ -35,17 +35,17 @@ class RelatoriosQuestionarioRecord extends FirestoreRecord {
   String get nomeDoArquivo => _nomeDoArquivo ?? '';
   bool hasNomeDoArquivo() => _nomeDoArquivo != null;
 
-  // "uid" field.
-  String? _uid;
-  String get uid => _uid ?? '';
-  bool hasUid() => _uid != null;
+  // "user_id" field.
+  String? _userId;
+  String get userId => _userId ?? '';
+  bool hasUserId() => _userId != null;
 
   void _initializeFields() {
     _nomePaciente = snapshotData['nome_paciente'] as String?;
     _urlPdf = snapshotData['url_pdf'] as String?;
     _dataCriacao = snapshotData['data_criacao'] as DateTime?;
     _nomeDoArquivo = snapshotData['nome_do_arquivo'] as String?;
-    _uid = snapshotData['uid'] as String?;
+    _userId = snapshotData['user_id'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -89,7 +89,7 @@ Map<String, dynamic> createRelatoriosQuestionarioRecordData({
   String? urlPdf,
   DateTime? dataCriacao,
   String? nomeDoArquivo,
-  String? uid,
+  String? userId,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -97,7 +97,7 @@ Map<String, dynamic> createRelatoriosQuestionarioRecordData({
       'url_pdf': urlPdf,
       'data_criacao': dataCriacao,
       'nome_do_arquivo': nomeDoArquivo,
-      'uid': uid,
+      'user_id': userId,
     }.withoutNulls,
   );
 
@@ -115,12 +115,17 @@ class RelatoriosQuestionarioRecordDocumentEquality
         e1?.urlPdf == e2?.urlPdf &&
         e1?.dataCriacao == e2?.dataCriacao &&
         e1?.nomeDoArquivo == e2?.nomeDoArquivo &&
-        e1?.uid == e2?.uid;
+        e1?.userId == e2?.userId;
   }
 
   @override
-  int hash(RelatoriosQuestionarioRecord? e) => const ListEquality().hash(
-      [e?.nomePaciente, e?.urlPdf, e?.dataCriacao, e?.nomeDoArquivo, e?.uid]);
+  int hash(RelatoriosQuestionarioRecord? e) => const ListEquality().hash([
+        e?.nomePaciente,
+        e?.urlPdf,
+        e?.dataCriacao,
+        e?.nomeDoArquivo,
+        e?.userId
+      ]);
 
   @override
   bool isValidKey(Object? o) => o is RelatoriosQuestionarioRecord;

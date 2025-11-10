@@ -432,29 +432,41 @@ class _LoginWidgetState extends State<LoginWidget> {
                               if (!(isWeb
                                   ? MediaQuery.viewInsetsOf(context).bottom > 0
                                   : _isKeyboardVisible))
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      16.0, 12.0, 16.0, 0.0),
-                                  child: FFButtonWidget(
-                                    onPressed: () async {
-                                      context.pushNamed(
-                                          RecuperaPt1Widget.routeName);
-                                    },
-                                    text: 'Esqueceu a senha?',
-                                    options: FFButtonOptions(
-                                      width: double.infinity,
-                                      height: 60.0,
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 0.0),
-                                      iconPadding:
-                                          EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 0.0, 0.0, 0.0),
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondaryBackground,
-                                      textStyle: FlutterFlowTheme.of(context)
-                                          .titleLarge
-                                          .override(
-                                            font: GoogleFonts.interTight(
+                                Align(
+                                  alignment: AlignmentDirectional(0.0, 1.0),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        16.0, 12.0, 16.0, 0.0),
+                                    child: FFButtonWidget(
+                                      onPressed: () async {
+                                        context.pushNamed(
+                                            RecuperaPt1Widget.routeName);
+                                      },
+                                      text: 'Esqueceu a senha?',
+                                      options: FFButtonOptions(
+                                        width: double.infinity,
+                                        height: 60.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        iconPadding:
+                                            EdgeInsetsDirectional.fromSTEB(
+                                                0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleLarge
+                                            .override(
+                                              font: GoogleFonts.interTight(
+                                                fontWeight:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .fontWeight,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleLarge
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
                                               fontWeight:
                                                   FlutterFlowTheme.of(context)
                                                       .titleLarge
@@ -464,24 +476,16 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                       .titleLarge
                                                       .fontStyle,
                                             ),
-                                            letterSpacing: 0.0,
-                                            fontWeight:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleLarge
-                                                    .fontWeight,
-                                            fontStyle:
-                                                FlutterFlowTheme.of(context)
-                                                    .titleLarge
-                                                    .fontStyle,
-                                          ),
-                                      elevation: 0.0,
-                                      borderSide: BorderSide(
-                                        color: Colors.transparent,
-                                        width: 1.0,
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color: Colors.transparent,
+                                          width: 1.0,
+                                        ),
+                                        borderRadius:
+                                            BorderRadius.circular(50.0),
+                                        hoverColor: FlutterFlowTheme.of(context)
+                                            .alternate,
                                       ),
-                                      borderRadius: BorderRadius.circular(50.0),
-                                      hoverColor: FlutterFlowTheme.of(context)
-                                          .alternate,
                                     ),
                                   ),
                                 ),
@@ -515,6 +519,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 (valueOrDefault<bool>(
                                         currentUserDocument?.admLess, false) ==
                                     true)) {
+                              if (Navigator.of(context).canPop()) {
+                                context.pop();
+                              }
                               context.pushNamedAuth(
                                   PaginadoNutricionistaWidget.routeName,
                                   context.mounted);
@@ -535,6 +542,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                                 );
                               }
 
+                              if (Navigator.of(context).canPop()) {
+                                context.pop();
+                              }
                               context.pushNamedAuth(
                                   PrescricoesPageWidget.routeName,
                                   context.mounted);

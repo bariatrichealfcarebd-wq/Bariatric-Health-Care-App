@@ -30,11 +30,11 @@ class TipodesuplementodiarioModel
       tipoDeSuplementoTextControllerValidator;
   bool isDataUploading_uploadDataLd4 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd4 =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
   bool isDataUploading_uploadData0zh = false;
   FFUploadedFile uploadedLocalFile_uploadData0zh =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
+      FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadData0zh = '';
 
   @override

@@ -38,9 +38,34 @@ class _HistoricoSupWidgetState extends State<HistoricoSupWidget>
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||
           (valueOrDefault<bool>(currentUserDocument?.admLess, false) == true)) {
-        _model.listarSup = await PacienteRecord.getDocumentOnce(
+        _model.pacienteDat = await PacienteRecord.getDocumentOnce(
             FFAppState().pacientePesquisa!);
-        _model.pacienteData = _model.listarSup?.reference;
+        _model.filtroNuti = await querySuplementacaodiariaRecordOnce(
+          queryBuilder: (suplementacaodiariaRecord) =>
+              suplementacaodiariaRecord.where(
+            'id_User',
+            isEqualTo: _model.pacienteDat?.uid,
+          ),
+        );
+        _model.listaSupDiaria = _model.filtroNuti!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+        safeSetState(() {});
+      } else {
+        _model.filtroPaciente = await querySuplementacaodiariaRecordOnce(
+          queryBuilder: (suplementacaodiariaRecord) =>
+              suplementacaodiariaRecord.where(
+            'id_User',
+            isEqualTo: currentUserUid,
+          ),
+        );
+        _model.listaSupDiaria = _model.filtroPaciente!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
         safeSetState(() {});
       }
     });
@@ -166,7 +191,123 @@ class _HistoricoSupWidgetState extends State<HistoricoSupWidget>
                     ],
                     controller: _model.tabBarController,
                     onTap: (i) async {
-                      [() async {}, () async {}, () async {}][i]();
+                      [
+                        () async {
+                          if ((valueOrDefault<bool>(
+                                      currentUserDocument?.isADM, false) ==
+                                  true) ||
+                              (valueOrDefault<bool>(
+                                      currentUserDocument?.admLess, false) ==
+                                  true)) {
+                            _model.filtroNutriDiario =
+                                await querySuplementacaodiariaRecordOnce(
+                              queryBuilder: (suplementacaodiariaRecord) =>
+                                  suplementacaodiariaRecord.where(
+                                'id_User',
+                                isEqualTo: _model.pacienteDat?.uid,
+                              ),
+                            );
+                            _model.listaSupDiaria = _model.filtroNutriDiario!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          } else {
+                            _model.filtroPacienteDiario =
+                                await querySuplementacaodiariaRecordOnce(
+                              queryBuilder: (suplementacaodiariaRecord) =>
+                                  suplementacaodiariaRecord.where(
+                                'id_User',
+                                isEqualTo: currentUserUid,
+                              ),
+                            );
+                            _model.listaSupDiaria = _model.filtroPacienteDiario!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          }
+
+                          safeSetState(() {});
+                        },
+                        () async {
+                          if ((valueOrDefault<bool>(
+                                      currentUserDocument?.isADM, false) ==
+                                  true) ||
+                              (valueOrDefault<bool>(
+                                      currentUserDocument?.admLess, false) ==
+                                  true)) {
+                            _model.filtroNutriCutanea =
+                                await querySuplementacaoRecordOnce(
+                              queryBuilder: (suplementacaoRecord) =>
+                                  suplementacaoRecord.where(
+                                'id_User',
+                                isEqualTo: _model.pacienteDat?.uid,
+                              ),
+                            );
+                            _model.listaSupCutanea = _model.filtroNutriCutanea!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          } else {
+                            _model.filtroPacienteCutanea =
+                                await querySuplementacaoRecordOnce(
+                              queryBuilder: (suplementacaoRecord) =>
+                                  suplementacaoRecord.where(
+                                'id_User',
+                                isEqualTo: currentUserUid,
+                              ),
+                            );
+                            _model.listaSupCutanea = _model
+                                .filtroPacienteCutanea!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          }
+
+                          safeSetState(() {});
+                        },
+                        () async {
+                          if ((valueOrDefault<bool>(
+                                      currentUserDocument?.isADM, false) ==
+                                  true) ||
+                              (valueOrDefault<bool>(
+                                      currentUserDocument?.admLess, false) ==
+                                  true)) {
+                            _model.filtroNutriOutras =
+                                await queryOutrasSuplementacaoRecordOnce(
+                              queryBuilder: (outrasSuplementacaoRecord) =>
+                                  outrasSuplementacaoRecord.where(
+                                'id_User',
+                                isEqualTo: _model.pacienteDat?.uid,
+                              ),
+                            );
+                            _model.listaSupOutros = _model.filtroNutriOutras!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          } else {
+                            _model.filtroPacienteOutras =
+                                await queryOutrasSuplementacaoRecordOnce(
+                              queryBuilder: (outrasSuplementacaoRecord) =>
+                                  outrasSuplementacaoRecord.where(
+                                'id_User',
+                                isEqualTo: currentUserUid,
+                              ),
+                            );
+                            _model.listaSupOutros = _model.filtroPacienteOutras!
+                                .map((e) => e.reference)
+                                .toList()
+                                .cast<DocumentReference>();
+                            safeSetState(() {});
+                          }
+
+                          safeSetState(() {});
+                        }
+                      ][i]();
                     },
                   ),
                 ),
@@ -175,106 +316,97 @@ class _HistoricoSupWidgetState extends State<HistoricoSupWidget>
                     controller: _model.tabBarController,
                     children: [
                       KeepAliveWidgetWrapper(
-                        builder: (context) => Builder(
-                          builder: (context) {
-                            if ((valueOrDefault<bool>(
-                                        currentUserDocument?.isADM, false) ==
-                                    true) ||
-                                (valueOrDefault<bool>(
-                                        currentUserDocument?.admLess, false) ==
-                                    true)) {
-                              return StreamBuilder<
-                                  List<SuplementacaodiariaRecord>>(
-                                stream: querySuplementacaodiariaRecord(
-                                  queryBuilder: (suplementacaodiariaRecord) =>
-                                      suplementacaodiariaRecord.where(
-                                    'id_User',
-                                    isEqualTo: _model.listarSup?.uid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<SuplementacaodiariaRecord>
-                                      listViewSuplementacaodiariaRecordList =
-                                      snapshot.data!;
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    final supDiariaItem =
+                                        _model.listaSupDiaria.toList();
 
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewSuplementacaodiariaRecordList
-                                            .length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewSuplementacaodiariaRecord =
-                                          listViewSuplementacaodiariaRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.01,
-                                                    height: 49.4,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children:
+                                          List.generate(supDiariaItem.length,
+                                              (supDiariaItemIndex) {
+                                        final supDiariaItemItem =
+                                            supDiariaItem[supDiariaItemIndex];
+                                        return StreamBuilder<
+                                            SuplementacaodiariaRecord>(
+                                          stream: SuplementacaodiariaRecord
+                                              .getDocument(supDiariaItemItem),
+                                          builder: (context, snapshot) {
+                                            // Customize what your widget looks like when it's loading.
+                                            if (!snapshot.hasData) {
+                                              return Center(
+                                                child: SizedBox(
+                                                  width: 50.0,
+                                                  height: 50.0,
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                    valueColor:
+                                                        AlwaysStoppedAnimation<
+                                                            Color>(
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .primary,
                                                     ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
+                                                  ),
+                                                ),
+                                              );
+                                            }
+
+                                            final rowSuplementacaodiariaRecord =
+                                                snapshot.data!;
+
+                                            return Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Expanded(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsets.all(8.0),
+                                                    child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       mainAxisAlignment:
                                                           MainAxisAlignment
-                                                              .spaceBetween,
+                                                              .center,
+                                                      crossAxisAlignment:
+                                                          CrossAxisAlignment
+                                                              .start,
                                                       children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
+                                                        Container(
+                                                          width: 337.0,
+                                                          height: 49.4,
+                                                          decoration:
+                                                              BoxDecoration(
+                                                            color: FlutterFlowTheme
+                                                                    .of(context)
+                                                                .accent2,
+                                                            borderRadius:
+                                                                BorderRadius
+                                                                    .circular(
+                                                                        14.0),
+                                                          ),
+                                                          alignment:
+                                                              AlignmentDirectional(
+                                                                  -1.0, 0.0),
+                                                          child: Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
                                                             children: [
                                                               Text(
-                                                                listViewSuplementacaodiariaRecord
+                                                                rowSuplementacaodiariaRecord
                                                                     .tipoSuplementacao,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
@@ -299,812 +431,542 @@ class _HistoricoSupWidgetState extends State<HistoricoSupWidget>
                                                                           .fontStyle,
                                                                     ),
                                                               ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewSuplementacaodiariaRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          if (valueOrDefault<bool>(
-                                                  currentUserDocument?.isADM,
-                                                  false) ==
-                                              true)
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Apagar?'),
-                                                              content: Text(
-                                                                  'Quer mesmo continuar'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'não'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'sim'),
-                                                                ),
-                                                              ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  await listViewSuplementacaodiariaRecord
-                                                      .reference
-                                                      .delete();
-                                                }
-                                              },
-                                              child: Icon(
-                                                Icons.delete_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            } else {
-                              return StreamBuilder<
-                                  List<SuplementacaodiariaRecord>>(
-                                stream: querySuplementacaodiariaRecord(
-                                  queryBuilder: (suplementacaodiariaRecord) =>
-                                      suplementacaodiariaRecord.where(
-                                    'id_User',
-                                    isEqualTo: currentUserUid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<SuplementacaodiariaRecord>
-                                      listViewSuplementacaodiariaRecordList =
-                                      snapshot.data!;
-
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewSuplementacaodiariaRecordList
-                                            .length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewSuplementacaodiariaRecord =
-                                          listViewSuplementacaodiariaRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.0,
-                                                    height: 49.4,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                listViewSuplementacaodiariaRecord
-                                                                    .tipoSuplementacao,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
+                                                              Row(
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                children: [
+                                                                  Padding(
+                                                                    padding:
+                                                                        EdgeInsets.all(
+                                                                            5.0),
+                                                                    child:
+                                                                        FlutterFlowIconButton(
+                                                                      borderRadius:
+                                                                          8.0,
+                                                                      fillColor:
+                                                                          Color(
+                                                                              0xFF78C3BA),
+                                                                      icon:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .download_sharp,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .info,
+                                                                        size:
+                                                                            20.0,
                                                                       ),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
+                                                                      onPressed:
+                                                                          () async {
+                                                                        await launchURL(
+                                                                            rowSuplementacaodiariaRecord.anexo);
+                                                                      },
                                                                     ),
+                                                                  ),
+                                                                  if (valueOrDefault<
+                                                                              bool>(
+                                                                          currentUserDocument
+                                                                              ?.isADM,
+                                                                          false) ==
+                                                                      true)
+                                                                    Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                      child:
+                                                                          AuthUserStreamWidget(
+                                                                        builder:
+                                                                            (context) =>
+                                                                                InkWell(
+                                                                          splashColor:
+                                                                              Colors.transparent,
+                                                                          focusColor:
+                                                                              Colors.transparent,
+                                                                          hoverColor:
+                                                                              Colors.transparent,
+                                                                          highlightColor:
+                                                                              Colors.transparent,
+                                                                          onTap:
+                                                                              () async {
+                                                                            var confirmDialogResponse = await showDialog<bool>(
+                                                                                  context: context,
+                                                                                  builder: (alertDialogContext) {
+                                                                                    return AlertDialog(
+                                                                                      title: Text('Apagar?'),
+                                                                                      content: Text('Quer mesmo continuar'),
+                                                                                      actions: [
+                                                                                        TextButton(
+                                                                                          onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                          child: Text('não'),
+                                                                                        ),
+                                                                                        TextButton(
+                                                                                          onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                          child: Text('sim'),
+                                                                                        ),
+                                                                                      ],
+                                                                                    );
+                                                                                  },
+                                                                                ) ??
+                                                                                false;
+                                                                            if (confirmDialogResponse) {
+                                                                              await rowSuplementacaodiariaRecord.reference.delete();
+                                                                              _model.fi = await querySuplementacaodiariaRecordOnce(
+                                                                                queryBuilder: (suplementacaodiariaRecord) => suplementacaodiariaRecord.where(
+                                                                                  'id_User',
+                                                                                  isEqualTo: _model.pacienteDat?.uid,
+                                                                                ),
+                                                                              );
+                                                                            }
+
+                                                                            safeSetState(() {});
+                                                                          },
+                                                                          child:
+                                                                              Icon(
+                                                                            Icons.delete_rounded,
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).primaryText,
+                                                                            size:
+                                                                                20.0,
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                ].divide(SizedBox(
+                                                                    width:
+                                                                        5.0)),
                                                               ),
                                                             ],
                                                           ),
                                                         ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewSuplementacaodiariaRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
                                                       ],
                                                     ),
                                                   ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            }
-                          },
+                                                ),
+                                              ].divide(SizedBox(width: 12.0)),
+                                            );
+                                          },
+                                        );
+                                      }),
+                                    );
+                                  },
+                                ),
+                              ].divide(SizedBox(height: 10.0)),
+                            ),
+                          ],
                         ),
                       ),
                       KeepAliveWidgetWrapper(
-                        builder: (context) => Builder(
-                          builder: (context) {
-                            if ((valueOrDefault<bool>(
-                                        currentUserDocument?.isADM, false) ==
-                                    true) ||
-                                (valueOrDefault<bool>(
-                                        currentUserDocument?.admLess, false) ==
-                                    true)) {
-                              return StreamBuilder<List<SuplementacaoRecord>>(
-                                stream: querySuplementacaoRecord(
-                                  queryBuilder: (suplementacaoRecord) =>
-                                      suplementacaoRecord.where(
-                                    'id_User',
-                                    isEqualTo: _model.listarSup?.uid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<SuplementacaoRecord>
-                                      listViewSuplementacaoRecordList =
-                                      snapshot.data!;
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            ListView(
+                              padding: EdgeInsets.zero,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              children: [
+                                Builder(
+                                  builder: (context) {
+                                    final cutaneaListItem =
+                                        _model.listaSupCutanea.toList();
 
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewSuplementacaoRecordList.length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewSuplementacaoRecord =
-                                          listViewSuplementacaoRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.0,
-                                                    height: 49.4,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                dateTimeFormat(
-                                                                  "d/M/y",
-                                                                  listViewSuplementacaoRecord
-                                                                      .data!,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children:
+                                          List.generate(cutaneaListItem.length,
+                                              (cutaneaListItemIndex) {
+                                        final cutaneaListItemItem =
+                                            cutaneaListItem[
+                                                cutaneaListItemIndex];
+                                        return Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.all(8.0),
+                                                child: Column(
+                                                  mainAxisSize:
+                                                      MainAxisSize.max,
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Container(
+                                                      width: 337.0,
+                                                      height: 49.4,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .accent2,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(14.0),
+                                                      ),
+                                                      alignment:
+                                                          AlignmentDirectional(
+                                                              -1.0, 0.0),
+                                                      child: StreamBuilder<
+                                                          SuplementacaoRecord>(
+                                                        stream: SuplementacaoRecord
+                                                            .getDocument(
+                                                                cutaneaListItemItem),
+                                                        builder: (context,
+                                                            snapshot) {
+                                                          // Customize what your widget looks like when it's loading.
+                                                          if (!snapshot
+                                                              .hasData) {
+                                                            return Center(
+                                                              child: SizedBox(
+                                                                width: 50.0,
+                                                                height: 50.0,
+                                                                child:
+                                                                    CircularProgressIndicator(
+                                                                  valueColor:
+                                                                      AlwaysStoppedAnimation<
+                                                                          Color>(
+                                                                    FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .primary,
+                                                                  ),
                                                                 ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontStyle,
-                                                                    ),
                                                               ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewSuplementacaoRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          if (valueOrDefault<bool>(
-                                                  currentUserDocument?.isADM,
-                                                  false) ==
-                                              true)
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Apagar?'),
-                                                              content: Text(
-                                                                  'Quer mesmo continuar'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'não'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'sim'),
-                                                                ),
-                                                              ],
                                                             );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  await listViewSuplementacaoRecord
-                                                      .reference
-                                                      .delete();
-                                                }
-                                              },
-                                              child: Icon(
-                                                Icons.delete_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            } else {
-                              return StreamBuilder<List<SuplementacaoRecord>>(
-                                stream: querySuplementacaoRecord(
-                                  queryBuilder: (suplementacaoRecord) =>
-                                      suplementacaoRecord.where(
-                                    'id_User',
-                                    isEqualTo: currentUserUid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<SuplementacaoRecord>
-                                      listViewSuplementacaoRecordList =
-                                      snapshot.data!;
+                                                          }
 
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewSuplementacaoRecordList.length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewSuplementacaoRecord =
-                                          listViewSuplementacaoRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.0,
-                                                    height: 49.4,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
+                                                          final rowSuplementacaoRecord =
+                                                              snapshot.data!;
+
+                                                          return Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceEvenly,
                                                             children: [
-                                                              Text(
-                                                                dateTimeFormat(
-                                                                  "d/M/y",
-                                                                  listViewSuplementacaoRecord
-                                                                      .data!,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
-                                                                ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontStyle,
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            8.0),
+                                                                child: Column(
+                                                                  mainAxisSize:
+                                                                      MainAxisSize
+                                                                          .max,
+                                                                  crossAxisAlignment:
+                                                                      CrossAxisAlignment
+                                                                          .start,
+                                                                  children: [
+                                                                    Text(
+                                                                      dateTimeFormat(
+                                                                        "d/M",
+                                                                        rowSuplementacaoRecord
+                                                                            .data!,
+                                                                        locale:
+                                                                            FFLocalizations.of(context).languageCode,
                                                                       ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
+                                                                      style: FlutterFlowTheme.of(
                                                                               context)
                                                                           .bodySmall
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontStyle,
+                                                                          .override(
+                                                                            font:
+                                                                                GoogleFonts.inter(
+                                                                              fontWeight: FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                                                                              fontStyle: FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                                                                            ),
+                                                                            color:
+                                                                                FlutterFlowTheme.of(context).secondaryText,
+                                                                            letterSpacing:
+                                                                                0.0,
+                                                                            fontWeight:
+                                                                                FlutterFlowTheme.of(context).bodySmall.fontWeight,
+                                                                            fontStyle:
+                                                                                FlutterFlowTheme.of(context).bodySmall.fontStyle,
+                                                                          ),
                                                                     ),
+                                                                  ],
+                                                                ),
                                                               ),
+                                                              Padding(
+                                                                padding: EdgeInsetsDirectional
+                                                                    .fromSTEB(
+                                                                        150.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0),
+                                                                child:
+                                                                    FlutterFlowIconButton(
+                                                                  borderRadius:
+                                                                      8.0,
+                                                                  fillColor: Color(
+                                                                      0xFF78C3BA),
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .download_sharp,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .info,
+                                                                    size: 20.0,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await launchURL(
+                                                                        rowSuplementacaoRecord
+                                                                            .anexo);
+                                                                  },
+                                                                ),
+                                                              ),
+                                                              if (valueOrDefault<
+                                                                          bool>(
+                                                                      currentUserDocument
+                                                                          ?.isADM,
+                                                                      false) ==
+                                                                  true)
+                                                                Padding(
+                                                                  padding: EdgeInsetsDirectional
+                                                                      .fromSTEB(
+                                                                          0.0,
+                                                                          0.0,
+                                                                          8.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      AuthUserStreamWidget(
+                                                                    builder:
+                                                                        (context) =>
+                                                                            InkWell(
+                                                                      splashColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      focusColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      hoverColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      highlightColor:
+                                                                          Colors
+                                                                              .transparent,
+                                                                      onTap:
+                                                                          () async {
+                                                                        var confirmDialogResponse = await showDialog<bool>(
+                                                                              context: context,
+                                                                              builder: (alertDialogContext) {
+                                                                                return AlertDialog(
+                                                                                  title: Text('Apagar?'),
+                                                                                  content: Text('Quer mesmo continuar'),
+                                                                                  actions: [
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                      child: Text('não'),
+                                                                                    ),
+                                                                                    TextButton(
+                                                                                      onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                      child: Text('sim'),
+                                                                                    ),
+                                                                                  ],
+                                                                                );
+                                                                              },
+                                                                            ) ??
+                                                                            false;
+                                                                        if (confirmDialogResponse) {
+                                                                          await cutaneaListItemItem
+                                                                              .delete();
+                                                                          _model.fiCopy =
+                                                                              await querySuplementacaoRecordOnce(
+                                                                            queryBuilder: (suplementacaoRecord) =>
+                                                                                suplementacaoRecord.where(
+                                                                              'id_User',
+                                                                              isEqualTo: _model.pacienteDat?.uid,
+                                                                            ),
+                                                                          );
+                                                                        }
+
+                                                                        safeSetState(
+                                                                            () {});
+                                                                      },
+                                                                      child:
+                                                                          Icon(
+                                                                        Icons
+                                                                            .delete_rounded,
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .primaryText,
+                                                                        size:
+                                                                            20.0,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
                                                             ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewSuplementacaoRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
-                                          ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            }
-                          },
+                                          ].divide(SizedBox(width: 12.0)),
+                                        );
+                                      }),
+                                    );
+                                  },
+                                ),
+                              ].divide(SizedBox(height: 10.0)),
+                            ),
+                          ],
                         ),
                       ),
                       KeepAliveWidgetWrapper(
-                        builder: (context) => Builder(
-                          builder: (context) {
-                            if ((valueOrDefault<bool>(
-                                        currentUserDocument?.isADM, false) ==
-                                    true) ||
-                                (valueOrDefault<bool>(
-                                        currentUserDocument?.admLess, false) ==
-                                    true)) {
-                              return StreamBuilder<
-                                  List<OutrasSuplementacaoRecord>>(
-                                stream: queryOutrasSuplementacaoRecord(
-                                  queryBuilder: (outrasSuplementacaoRecord) =>
-                                      outrasSuplementacaoRecord.where(
-                                    'id_User',
-                                    isEqualTo: _model.listarSup?.uid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<OutrasSuplementacaoRecord>
-                                      listViewOutrasSuplementacaoRecordList =
-                                      snapshot.data!;
+                        builder: (context) => Column(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Builder(
+                              builder: (context) {
+                                final outrosSupItens =
+                                    _model.listaSupOutros.toList();
 
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewOutrasSuplementacaoRecordList
-                                            .length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewOutrasSuplementacaoRecord =
-                                          listViewOutrasSuplementacaoRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.0,
-                                                    height: 67.9,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
-                                                            children: [
-                                                              Text(
-                                                                listViewOutrasSuplementacaoRecord
-                                                                    .nome,
-                                                                style: FlutterFlowTheme.of(
+                                return ListView.separated(
+                                  padding: EdgeInsets.zero,
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.vertical,
+                                  itemCount: outrosSupItens.length,
+                                  separatorBuilder: (_, __) =>
+                                      SizedBox(height: 10.0),
+                                  itemBuilder: (context, outrosSupItensIndex) {
+                                    final outrosSupItensItem =
+                                        outrosSupItens[outrosSupItensIndex];
+                                    return Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Expanded(
+                                          child: Padding(
+                                            padding: EdgeInsets.all(8.0),
+                                            child: Column(
+                                              mainAxisSize: MainAxisSize.max,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.center,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Container(
+                                                  width: 337.0,
+                                                  height: 67.9,
+                                                  decoration: BoxDecoration(
+                                                    color: FlutterFlowTheme.of(
+                                                            context)
+                                                        .accent2,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            14.0),
+                                                  ),
+                                                  alignment:
+                                                      AlignmentDirectional(
+                                                          -1.0, 0.0),
+                                                  child: StreamBuilder<
+                                                      OutrasSuplementacaoRecord>(
+                                                    stream: OutrasSuplementacaoRecord
+                                                        .getDocument(
+                                                            outrosSupItensItem),
+                                                    builder:
+                                                        (context, snapshot) {
+                                                      // Customize what your widget looks like when it's loading.
+                                                      if (!snapshot.hasData) {
+                                                        return Center(
+                                                          child: SizedBox(
+                                                            width: 50.0,
+                                                            height: 50.0,
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  AlwaysStoppedAnimation<
+                                                                      Color>(
+                                                                FlutterFlowTheme.of(
                                                                         context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
+                                                                    .primary,
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        );
+                                                      }
+
+                                                      final rowOutrasSuplementacaoRecord =
+                                                          snapshot.data!;
+
+                                                      return Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        children: [
+                                                          Padding(
+                                                            padding:
+                                                                EdgeInsets.all(
+                                                                    8.0),
+                                                            child: Column(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Text(
+                                                                  rowOutrasSuplementacaoRecord
+                                                                      .nome,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodyMedium
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight:
+                                                                              FontWeight.w500,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodyMedium
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight:
                                                                             FontWeight.w500,
                                                                         fontStyle: FlutterFlowTheme.of(context)
                                                                             .bodyMedium
                                                                             .fontStyle,
                                                                       ),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ),
-                                                              Text(
-                                                                dateTimeFormat(
-                                                                  "d/M/y",
-                                                                  listViewOutrasSuplementacaoRecord
-                                                                      .dataMedic!,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
                                                                 ),
-                                                                textAlign:
-                                                                    TextAlign
-                                                                        .start,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
+                                                                Text(
+                                                                  dateTimeFormat(
+                                                                    "d/M/y",
+                                                                    rowOutrasSuplementacaoRecord
+                                                                        .dataMedic!,
+                                                                    locale: FFLocalizations.of(
+                                                                            context)
+                                                                        .languageCode,
+                                                                  ),
+                                                                  textAlign:
+                                                                      TextAlign
+                                                                          .start,
+                                                                  style: FlutterFlowTheme.of(
+                                                                          context)
+                                                                      .bodySmall
+                                                                      .override(
+                                                                        font: GoogleFonts
+                                                                            .inter(
+                                                                          fontWeight: FlutterFlowTheme.of(context)
+                                                                              .bodySmall
+                                                                              .fontWeight,
+                                                                          fontStyle: FlutterFlowTheme.of(context)
+                                                                              .bodySmall
+                                                                              .fontStyle,
+                                                                        ),
+                                                                        color: FlutterFlowTheme.of(context)
+                                                                            .secondaryText,
+                                                                        letterSpacing:
+                                                                            0.0,
                                                                         fontWeight: FlutterFlowTheme.of(context)
                                                                             .bodySmall
                                                                             .fontWeight,
@@ -1112,316 +974,142 @@ class _HistoricoSupWidgetState extends State<HistoricoSupWidget>
                                                                             .bodySmall
                                                                             .fontStyle,
                                                                       ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewOutrasSuplementacaoRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ),
-                                          if (valueOrDefault<bool>(
-                                                  currentUserDocument?.isADM,
-                                                  false) ==
-                                              true)
-                                            InkWell(
-                                              splashColor: Colors.transparent,
-                                              focusColor: Colors.transparent,
-                                              hoverColor: Colors.transparent,
-                                              highlightColor:
-                                                  Colors.transparent,
-                                              onTap: () async {
-                                                var confirmDialogResponse =
-                                                    await showDialog<bool>(
-                                                          context: context,
-                                                          builder:
-                                                              (alertDialogContext) {
-                                                            return AlertDialog(
-                                                              title: Text(
-                                                                  'Apagar?'),
-                                                              content: Text(
-                                                                  'Quer mesmo continuar'),
-                                                              actions: [
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          false),
-                                                                  child: Text(
-                                                                      'não'),
-                                                                ),
-                                                                TextButton(
-                                                                  onPressed: () =>
-                                                                      Navigator.pop(
-                                                                          alertDialogContext,
-                                                                          true),
-                                                                  child: Text(
-                                                                      'sim'),
                                                                 ),
                                                               ],
-                                                            );
-                                                          },
-                                                        ) ??
-                                                        false;
-                                                if (confirmDialogResponse) {
-                                                  await listViewOutrasSuplementacaoRecord
-                                                      .reference
-                                                      .delete();
-                                                }
-                                              },
-                                              child: Icon(
-                                                Icons.delete_rounded,
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .primaryText,
-                                                size: 24.0,
-                                              ),
-                                            ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            } else {
-                              return StreamBuilder<
-                                  List<OutrasSuplementacaoRecord>>(
-                                stream: queryOutrasSuplementacaoRecord(
-                                  queryBuilder: (outrasSuplementacaoRecord) =>
-                                      outrasSuplementacaoRecord.where(
-                                    'id_User',
-                                    isEqualTo: currentUserUid,
-                                  ),
-                                ),
-                                builder: (context, snapshot) {
-                                  // Customize what your widget looks like when it's loading.
-                                  if (!snapshot.hasData) {
-                                    return Center(
-                                      child: SizedBox(
-                                        width: 50.0,
-                                        height: 50.0,
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              AlwaysStoppedAnimation<Color>(
-                                            FlutterFlowTheme.of(context)
-                                                .primary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }
-                                  List<OutrasSuplementacaoRecord>
-                                      listViewOutrasSuplementacaoRecordList =
-                                      snapshot.data!;
-
-                                  return ListView.separated(
-                                    padding: EdgeInsets.zero,
-                                    shrinkWrap: true,
-                                    scrollDirection: Axis.vertical,
-                                    itemCount:
-                                        listViewOutrasSuplementacaoRecordList
-                                            .length,
-                                    separatorBuilder: (_, __) =>
-                                        SizedBox(height: 10.0),
-                                    itemBuilder: (context, listViewIndex) {
-                                      final listViewOutrasSuplementacaoRecord =
-                                          listViewOutrasSuplementacaoRecordList[
-                                              listViewIndex];
-                                      return Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.all(8.0),
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Container(
-                                                    width: 337.0,
-                                                    height: 64.2,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent2,
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              14.0),
-                                                    ),
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 0.0),
-                                                    child: Row(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .spaceBetween,
-                                                      children: [
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  8.0),
-                                                          child: Column(
+                                                            ),
+                                                          ),
+                                                          Row(
                                                             mainAxisSize:
                                                                 MainAxisSize
                                                                     .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
                                                             children: [
-                                                              Text(
-                                                                listViewOutrasSuplementacaoRecord
-                                                                    .nome,
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMedium
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight:
-                                                                            FontWeight.w500,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodyMedium
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyMedium
-                                                                          .fontStyle,
-                                                                    ),
-                                                              ),
-                                                              Text(
-                                                                dateTimeFormat(
-                                                                  "d/M/y",
-                                                                  listViewOutrasSuplementacaoRecord
-                                                                      .dataMedic!,
-                                                                  locale: FFLocalizations.of(
-                                                                          context)
-                                                                      .languageCode,
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(
+                                                                            5.0),
+                                                                child:
+                                                                    FlutterFlowIconButton(
+                                                                  borderRadius:
+                                                                      8.0,
+                                                                  fillColor: Color(
+                                                                      0xFF78C3BA),
+                                                                  icon: Icon(
+                                                                    Icons
+                                                                        .download_sharp,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .info,
+                                                                    size: 20.0,
+                                                                  ),
+                                                                  onPressed:
+                                                                      () async {
+                                                                    await launchURL(
+                                                                        rowOutrasSuplementacaoRecord
+                                                                            .anexo);
+                                                                  },
                                                                 ),
-                                                                style: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodySmall
-                                                                    .override(
-                                                                      font: GoogleFonts
-                                                                          .inter(
-                                                                        fontWeight: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontWeight,
-                                                                        fontStyle: FlutterFlowTheme.of(context)
-                                                                            .bodySmall
-                                                                            .fontStyle,
-                                                                      ),
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .secondaryText,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontWeight,
-                                                                      fontStyle: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodySmall
-                                                                          .fontStyle,
-                                                                    ),
                                                               ),
-                                                            ],
+                                                              if (valueOrDefault<
+                                                                          bool>(
+                                                                      currentUserDocument
+                                                                          ?.isADM,
+                                                                      false) ==
+                                                                  true)
+                                                                Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          0.0,
+                                                                          0.0),
+                                                                  child:
+                                                                      Padding(
+                                                                    padding: EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            0.0,
+                                                                            0.0,
+                                                                            8.0,
+                                                                            0.0),
+                                                                    child:
+                                                                        AuthUserStreamWidget(
+                                                                      builder:
+                                                                          (context) =>
+                                                                              InkWell(
+                                                                        splashColor:
+                                                                            Colors.transparent,
+                                                                        focusColor:
+                                                                            Colors.transparent,
+                                                                        hoverColor:
+                                                                            Colors.transparent,
+                                                                        highlightColor:
+                                                                            Colors.transparent,
+                                                                        onTap:
+                                                                            () async {
+                                                                          var confirmDialogResponse = await showDialog<bool>(
+                                                                                context: context,
+                                                                                builder: (alertDialogContext) {
+                                                                                  return AlertDialog(
+                                                                                    title: Text('Apagar?'),
+                                                                                    content: Text('Quer mesmo continuar'),
+                                                                                    actions: [
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                        child: Text('não'),
+                                                                                      ),
+                                                                                      TextButton(
+                                                                                        onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                        child: Text('sim'),
+                                                                                      ),
+                                                                                    ],
+                                                                                  );
+                                                                                },
+                                                                              ) ??
+                                                                              false;
+                                                                          if (confirmDialogResponse) {
+                                                                            await rowOutrasSuplementacaoRecord.reference.delete();
+                                                                            _model.fiCopy2 =
+                                                                                await queryOutrasSuplementacaoRecordOnce(
+                                                                              queryBuilder: (outrasSuplementacaoRecord) => outrasSuplementacaoRecord.where(
+                                                                                'id_User',
+                                                                                isEqualTo: _model.pacienteDat?.uid,
+                                                                              ),
+                                                                            );
+                                                                          }
+
+                                                                          safeSetState(
+                                                                              () {});
+                                                                        },
+                                                                        child:
+                                                                            Icon(
+                                                                          Icons
+                                                                              .delete_rounded,
+                                                                          color:
+                                                                              FlutterFlowTheme.of(context).primaryText,
+                                                                          size:
+                                                                              23.0,
+                                                                        ),
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            ].divide(SizedBox(
+                                                                width: 5.0)),
                                                           ),
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.all(
-                                                                  5.0),
-                                                          child:
-                                                              FlutterFlowIconButton(
-                                                            borderRadius: 8.0,
-                                                            fillColor: Color(
-                                                                0xFF78C3BA),
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_sharp,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .info,
-                                                              size: 20.0,
-                                                            ),
-                                                            onPressed:
-                                                                () async {
-                                                              await launchURL(
-                                                                  listViewOutrasSuplementacaoRecord
-                                                                      .anexo);
-                                                            },
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
+                                                        ],
+                                                      );
+                                                    },
                                                   ),
-                                                ],
-                                              ),
+                                                ),
+                                              ],
                                             ),
                                           ),
-                                        ].divide(SizedBox(width: 12.0)),
-                                      );
-                                    },
-                                  );
-                                },
-                              );
-                            }
-                          },
+                                        ),
+                                      ].divide(SizedBox(width: 12.0)),
+                                    );
+                                  },
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       ),
                     ],

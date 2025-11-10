@@ -11,7 +11,7 @@ export '/componentes/subpages/tipodesuplementodiario/tipodesuplementodiario_widg
     show TipodesuplementodiarioWidget;
 export '/componentes/subpages/suplementacao_cutanea/suplementacao_cutanea_widget.dart'
     show SuplementacaoCutaneaWidget;
-export '/componentes/subpages/outra_suplementacoes/outra_suplementacoes_widget.dart'
+export '/componentes/outra_suplementacoes/outra_suplementacoes_widget.dart'
     show OutraSuplementacoesWidget;
 export '/componentes/subpages/historico/historico_widget.dart'
     show HistoricoWidget;
@@ -35,4 +35,6 @@ export '/componentes/historico_sup/historico_sup_widget.dart'
     show HistoricoSupWidget;
 export '/componentes/pages/cadastro2/cadastro2_widget.dart'
     show Cadastro2Widget;
-export '/agenda/agenda_widget.dart' show AgendaWidget;
+export '/terminar/agenda/agenda_widget.dart' show AgendaWidget;
+export '/nutris_ativos/nutris_ativos_widget.dart' show NutrisAtivosWidget;
+export '/carregando/carregando_widget.dart' show CarregandoWidget;

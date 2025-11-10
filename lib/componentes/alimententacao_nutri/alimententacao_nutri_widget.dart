@@ -180,6 +180,7 @@ class _AlimententacaoNutriWidgetState extends State<AlimententacaoNutriWidget> {
                               .map((m) => FFUploadedFile(
                                     name: m.storagePath.split('/').last,
                                     bytes: m.bytes,
+                                    originalFilename: m.originalFilename,
                                   ))
                               .toList();
                         } finally {

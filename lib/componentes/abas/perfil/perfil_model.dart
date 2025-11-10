@@ -12,26 +12,22 @@ class PerfilModel extends FlutterFlowModel<PerfilWidget> {
 
   ///  State fields for stateful widgets in this component.
 
-  bool isDataUploading_avatarLocalUpload = false;
-  FFUploadedFile uploadedLocalFile_avatarLocalUpload =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-
   // State field(s) for nome widget.
   FocusNode? nomeFocusNode;
   TextEditingController? nomeTextController;
   String? Function(BuildContext, String?)? nomeTextControllerValidator;
   // State field(s) for data widget.
-  FocusNode? dataFocusNode;
-  TextEditingController? dataTextController;
-  String? Function(BuildContext, String?)? dataTextControllerValidator;
+  FocusNode? dataFocusNode1;
+  TextEditingController? dataTextController1;
+  String? Function(BuildContext, String?)? dataTextController1Validator;
+  // State field(s) for data widget.
+  FocusNode? dataFocusNode2;
+  TextEditingController? dataTextController2;
+  String? Function(BuildContext, String?)? dataTextController2Validator;
   // State field(s) for email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
-  bool isDataUploading_uplaodImageFirestore = false;
-  FFUploadedFile uploadedLocalFile_uplaodImageFirestore =
-      FFUploadedFile(bytes: Uint8List.fromList([]));
-  String uploadedFileUrl_uplaodImageFirestore = '';
 
   @override
   void initState(BuildContext context) {}
@@ -41,8 +37,11 @@ class PerfilModel extends FlutterFlowModel<PerfilWidget> {
     nomeFocusNode?.dispose();
     nomeTextController?.dispose();
 
-    dataFocusNode?.dispose();
-    dataTextController?.dispose();
+    dataFocusNode1?.dispose();
+    dataTextController1?.dispose();
+
+    dataFocusNode2?.dispose();
+    dataTextController2?.dispose();
 
     emailFocusNode?.dispose();
     emailTextController?.dispose();

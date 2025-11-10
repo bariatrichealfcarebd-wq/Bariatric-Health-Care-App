@@ -45,22 +45,29 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
     _model.textController3 ??= TextEditingController();
     _model.textFieldFocusNode3 ??= FocusNode();
 
-    _model.textFieldMask3 = MaskTextInputFormatter(mask: '#####/SP');
+    _model.textFieldMask3 = MaskTextInputFormatter(mask: '##/##/####');
     _model.textController4 ??= TextEditingController();
     _model.textFieldFocusNode4 ??= FocusNode();
 
-    _model.textFieldMask4 = MaskTextInputFormatter(mask: '(##) #####-####');
+    _model.textFieldMask4 = MaskTextInputFormatter(mask: '#####/SP');
     _model.textController5 ??= TextEditingController();
     _model.textFieldFocusNode5 ??= FocusNode();
 
-    _model.emailTextController ??= TextEditingController();
+    _model.textFieldMask5 = MaskTextInputFormatter(mask: '(##) #####-####');
+    _model.textController6 ??= TextEditingController();
     _model.textFieldFocusNode6 ??= FocusNode();
+
+    _model.textController7 ??= TextEditingController();
+    _model.textFieldFocusNode7 ??= FocusNode();
+
+    _model.emailTextController ??= TextEditingController();
+    _model.textFieldFocusNode8 ??= FocusNode();
 
     _model.textFieldSenhaTextController ??= TextEditingController();
     _model.textFieldSenhaFocusNode ??= FocusNode();
 
     _model.confirmPasswordTextController ??= TextEditingController();
-    _model.textFieldFocusNode7 ??= FocusNode();
+    _model.textFieldFocusNode9 ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -327,10 +334,87 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                   .asValidator(context),
                               inputFormatters: [_model.textFieldMask2],
                             ),
-                            if (_model.admLessChecked == true)
+                            if ((_model.isAdmChecked == false) &&
+                                (_model.admLessChecked == false))
                               TextFormField(
                                 controller: _model.textController3,
                                 focusNode: _model.textFieldFocusNode3,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Data da cirurgia',
+                                  alignLabelWithHint: false,
+                                  hintText: 'dd/mm/yyyy',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                maxLength: 8,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
+                                keyboardType: TextInputType.number,
+                                validator: _model.textController3Validator
+                                    .asValidator(context),
+                                inputFormatters: [_model.textFieldMask3],
+                              ),
+                            if ((_model.admLessChecked == true) ||
+                                (_model.isAdmChecked == true))
+                              TextFormField(
+                                controller: _model.textController4,
+                                focusNode: _model.textFieldFocusNode4,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -396,15 +480,15 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         required isFocused,
                                         maxLength}) =>
                                     null,
-                                validator: _model.textController3Validator
+                                validator: _model.textController4Validator
                                     .asValidator(context),
-                                inputFormatters: [_model.textFieldMask3],
+                                inputFormatters: [_model.textFieldMask4],
                               ),
                             if ((_model.admLessChecked == true) ||
                                 (_model.isAdmChecked == true))
                               TextFormField(
-                                controller: _model.textController4,
-                                focusNode: _model.textFieldFocusNode4,
+                                controller: _model.textController5,
+                                focusNode: _model.textFieldFocusNode5,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -471,15 +555,15 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         maxLength}) =>
                                     null,
                                 keyboardType: TextInputType.phone,
-                                validator: _model.textController4Validator
+                                validator: _model.textController5Validator
                                     .asValidator(context),
-                                inputFormatters: [_model.textFieldMask4],
+                                inputFormatters: [_model.textFieldMask5],
                               ),
                             if ((_model.admLessChecked == true) ||
                                 (_model.isAdmChecked == true))
                               TextFormField(
-                                controller: _model.textController5,
-                                focusNode: _model.textFieldFocusNode5,
+                                controller: _model.textController6,
+                                focusNode: _model.textFieldFocusNode6,
                                 textInputAction: TextInputAction.next,
                                 obscureText: false,
                                 decoration: InputDecoration(
@@ -546,12 +630,86 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         required isFocused,
                                         maxLength}) =>
                                     null,
-                                validator: _model.textController5Validator
+                                validator: _model.textController6Validator
+                                    .asValidator(context),
+                              ),
+                            if ((_model.isAdmChecked == false) &&
+                                (_model.admLessChecked == false))
+                              TextFormField(
+                                controller: _model.textController7,
+                                focusNode: _model.textFieldFocusNode7,
+                                textInputAction: TextInputAction.next,
+                                obscureText: false,
+                                decoration: InputDecoration(
+                                  labelText: 'Tipo de cirurgia ',
+                                  hintText:
+                                      'Digite o tipo de cirurgia do seu paciente',
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: FlutterFlowTheme.of(context)
+                                          .alternate,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color:
+                                          FlutterFlowTheme.of(context).primary,
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  focusedErrorBorder: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Color(0x00000000),
+                                      width: 1.0,
+                                    ),
+                                    borderRadius: BorderRadius.circular(12.0),
+                                  ),
+                                  filled: true,
+                                  fillColor: FlutterFlowTheme.of(context)
+                                      .secondaryBackground,
+                                ),
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      font: GoogleFonts.inter(
+                                        fontWeight: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontWeight,
+                                        fontStyle: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .fontStyle,
+                                      ),
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontWeight,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                maxLength: 80,
+                                buildCounter: (context,
+                                        {required currentLength,
+                                        required isFocused,
+                                        maxLength}) =>
+                                    null,
+                                validator: _model.textController7Validator
                                     .asValidator(context),
                               ),
                             TextFormField(
                               controller: _model.emailTextController,
-                              focusNode: _model.textFieldFocusNode6,
+                              focusNode: _model.textFieldFocusNode8,
                               textInputAction: TextInputAction.next,
                               obscureText: false,
                               decoration: InputDecoration(
@@ -695,13 +853,19 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         .bodyMedium
                                         .fontStyle,
                                   ),
+                              maxLength: 80,
+                              buildCounter: (context,
+                                      {required currentLength,
+                                      required isFocused,
+                                      maxLength}) =>
+                                  null,
                               validator: _model
                                   .textFieldSenhaTextControllerValidator
                                   .asValidator(context),
                             ),
                             TextFormField(
                               controller: _model.confirmPasswordTextController,
-                              focusNode: _model.textFieldFocusNode7,
+                              focusNode: _model.textFieldFocusNode9,
                               textInputAction: TextInputAction.done,
                               obscureText: !_model.passwordVisibility,
                               decoration: InputDecoration(
@@ -992,10 +1156,14 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         }
                                       }(),
                                       "especializacao":
-                                          _model.textController5.text,
-                                      "crn": _model.textController3.text,
-                                      "telefone": _model.textController4.text,
+                                          _model.textController6.text,
+                                      "crn": _model.textController4.text,
+                                      "telefone": _model.textController5.text,
                                       "primeiroLoginProcessado": false,
+                                      "dataOperacao":
+                                          _model.textController3.text,
+                                      "tipoOperacao":
+                                          _model.textController7.text,
                                     });
                                     _model.cloudFunctionwx2 =
                                         CreatePatientAccountCloudFunctionCallResponse(
@@ -1093,10 +1261,14 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         }
                                       }(),
                                       "especializacao":
-                                          _model.textController5.text,
-                                      "crn": _model.textController3.text,
-                                      "telefone": _model.textController4.text,
+                                          _model.textController6.text,
+                                      "crn": _model.textController4.text,
+                                      "telefone": _model.textController5.text,
                                       "primeiroLoginProcessado": false,
+                                      "dataOperacao":
+                                          _model.textController3.text,
+                                      "tipoOperacao":
+                                          _model.textController7.text,
                                     });
                                     _model.cloudFunctionwx1 =
                                         CreatePatientAccountCloudFunctionCallResponse(

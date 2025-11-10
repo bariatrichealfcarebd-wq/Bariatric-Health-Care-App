@@ -104,4 +104,10 @@ class FFAppState extends ChangeNotifier {
   set pdfURL(String value) {
     _pdfURL = value;
   }
+
+  bool _concordaParam = false;
+  bool get concordaParam => _concordaParam;
+  set concordaParam(bool value) {
+    _concordaParam = value;
+  }
 }

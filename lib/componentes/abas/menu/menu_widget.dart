@@ -1,8 +1,8 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/componentes/abas/perfil/perfil_widget.dart';
-import '/components/dados_nutricionsta_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/terminar/dados_nutricionsta/dados_nutricionsta_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -287,59 +287,6 @@ class _MenuWidgetState extends State<MenuWidget> {
                         ].divide(SizedBox(width: 12.0)),
                       ),
                     ),
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 56.0,
-                decoration: BoxDecoration(
-                  color: FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(8.0),
-                  border: Border.all(
-                    color: Color(0xFFA7D2C7),
-                    width: 1.0,
-                  ),
-                ),
-                child: Padding(
-                  padding:
-                      EdgeInsetsDirectional.fromSTEB(16.0, 16.0, 16.0, 16.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.max,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Icon(
-                        Icons.description,
-                        color: Color(0xFFA7D2C7),
-                        size: 24.0,
-                      ),
-                      Text(
-                        'Documentos',
-                        style: FlutterFlowTheme.of(context).bodyLarge.override(
-                              font: GoogleFonts.inter(
-                                fontWeight: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontWeight,
-                                fontStyle: FlutterFlowTheme.of(context)
-                                    .bodyLarge
-                                    .fontStyle,
-                              ),
-                              color: FlutterFlowTheme.of(context).primaryText,
-                              letterSpacing: 0.0,
-                              fontWeight: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontWeight,
-                              fontStyle: FlutterFlowTheme.of(context)
-                                  .bodyLarge
-                                  .fontStyle,
-                            ),
-                      ),
-                      Icon(
-                        Icons.chevron_right,
-                        color: FlutterFlowTheme.of(context).secondaryText,
-                        size: 20.0,
-                      ),
-                    ].divide(SizedBox(width: 12.0)),
                   ),
                 ),
               ),

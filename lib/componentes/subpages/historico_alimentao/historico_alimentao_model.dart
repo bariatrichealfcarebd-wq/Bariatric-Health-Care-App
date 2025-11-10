@@ -20,11 +20,34 @@ class HistoricoAlimentaoModel
 
   DateTime? dataFiltrar;
 
+  List<DocumentReference> listadePdfs = [];
+  void addToListadePdfs(DocumentReference item) => listadePdfs.add(item);
+  void removeFromListadePdfs(DocumentReference item) =>
+      listadePdfs.remove(item);
+  void removeAtIndexFromListadePdfs(int index) => listadePdfs.removeAt(index);
+  void insertAtIndexInListadePdfs(int index, DocumentReference item) =>
+      listadePdfs.insert(index, item);
+  void updateListadePdfsAtIndex(
+          int index, Function(DocumentReference) updateFn) =>
+      listadePdfs[index] = updateFn(listadePdfs[index]);
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in HistoricoAlimentao widget.
   PacienteRecord? pacienteData;
+  // Stores action output result for [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
+  List<RelatoriosPdfRecord>? filtronutri;
+  // Stores action output result for [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
+  List<RelatoriosPdfRecord>? filtroteste2;
   DateTime? datePicked;
+  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
+  List<RelatoriosPdfRecord>? filtronutridata;
+  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
+  List<RelatoriosPdfRecord>? filtrotestdata;
+  // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.
+  List<RelatoriosPdfRecord>? filtronutri3;
+  // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.
+  List<RelatoriosPdfRecord>? filtroteste3;
 
   @override
   void initState(BuildContext context) {}

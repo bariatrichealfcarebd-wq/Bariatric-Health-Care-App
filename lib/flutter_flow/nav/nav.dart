@@ -78,13 +78,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? LoginWidget() : HomepageWidget(),
+          appStateNotifier.loggedIn ? CarregandoWidget() : HomepageWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? LoginWidget() : HomepageWidget(),
+              appStateNotifier.loggedIn ? CarregandoWidget() : HomepageWidget(),
         ),
         FFRoute(
           name: HomepageWidget.routeName,
@@ -195,6 +195,16 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: AgendaWidget.routeName,
           path: AgendaWidget.routePath,
           builder: (context, params) => AgendaWidget(),
+        ),
+        FFRoute(
+          name: NutrisAtivosWidget.routeName,
+          path: NutrisAtivosWidget.routePath,
+          builder: (context, params) => NutrisAtivosWidget(),
+        ),
+        FFRoute(
+          name: CarregandoWidget.routeName,
+          path: CarregandoWidget.routePath,
+          builder: (context, params) => CarregandoWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );

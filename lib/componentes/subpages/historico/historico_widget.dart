@@ -33,8 +33,48 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
 
     // On page load action.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.pacienteData =
-          await PacienteRecord.getDocumentOnce(FFAppState().pacientePesquisa!);
+      if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||
+          (valueOrDefault<bool>(currentUserDocument?.admLess, false) == true)) {
+        _model.pacienteData = await PacienteRecord.getDocumentOnce(
+            FFAppState().pacientePesquisa!);
+        _model.filtronutri = await queryRelatoriosQuestionarioRecordOnce(
+          queryBuilder: (relatoriosQuestionarioRecord) =>
+              relatoriosQuestionarioRecord
+                  .where(
+                    'user_id',
+                    isEqualTo: _model.pacienteData?.uid,
+                  )
+                  .where(
+                    'data_criacao',
+                    isEqualTo: _model.dataFiltrar,
+                  ),
+        );
+        _model.relatoriosList = _model.filtronutri!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+        safeSetState(() {});
+      } else {
+        _model.filtroteste = await queryRelatoriosQuestionarioRecordOnce(
+          queryBuilder: (relatoriosQuestionarioRecord) =>
+              relatoriosQuestionarioRecord
+                  .where(
+                    'user_id',
+                    isEqualTo: currentUserUid,
+                  )
+                  .where(
+                    'data_criacao',
+                    isEqualTo: _model.dataFiltrar,
+                  ),
+        );
+        _model.relatoriosList = _model.filtroteste!
+            .map((e) => e.reference)
+            .toList()
+            .toList()
+            .cast<DocumentReference>();
+        safeSetState(() {});
+      }
     });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -155,112 +195,204 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                               mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
-                                Text(
-                                  'Filtro por data',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        color: Colors.black,
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
-                                      ),
-                                ),
-                                InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    _model.dataFiltrar = null;
-                                    safeSetState(() {});
-                                    final _datePickedDate =
-                                        await showDatePicker(
-                                      context: context,
-                                      initialDate: (_model.dataFiltrar ??
-                                          DateTime.now()),
-                                      firstDate: DateTime(1900),
-                                      lastDate: DateTime(2050),
-                                      builder: (context, child) {
-                                        return wrapInMaterialDatePickerTheme(
-                                          context,
-                                          child!,
-                                          headerBackgroundColor:
-                                              Color(0xF073B6AD),
-                                          headerForegroundColor:
-                                              FlutterFlowTheme.of(context).info,
-                                          headerTextStyle: FlutterFlowTheme.of(
-                                                  context)
-                                              .headlineLarge
-                                              .override(
-                                                font: GoogleFonts.interTight(
-                                                  fontWeight: FontWeight.w600,
+                                Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10.0),
+                                    border: Border.all(
+                                      color:
+                                          FlutterFlowTheme.of(context).success,
+                                      width: 2.0,
+                                    ),
+                                  ),
+                                  child: Padding(
+                                    padding: EdgeInsets.all(5.0),
+                                    child: InkWell(
+                                      splashColor: Colors.transparent,
+                                      focusColor: Colors.transparent,
+                                      hoverColor: Colors.transparent,
+                                      highlightColor: Colors.transparent,
+                                      onTap: () async {
+                                        final _datePickedDate =
+                                            await showDatePicker(
+                                          context: context,
+                                          initialDate: (_model.dataFiltrar ??
+                                              DateTime.now()),
+                                          firstDate: DateTime(1900),
+                                          lastDate: DateTime(2050),
+                                          builder: (context, child) {
+                                            return wrapInMaterialDatePickerTheme(
+                                              context,
+                                              child!,
+                                              headerBackgroundColor:
+                                                  Color(0xF073B6AD),
+                                              headerForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              headerTextStyle: FlutterFlowTheme
+                                                      .of(context)
+                                                  .headlineLarge
+                                                  .override(
+                                                    font:
+                                                        GoogleFonts.interTight(
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .headlineLarge
+                                                              .fontStyle,
+                                                    ),
+                                                    fontSize: 32.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .headlineLarge
+                                                            .fontStyle,
+                                                  ),
+                                              pickerBackgroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .secondaryBackground,
+                                              pickerForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              selectedDateTimeBackgroundColor:
+                                                  Color(0xF073B6AD),
+                                              selectedDateTimeForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .info,
+                                              actionButtonForegroundColor:
+                                                  FlutterFlowTheme.of(context)
+                                                      .primaryText,
+                                              iconSize: 24.0,
+                                            );
+                                          },
+                                        );
+
+                                        if (_datePickedDate != null) {
+                                          safeSetState(() {
+                                            _model.datePicked = DateTime(
+                                              _datePickedDate.year,
+                                              _datePickedDate.month,
+                                              _datePickedDate.day,
+                                            );
+                                          });
+                                        } else if (_model.datePicked != null) {
+                                          safeSetState(() {
+                                            _model.datePicked =
+                                                _model.dataFiltrar;
+                                          });
+                                        }
+                                        if ((valueOrDefault<bool>(
+                                                    currentUserDocument?.isADM,
+                                                    false) ==
+                                                true) ||
+                                            (valueOrDefault<bool>(
+                                                    currentUserDocument
+                                                        ?.admLess,
+                                                    false) ==
+                                                true)) {
+                                          _model.dataFiltrar =
+                                              _model.datePicked;
+                                          safeSetState(() {});
+                                          _model.filtronutridata =
+                                              await queryRelatoriosQuestionarioRecordOnce(
+                                            queryBuilder:
+                                                (relatoriosQuestionarioRecord) =>
+                                                    relatoriosQuestionarioRecord
+                                                        .where(
+                                                          'user_id',
+                                                          isEqualTo: _model
+                                                              .pacienteData
+                                                              ?.uid,
+                                                        )
+                                                        .where(
+                                                          'data_criacao',
+                                                          isGreaterThanOrEqualTo:
+                                                              _model
+                                                                  .dataFiltrar,
+                                                        ),
+                                          );
+                                          _model.relatoriosList = _model
+                                              .filtronutridata!
+                                              .map((e) => e.reference)
+                                              .toList()
+                                              .cast<DocumentReference>();
+                                          safeSetState(() {});
+                                        } else {
+                                          _model.dataFiltrar =
+                                              _model.datePicked;
+                                          safeSetState(() {});
+                                          _model.filtrotestdata =
+                                              await queryRelatoriosQuestionarioRecordOnce(
+                                            queryBuilder:
+                                                (relatoriosQuestionarioRecord) =>
+                                                    relatoriosQuestionarioRecord
+                                                        .where(
+                                                          'user_id',
+                                                          isEqualTo:
+                                                              currentUserUid,
+                                                        )
+                                                        .where(
+                                                          'data_criacao',
+                                                          isGreaterThanOrEqualTo:
+                                                              _model
+                                                                  .dataFiltrar,
+                                                        ),
+                                          );
+                                          _model.relatoriosList = _model
+                                              .filtrotestdata!
+                                              .map((e) => e.reference)
+                                              .toList()
+                                              .cast<DocumentReference>();
+                                          safeSetState(() {});
+                                        }
+
+                                        safeSetState(() {});
+                                      },
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            'Filtro por data',
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
                                                   fontStyle:
                                                       FlutterFlowTheme.of(
                                                               context)
-                                                          .headlineLarge
+                                                          .bodyMedium
                                                           .fontStyle,
                                                 ),
-                                                fontSize: 32.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                fontStyle:
-                                                    FlutterFlowTheme.of(context)
-                                                        .headlineLarge
-                                                        .fontStyle,
-                                              ),
-                                          pickerBackgroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .secondaryBackground,
-                                          pickerForegroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          selectedDateTimeBackgroundColor:
-                                              Color(0xF073B6AD),
-                                          selectedDateTimeForegroundColor:
-                                              FlutterFlowTheme.of(context).info,
-                                          actionButtonForegroundColor:
-                                              FlutterFlowTheme.of(context)
-                                                  .primaryText,
-                                          iconSize: 24.0,
-                                        );
-                                      },
-                                    );
-
-                                    if (_datePickedDate != null) {
-                                      safeSetState(() {
-                                        _model.datePicked = DateTime(
-                                          _datePickedDate.year,
-                                          _datePickedDate.month,
-                                          _datePickedDate.day,
-                                        );
-                                      });
-                                    } else if (_model.datePicked != null) {
-                                      safeSetState(() {
-                                        _model.datePicked = _model.dataFiltrar;
-                                      });
-                                    }
-                                    _model.dataFiltrar = _model.datePicked;
-                                    safeSetState(() {});
-                                  },
-                                  child: Icon(
-                                    Icons.calendar_month,
-                                    color: Colors.black,
-                                    size: 24.0,
+                                          ),
+                                          Icon(
+                                            Icons.calendar_month,
+                                            color: Colors.black,
+                                            size: 24.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ].divide(SizedBox(width: 5.0)),
@@ -306,178 +438,187 @@ class _HistoricoWidgetState extends State<HistoricoWidget> {
                                                     .fontStyle,
                                           ),
                                     ),
-                                    StreamBuilder<List<RelatoriosPdfRecord>>(
-                                      stream: queryRelatoriosPdfRecord(
-                                        queryBuilder: (relatoriosPdfRecord) =>
-                                            relatoriosPdfRecord.where(
-                                          'user_cpf',
-                                          isEqualTo: currentUserUid,
-                                        ),
-                                      ),
-                                      builder: (context, snapshot) {
-                                        // Customize what your widget looks like when it's loading.
-                                        if (!snapshot.hasData) {
-                                          return Center(
-                                            child: SizedBox(
-                                              width: 50.0,
-                                              height: 50.0,
-                                              child: CircularProgressIndicator(
-                                                valueColor:
-                                                    AlwaysStoppedAnimation<
-                                                        Color>(
-                                                  FlutterFlowTheme.of(context)
-                                                      .primary,
-                                                ),
-                                              ),
-                                            ),
-                                          );
-                                        }
-                                        List<RelatoriosPdfRecord>
-                                            listViewRelatoriosPdfRecordList =
-                                            snapshot.data!;
+                                    Builder(
+                                      builder: (context) {
+                                        final relatorioItemRef =
+                                            _model.relatoriosList.toList();
 
                                         return ListView.builder(
                                           padding: EdgeInsets.zero,
                                           shrinkWrap: true,
                                           scrollDirection: Axis.vertical,
-                                          itemCount:
-                                              listViewRelatoriosPdfRecordList
-                                                  .length,
+                                          itemCount: relatorioItemRef.length,
                                           itemBuilder:
-                                              (context, listViewIndex) {
-                                            final listViewRelatoriosPdfRecord =
-                                                listViewRelatoriosPdfRecordList[
-                                                    listViewIndex];
-                                            return Material(
-                                              color: Colors.transparent,
-                                              elevation: 1.0,
-                                              shape: RoundedRectangleBorder(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                              ),
-                                              child: Container(
-                                                width: double.infinity,
-                                                height: 50.0,
-                                                decoration: BoxDecoration(
-                                                  color: Colors.white,
-                                                  borderRadius:
-                                                      BorderRadius.circular(
-                                                          8.0),
-                                                ),
-                                                child: Padding(
-                                                  padding: EdgeInsetsDirectional
-                                                      .fromSTEB(12.0, 12.0,
-                                                          12.0, 12.0),
-                                                  child: Row(
-                                                    mainAxisSize:
-                                                        MainAxisSize.max,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Expanded(
-                                                        flex: 1,
-                                                        child: Flex(
-                                                          direction:
-                                                              Axis.vertical,
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Expanded(
-                                                              flex: 1,
-                                                              child: Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .min,
-                                                                mainAxisAlignment:
-                                                                    MainAxisAlignment
-                                                                        .start,
-                                                                children: [
-                                                                  Icon(
-                                                                    Icons
-                                                                        .picture_as_pdf_rounded,
-                                                                    color: Color(
-                                                                        0xFFFF5963),
-                                                                    size: 24.0,
-                                                                  ),
-                                                                  custom_widgets
-                                                                      .MarqueeText(
-                                                                    width:
-                                                                        190.0,
-                                                                    height:
-                                                                        24.0,
-                                                                    text: '',
-                                                                    textColor:
-                                                                        Colors
-                                                                            .black,
-                                                                  ),
-                                                                ].divide(SizedBox(
-                                                                    width:
-                                                                        8.0)),
-                                                              ),
-                                                            ),
-                                                          ],
+                                              (context, relatorioItemRefIndex) {
+                                            final relatorioItemRefItem =
+                                                relatorioItemRef[
+                                                    relatorioItemRefIndex];
+                                            return StreamBuilder<
+                                                RelatoriosQuestionarioRecord>(
+                                              stream:
+                                                  RelatoriosQuestionarioRecord
+                                                      .getDocument(
+                                                          relatorioItemRefItem),
+                                              builder: (context, snapshot) {
+                                                // Customize what your widget looks like when it's loading.
+                                                if (!snapshot.hasData) {
+                                                  return Center(
+                                                    child: SizedBox(
+                                                      width: 50.0,
+                                                      height: 50.0,
+                                                      child:
+                                                          CircularProgressIndicator(
+                                                        valueColor:
+                                                            AlwaysStoppedAnimation<
+                                                                Color>(
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
                                                         ),
                                                       ),
-                                                      FlutterFlowIconButton(
-                                                        buttonSize: 40.0,
-                                                        icon: Icon(
-                                                          Icons
-                                                              .download_rounded,
-                                                          color:
-                                                              Color(0xFF4B986C),
-                                                          size: 20.0,
-                                                        ),
-                                                        onPressed: () async {
-                                                          var confirmDialogResponse =
-                                                              await showDialog<
-                                                                      bool>(
-                                                                    context:
-                                                                        context,
-                                                                    builder:
-                                                                        (alertDialogContext) {
-                                                                      return AlertDialog(
-                                                                        title: Text(
-                                                                            'Fazer o download?'),
-                                                                        content:
-                                                                            Text('Tem a certeza de que pretende baixar este documento?'),
-                                                                        actions: [
-                                                                          TextButton(
-                                                                            onPressed: () =>
-                                                                                Navigator.pop(alertDialogContext, false),
-                                                                            child:
-                                                                                Text('Não'),
-                                                                          ),
-                                                                          TextButton(
-                                                                            onPressed: () =>
-                                                                                Navigator.pop(alertDialogContext, true),
-                                                                            child:
-                                                                                Text('Sim'),
-                                                                          ),
-                                                                        ],
-                                                                      );
-                                                                    },
-                                                                  ) ??
-                                                                  false;
-                                                          if (confirmDialogResponse) {
-                                                            await launchURL(
-                                                                FFAppState()
-                                                                    .pdfURL);
-                                                          } else {
-                                                            return;
-                                                          }
-                                                        },
-                                                      ),
-                                                    ],
+                                                    ),
+                                                  );
+                                                }
+
+                                                final containerRelatoriosQuestionarioRecord =
+                                                    snapshot.data!;
+
+                                                return Material(
+                                                  color: Colors.transparent,
+                                                  elevation: 1.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            8.0),
                                                   ),
-                                                ),
-                                              ),
+                                                  child: Container(
+                                                    width: double.infinity,
+                                                    height: 50.0,
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.white,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  12.0,
+                                                                  12.0,
+                                                                  12.0,
+                                                                  12.0),
+                                                      child: Row(
+                                                        mainAxisSize:
+                                                            MainAxisSize.max,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceBetween,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .center,
+                                                        children: [
+                                                          Expanded(
+                                                            flex: 1,
+                                                            child: Flex(
+                                                              direction:
+                                                                  Axis.vertical,
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment
+                                                                      .start,
+                                                              children: [
+                                                                Expanded(
+                                                                  flex: 1,
+                                                                  child: Row(
+                                                                    mainAxisSize:
+                                                                        MainAxisSize
+                                                                            .min,
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .start,
+                                                                    children: [
+                                                                      Icon(
+                                                                        Icons
+                                                                            .picture_as_pdf_rounded,
+                                                                        color: Color(
+                                                                            0xFFFF5963),
+                                                                        size:
+                                                                            24.0,
+                                                                      ),
+                                                                      custom_widgets
+                                                                          .MarqueeText(
+                                                                        width:
+                                                                            190.0,
+                                                                        height:
+                                                                            24.0,
+                                                                        text: containerRelatoriosQuestionarioRecord
+                                                                            .nomeDoArquivo,
+                                                                        textColor:
+                                                                            Colors.black,
+                                                                      ),
+                                                                    ].divide(SizedBox(
+                                                                        width:
+                                                                            8.0)),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                          FlutterFlowIconButton(
+                                                            buttonSize: 40.0,
+                                                            icon: Icon(
+                                                              Icons
+                                                                  .download_rounded,
+                                                              color: Color(
+                                                                  0xFF4B986C),
+                                                              size: 20.0,
+                                                            ),
+                                                            onPressed:
+                                                                () async {
+                                                              var confirmDialogResponse =
+                                                                  await showDialog<
+                                                                          bool>(
+                                                                        context:
+                                                                            context,
+                                                                        builder:
+                                                                            (alertDialogContext) {
+                                                                          return AlertDialog(
+                                                                            title:
+                                                                                Text('Fazer o download?'),
+                                                                            content:
+                                                                                Text('Tem a certeza de que pretende baixar este documento?'),
+                                                                            actions: [
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                child: Text('Não'),
+                                                                              ),
+                                                                              TextButton(
+                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                child: Text('Sim'),
+                                                                              ),
+                                                                            ],
+                                                                          );
+                                                                        },
+                                                                      ) ??
+                                                                      false;
+                                                              if (confirmDialogResponse) {
+                                                                await launchURL(
+                                                                    containerRelatoriosQuestionarioRecord
+                                                                        .urlPdf);
+                                                              } else {
+                                                                return;
+                                                              }
+                                                            },
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              },
                                             );
                                           },
                                         );
