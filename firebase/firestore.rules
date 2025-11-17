@@ -1,6 +1,8 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+    // Coleção para armazenar dados dos pacientes.
+    // Acesso de escrita e leitura abertos, mas exclusão requer autenticação.
     match /Paciente/{document} {
       allow create: if true;
       allow read: if true;
@@ -8,6 +10,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Coleção de nutrientes. Apenas leitura e criação são permitidas.
     match /Nutrientes/{document} {
       allow create: if true;
       allow read: if true;
@@ -15,6 +18,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Coleção de sintomas. Apenas leitura e criação são permitidas.
     match /sintomas/{document} {
       allow create: if true;
       allow read: if true;
@@ -22,6 +26,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Associa sintomas a outras informações. Exclusão requer autenticação.
     match /ligacao_sintoma/{document} {
       allow create: if true;
       allow read: if true;
@@ -29,6 +34,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Dados sobre suplementação. Exclusão requer autenticação.
     match /suplementacao/{document} {
       allow create: if true;
       allow read: if true;
@@ -36,6 +42,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Registros diários de suplementação. Exclusão requer autenticação.
     match /Suplementacaodiaria/{document} {
       allow create: if true;
       allow read: if true;
@@ -43,6 +50,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Outros tipos de suplementação. Exclusão requer autenticação.
     match /outrasSuplementacao/{document} {
       allow create: if true;
       allow read: if true;
@@ -50,6 +58,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Armazena relatórios em PDF. Exclusão requer autenticação.
     match /relatorios_pdf/{document} {
       allow create: if true;
       allow read: if true;
@@ -57,6 +66,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Planos alimentares dos pacientes. Exclusão requer autenticação.
     match /Plano_Alimentacao/{document} {
       allow create: if true;
       allow read: if true;
@@ -64,6 +74,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Armazena fotos diversas. Exclusão requer autenticação.
     match /photos/{document} {
       allow create: if true;
       allow read: if true;
@@ -71,6 +82,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Relatórios gerados a partir de questionários. Exclusão requer autenticação.
     match /relatorios_Questionario/{document} {
       allow create: if true;
       allow read: if true;
@@ -78,6 +90,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Relacionamento entre nutricionistas e pacientes. Exclusão requer autenticação.
     match /Nutri_Paciente/{document} {
       allow create: if true;
       allow read: if true;
@@ -85,6 +98,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Notificações para os usuários. Exclusão requer autenticação.
     match /notificacoes/{document} {
       allow create: if true;
       allow read: if true;
@@ -92,6 +106,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Controle de disponibilidade (ex: agenda). Exclusão requer autenticação.
     match /Disponibilidade/{document} {
       allow create: if true;
       allow read: if true;
@@ -99,6 +114,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Eventos agendados. Não permite exclusão ou escrita.
     match /AgendEventos/{document} {
       allow create: if true;
       allow read: if true;
@@ -106,6 +122,7 @@ service cloud.firestore {
       allow delete: if false;
     }
 
+    // Dados para gráficos de sintomas. Exclusão requer autenticação.
     match /graficosSintomas/{document} {
       allow create: if true;
       allow read: if true;
@@ -113,6 +130,7 @@ service cloud.firestore {
       allow delete: if request.auth != null;
     }
 
+    // Registros de peso do paciente. Exclusão requer autenticação.
     match /Paciente_Peso/{document} {
       allow create: if true;
       allow read: if true;

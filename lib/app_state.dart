@@ -22,6 +22,7 @@ class FFAppState extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Armazena referências aos sintomas selecionados pelo paciente.
   List<DocumentReference> _sintomasSelecionados = [];
   List<DocumentReference> get sintomasSelecionados => _sintomasSelecionados;
   set sintomasSelecionados(List<DocumentReference> value) {
@@ -51,6 +52,7 @@ class FFAppState extends ChangeNotifier {
     sintomasSelecionados.insert(index, value);
   }
 
+  /// Registra as categorias de conteúdo que o usuário visitou.
   List<String> _categoriaVisitadas = [];
   List<String> get categoriaVisitadas => _categoriaVisitadas;
   set categoriaVisitadas(List<String> value) {
@@ -80,37 +82,42 @@ class FFAppState extends ChangeNotifier {
     categoriaVisitadas.insert(index, value);
   }
 
+  /// Nome do paciente atualmente em visualização ou pesquisa.
   String _nomePaciente = '';
   String get nomePaciente => _nomePaciente;
   set nomePaciente(String value) {
     _nomePaciente = value;
   }
 
+  /// Referência ao documento do paciente que está sendo pesquisado.
   DocumentReference? _pacientePesquisa;
   DocumentReference? get pacientePesquisa => _pacientePesquisa;
   set pacientePesquisa(DocumentReference? value) {
     _pacientePesquisa = value;
   }
 
+  /// Data selecionada em calendários ou filtros.
   DateTime? _dataSelecionada;
   DateTime? get dataSelecionada => _dataSelecionada;
   set dataSelecionada(DateTime? value) {
     _dataSelecionada = value;
   }
 
-  /// vai guardar o link para o arquivo pdf
+  /// Armazena a URL de um arquivo PDF gerado ou selecionado.
   String _pdfURL = '';
   String get pdfURL => _pdfURL;
   set pdfURL(String value) {
     _pdfURL = value;
   }
 
+  /// Sinaliza se o usuário concordou com os parâmetros ou termos de uso.
   bool _concordaParam = false;
   bool get concordaParam => _concordaParam;
   set concordaParam(bool value) {
     _concordaParam = value;
   }
 
+  /// Sinaliza se o usuário aceitou o termo de consentimento.
   bool _Termo = false;
   bool get Termo => _Termo;
   set Termo(bool value) {

@@ -34,6 +34,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     super.initState();
     _model = createModel(context, () => LoginModel());
 
+    // Listener para reagir a mudanças de visibilidade do teclado
     if (!isWeb) {
       _keyboardVisibilitySubscription =
           KeyboardVisibilityController().onChange.listen((bool visible) {
@@ -178,6 +179,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       ),
                                 ),
                               ),
+
+                              /// Campo de entrada para o email do usuário
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 12.0, 16.0, 0.0),
@@ -289,6 +292,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                       .asValidator(context),
                                 ),
                               ),
+
+                              /// Campo de entrada para a senha do usuário
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     16.0, 12.0, 16.0, 0.0),
@@ -427,6 +432,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                                   ],
                                 ),
                               ),
+
+                              /// Botão para redirecionar para a tela de recuperação de senha
                               if (!(isWeb
                                   ? MediaQuery.viewInsetsOf(context).bottom > 0
                                   : _isKeyboardVisible))
@@ -492,6 +499,8 @@ class _LoginWidgetState extends State<LoginWidget> {
                         ),
                       ),
                     ),
+
+                    /// Botão principal para executar o login
                     if (!(isWeb
                         ? MediaQuery.viewInsetsOf(context).bottom > 0
                         : _isKeyboardVisible))
