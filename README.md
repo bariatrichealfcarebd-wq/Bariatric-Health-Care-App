@@ -1,6 +1,5 @@
 # Bariatric Health Care
-
-A new Flutter project.
+app em fases de testes é importante notar que apesar do codigo estar presente no git, mas teste são feito no FlutterFlow
 
 ## Getting Started
 
