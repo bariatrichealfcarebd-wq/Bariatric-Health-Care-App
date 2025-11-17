@@ -7,8 +7,8 @@ export '/componentes/homepages/questions_page/questions_page_widget.dart'
     show QuestionsPageWidget;
 export '/componentes/homepages/alimentacao_page/alimentacao_page_widget.dart'
     show AlimentacaoPageWidget;
-export '/componentes/subpages/tipodesuplementodiario/tipodesuplementodiario_widget.dart'
-    show TipodesuplementodiarioWidget;
+export '/componentes/subpages/suplementacao_diaria/suplementacao_diaria_widget.dart'
+    show SuplementacaoDiariaWidget;
 export '/componentes/subpages/suplementacao_cutanea/suplementacao_cutanea_widget.dart'
     show SuplementacaoCutaneaWidget;
 export '/componentes/outra_suplementacoes/outra_suplementacoes_widget.dart'
@@ -36,5 +36,11 @@ export '/componentes/historico_sup/historico_sup_widget.dart'
 export '/componentes/pages/cadastro2/cadastro2_widget.dart'
     show Cadastro2Widget;
 export '/terminar/agenda/agenda_widget.dart' show AgendaWidget;
-export '/nutris_ativos/nutris_ativos_widget.dart' show NutrisAtivosWidget;
-export '/carregando/carregando_widget.dart' show CarregandoWidget;
+export '/componentes/subpages/nutris_ativos/nutris_ativos_widget.dart'
+    show NutrisAtivosWidget;
+export '/terminar/carregando/carregando_widget.dart' show CarregandoWidget;
+export '/terminar/agenda_nutri/agenda_nutri_widget.dart' show AgendaNutriWidget;
+export '/componentes/pages/checagem_grafico/checagem_grafico_widget.dart'
+    show ChecagemGraficoWidget;
+export '/graf_ico_peso/graf_ico_peso_widget.dart' show GrafIcoPesoWidget;
+export '/peso_registro/peso_registro_widget.dart' show PesoRegistroWidget;

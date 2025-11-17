@@ -12,6 +12,7 @@ import 'package:easy_debounce/easy_debounce.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'paginado_nutricionista_model.dart';
 export 'paginado_nutricionista_model.dart';
 
@@ -51,6 +52,8 @@ class _PaginadoNutricionistaWidgetState
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return StreamBuilder<List<PacienteRecord>>(
       stream: queryPacienteRecord(),
       builder: (context, snapshot) {
@@ -122,15 +125,14 @@ class _PaginadoNutricionistaWidgetState
                       GoRouter.of(context).clearRedirectLocation();
 
                       context.goNamedAuth(
-                          HomepageWidget.routeName, context.mounted);
+                          LoginWidget.routeName, context.mounted);
 
                       return;
                     } else {
                       return;
                     }
 
-                    context.goNamedAuth(
-                        HomepageWidget.routeName, context.mounted);
+                    context.goNamedAuth(LoginWidget.routeName, context.mounted);
                   },
                   child: Icon(
                     Icons.arrow_back,
@@ -272,7 +274,7 @@ class _PaginadoNutricionistaWidgetState
                               child: Padding(
                                 padding: EdgeInsets.all(15.0),
                                 child: Text(
-                                  'CPF do(a) Paciente',
+                                  'Nome do(a) Paciente',
                                   style: FlutterFlowTheme.of(context)
                                       .bodyMedium
                                       .override(
@@ -571,6 +573,10 @@ class _PaginadoNutricionistaWidgetState
                                         _model.nomePaciente =
                                             _model.campoCPFTextController.text;
                                         safeSetState(() {});
+                                        _model.pacienteData =
+                                            await PacienteRecord
+                                                .getDocumentOnce(FFAppState()
+                                                    .pacientePesquisa!);
                                         _model.campoCPFTextController?.clear();
                                       } else {
                                         FFAppState().pacientePesquisa = null;
@@ -597,6 +603,8 @@ class _PaginadoNutricionistaWidgetState
                                           },
                                         );
                                       }
+
+                                      safeSetState(() {});
                                     },
                                     text: 'Verificar',
                                     options: FFButtonOptions(
@@ -803,6 +811,117 @@ class _PaginadoNutricionistaWidgetState
                                                       .fontStyle,
                                             ),
                                       ),
+                                      if (_model.pacienteData?.reference !=
+                                          null)
+                                        Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          children: [
+                                            Text(
+                                              valueOrDefault<String>(
+                                                _model
+                                                    .pacienteData?.tipoOperacao,
+                                                '...',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                            ),
+                                            Text(
+                                              valueOrDefault<String>(
+                                                _model
+                                                    .pacienteData?.dataOperacao,
+                                                '...',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                            ),
+                                            Text(
+                                              valueOrDefault<String>(
+                                                _model.pacienteData?.email,
+                                                '...',
+                                              ),
+                                              style:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        font: GoogleFonts.inter(
+                                                          fontWeight:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontWeight,
+                                                          fontStyle:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMedium
+                                                                  .fontStyle,
+                                                        ),
+                                                        letterSpacing: 0.0,
+                                                        fontWeight:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontWeight,
+                                                        fontStyle:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMedium
+                                                                .fontStyle,
+                                                      ),
+                                            ),
+                                          ],
+                                        ),
                                     ],
                                   ),
                                 ),
@@ -847,7 +966,7 @@ class _PaginadoNutricionistaWidgetState
                                   highlightColor: Colors.transparent,
                                   onTap: () async {
                                     context.pushNamed(
-                                        TipodesuplementodiarioWidget.routeName);
+                                        SuplementacaoDiariaWidget.routeName);
                                   },
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
@@ -1035,6 +1154,122 @@ class _PaginadoNutricionistaWidgetState
                                       ),
                                       Text(
                                         'Histórico de Suplementações',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              font: GoogleFonts.interTight(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(height: 8.0)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).success,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context
+                                        .pushNamed(AgendaNutriWidget.routeName);
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_month,
+                                        color: FlutterFlowTheme.of(context)
+                                            .success,
+                                        size: 32.0,
+                                      ),
+                                      Text(
+                                        'Agenda Paciente ',
+                                        textAlign: TextAlign.center,
+                                        style: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              font: GoogleFonts.interTight(
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .titleSmall
+                                                        .fontStyle,
+                                              ),
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(height: 8.0)),
+                                  ),
+                                ),
+                              ),
+                            ),
+                            Container(
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: FlutterFlowTheme.of(context)
+                                    .secondaryBackground,
+                                borderRadius: BorderRadius.circular(12.0),
+                                border: Border.all(
+                                  color: FlutterFlowTheme.of(context).success,
+                                  width: 2.0,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: EdgeInsets.all(16.0),
+                                child: InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context
+                                        .pushNamed(HistoricoWidget.routeName);
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.assessment,
+                                        color: FlutterFlowTheme.of(context)
+                                            .success,
+                                        size: 32.0,
+                                      ),
+                                      Text(
+                                        'Relatórios do Questionario',
                                         textAlign: TextAlign.center,
                                         style: FlutterFlowTheme.of(context)
                                             .titleSmall
@@ -1331,7 +1566,8 @@ class _PaginadoNutricionistaWidgetState
                               hoverColor: Colors.transparent,
                               highlightColor: Colors.transparent,
                               onTap: () async {
-                                context.pushNamed(HistoricoWidget.routeName);
+                                context
+                                    .pushNamed(ChecagemGraficoWidget.routeName);
                               },
                               child: Container(
                                 width: double.infinity,
@@ -1356,7 +1592,7 @@ class _PaginadoNutricionistaWidgetState
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Icon(
-                                            Icons.assessment_outlined,
+                                            Icons.insert_chart,
                                             color: FlutterFlowTheme.of(context)
                                                 .success,
                                             size: 24.0,
@@ -1367,7 +1603,7 @@ class _PaginadoNutricionistaWidgetState
                                                 CrossAxisAlignment.start,
                                             children: [
                                               Text(
-                                                'Relatórios do Questionario',
+                                                'Relatorio de ocorrencias',
                                                 style:
                                                     FlutterFlowTheme.of(context)
                                                         .titleSmall
@@ -1393,7 +1629,7 @@ class _PaginadoNutricionistaWidgetState
                                                         ),
                                               ),
                                               Text(
-                                                'Evolução e resultados obtidos',
+                                                'Veja as ocorrencias dos sintomas',
                                                 style: FlutterFlowTheme.of(
                                                         context)
                                                     .bodySmall

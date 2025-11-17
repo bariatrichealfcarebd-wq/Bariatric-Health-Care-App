@@ -51,14 +51,27 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
   String? Function(BuildContext, String?)? textController7Validator;
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode8;
-  TextEditingController? emailTextController;
-  String? Function(BuildContext, String?)? emailTextControllerValidator;
+  TextEditingController? textFieldTextController;
+  String? Function(BuildContext, String?)? textFieldTextControllerValidator;
   // State field(s) for TextFieldSenha widget.
   FocusNode? textFieldSenhaFocusNode;
   TextEditingController? textFieldSenhaTextController;
   late bool textFieldSenhaVisibility;
   String? Function(BuildContext, String?)?
       textFieldSenhaTextControllerValidator;
+  String? _textFieldSenhaTextControllerValidator(
+      BuildContext context, String? val) {
+    if (val == null || val.isEmpty) {
+      return 'Senha is required';
+    }
+
+    if (val.length < 8) {
+      return 'Requires at least 8 characters.';
+    }
+
+    return null;
+  }
+
   // State field(s) for TextField widget.
   FocusNode? textFieldFocusNode9;
   TextEditingController? confirmPasswordTextController;
@@ -79,6 +92,8 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
   @override
   void initState(BuildContext context) {
     textFieldSenhaVisibility = false;
+    textFieldSenhaTextControllerValidator =
+        _textFieldSenhaTextControllerValidator;
     passwordVisibility = false;
   }
 
@@ -106,7 +121,7 @@ class Cadastro2Model extends FlutterFlowModel<Cadastro2Widget> {
     textController7?.dispose();
 
     textFieldFocusNode8?.dispose();
-    emailTextController?.dispose();
+    textFieldTextController?.dispose();
 
     textFieldSenhaFocusNode?.dispose();
     textFieldSenhaTextController?.dispose();

@@ -182,201 +182,139 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                             padding: EdgeInsets.all(10.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.max,
-                              mainAxisAlignment: MainAxisAlignment.end,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    border: Border.all(
-                                      color:
-                                          FlutterFlowTheme.of(context).success,
-                                      width: 2.0,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.all(5.0),
-                                    child: InkWell(
-                                      splashColor: Colors.transparent,
-                                      focusColor: Colors.transparent,
-                                      hoverColor: Colors.transparent,
-                                      highlightColor: Colors.transparent,
-                                      onTap: () async {
-                                        final _datePickedDate =
-                                            await showDatePicker(
-                                          context: context,
-                                          initialDate: (_model.dataFiltrar ??
-                                              DateTime.now()),
-                                          firstDate: DateTime(1900),
-                                          lastDate: DateTime(2050),
-                                          builder: (context, child) {
-                                            return wrapInMaterialDatePickerTheme(
-                                              context,
-                                              child!,
-                                              headerBackgroundColor:
-                                                  Color(0xF073B6AD),
-                                              headerForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              headerTextStyle: FlutterFlowTheme
-                                                      .of(context)
-                                                  .headlineLarge
-                                                  .override(
-                                                    font:
-                                                        GoogleFonts.interTight(
-                                                      fontWeight:
-                                                          FontWeight.w600,
-                                                      fontStyle:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .headlineLarge
-                                                              .fontStyle,
-                                                    ),
-                                                    fontSize: 32.0,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.w600,
-                                                    fontStyle:
-                                                        FlutterFlowTheme.of(
-                                                                context)
-                                                            .headlineLarge
-                                                            .fontStyle,
-                                                  ),
-                                              pickerBackgroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryBackground,
-                                              pickerForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              selectedDateTimeBackgroundColor:
-                                                  Color(0xF073B6AD),
-                                              selectedDateTimeForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .info,
-                                              actionButtonForegroundColor:
-                                                  FlutterFlowTheme.of(context)
-                                                      .primaryText,
-                                              iconSize: 24.0,
-                                            );
-                                          },
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    // Inicio
+                                    final _datePicked1Date =
+                                        await showDatePicker(
+                                      context: context,
+                                      initialDate: (_model.dataFiltrar ??
+                                          DateTime.now()),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2050),
+                                      builder: (context, child) {
+                                        return wrapInMaterialDatePickerTheme(
+                                          context,
+                                          child!,
+                                          headerBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          headerForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          headerTextStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .headlineLarge
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                                fontSize: 32.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineLarge
+                                                        .fontStyle,
+                                              ),
+                                          pickerBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          pickerForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          selectedDateTimeBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          selectedDateTimeForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          actionButtonForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          iconSize: 24.0,
                                         );
-
-                                        if (_datePickedDate != null) {
-                                          safeSetState(() {
-                                            _model.datePicked = DateTime(
-                                              _datePickedDate.year,
-                                              _datePickedDate.month,
-                                              _datePickedDate.day,
-                                            );
-                                          });
-                                        } else if (_model.datePicked != null) {
-                                          safeSetState(() {
-                                            _model.datePicked =
-                                                _model.dataFiltrar;
-                                          });
-                                        }
-                                        if ((valueOrDefault<bool>(
-                                                    currentUserDocument?.isADM,
-                                                    false) ==
-                                                true) ||
-                                            (valueOrDefault<bool>(
-                                                    currentUserDocument
-                                                        ?.admLess,
-                                                    false) ==
-                                                true)) {
-                                          _model.dataFiltrar =
-                                              _model.datePicked;
-                                          safeSetState(() {});
-                                          _model.filtronutridata =
-                                              await queryRelatoriosPdfRecordOnce(
-                                            queryBuilder:
-                                                (relatoriosPdfRecord) =>
-                                                    relatoriosPdfRecord
-                                                        .where(
-                                                          'user_cpf',
-                                                          isEqualTo: _model
-                                                              .pacienteData
-                                                              ?.uid,
-                                                        )
-                                                        .where(
-                                                          'created_at',
-                                                          isGreaterThanOrEqualTo:
-                                                              _model
-                                                                  .dataFiltrar,
-                                                        ),
-                                          );
-                                          _model.listadePdfs = _model
-                                              .filtronutridata!
-                                              .map((e) => e.reference)
-                                              .toList()
-                                              .cast<DocumentReference>();
-                                          safeSetState(() {});
-                                        } else {
-                                          _model.dataFiltrar =
-                                              _model.datePicked;
-                                          safeSetState(() {});
-                                          _model.filtrotestdata =
-                                              await queryRelatoriosPdfRecordOnce(
-                                            queryBuilder:
-                                                (relatoriosPdfRecord) =>
-                                                    relatoriosPdfRecord
-                                                        .where(
-                                                          'user_cpf',
-                                                          isEqualTo:
-                                                              currentUserUid,
-                                                        )
-                                                        .where(
-                                                          'created_at',
-                                                          isGreaterThanOrEqualTo:
-                                                              _model
-                                                                  .dataFiltrar,
-                                                        ),
-                                          );
-                                          _model.listadePdfs = _model
-                                              .filtrotestdata!
-                                              .map((e) => e.reference)
-                                              .toList()
-                                              .cast<DocumentReference>();
-                                          safeSetState(() {});
-                                        }
-
-                                        safeSetState(() {});
                                       },
+                                    );
+
+                                    if (_datePicked1Date != null) {
+                                      safeSetState(() {
+                                        _model.datePicked1 = DateTime(
+                                          _datePicked1Date.year,
+                                          _datePicked1Date.month,
+                                          _datePicked1Date.day,
+                                        );
+                                      });
+                                    } else if (_model.datePicked1 != null) {
+                                      safeSetState(() {
+                                        _model.datePicked1 = _model.dataFiltrar;
+                                      });
+                                    }
+                                    _model.dataFiltrar = _model.datePicked1;
+                                    safeSetState(() {});
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .success,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(5.0),
                                       child: Row(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
-                                          Padding(
-                                            padding: EdgeInsets.all(2.0),
-                                            child: Text(
-                                              'Filtro por data',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMedium
-                                                      .override(
-                                                        font: GoogleFonts.inter(
-                                                          fontWeight:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontWeight,
-                                                          fontStyle:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMedium
-                                                                  .fontStyle,
-                                                        ),
-                                                        color: Colors.black,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontWeight,
-                                                        fontStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .bodyMedium
-                                                                .fontStyle,
-                                                      ),
+                                          Text(
+                                            valueOrDefault<String>(
+                                              dateTimeFormat(
+                                                "d/M",
+                                                _model.dataFiltrar,
+                                                locale:
+                                                    FFLocalizations.of(context)
+                                                        .languageCode,
+                                              ),
+                                              'Data inicio',
                                             ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
                                           ),
                                           Icon(
                                             Icons.calendar_month,
@@ -387,6 +325,221 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
                                       ),
                                     ),
                                   ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    // Fim
+                                    final _datePicked2Date =
+                                        await showDatePicker(
+                                      context: context,
+                                      initialDate:
+                                          (_model.dataFim ?? DateTime.now()),
+                                      firstDate: DateTime(1900),
+                                      lastDate: DateTime(2050),
+                                      builder: (context, child) {
+                                        return wrapInMaterialDatePickerTheme(
+                                          context,
+                                          child!,
+                                          headerBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          headerForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          headerTextStyle: FlutterFlowTheme.of(
+                                                  context)
+                                              .headlineLarge
+                                              .override(
+                                                font: GoogleFonts.interTight(
+                                                  fontWeight: FontWeight.w600,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .headlineLarge
+                                                          .fontStyle,
+                                                ),
+                                                fontSize: 32.0,
+                                                letterSpacing: 0.0,
+                                                fontWeight: FontWeight.w600,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .headlineLarge
+                                                        .fontStyle,
+                                              ),
+                                          pickerBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .secondaryBackground,
+                                          pickerForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          selectedDateTimeBackgroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primary,
+                                          selectedDateTimeForegroundColor:
+                                              FlutterFlowTheme.of(context).info,
+                                          actionButtonForegroundColor:
+                                              FlutterFlowTheme.of(context)
+                                                  .primaryText,
+                                          iconSize: 24.0,
+                                        );
+                                      },
+                                    );
+
+                                    if (_datePicked2Date != null) {
+                                      safeSetState(() {
+                                        _model.datePicked2 = DateTime(
+                                          _datePicked2Date.year,
+                                          _datePicked2Date.month,
+                                          _datePicked2Date.day,
+                                        );
+                                      });
+                                    } else if (_model.datePicked2 != null) {
+                                      safeSetState(() {
+                                        _model.datePicked2 = _model.dataFim;
+                                      });
+                                    }
+                                    _model.dataFim = _model.datePicked2;
+                                    safeSetState(() {});
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10.0),
+                                      border: Border.all(
+                                        color: FlutterFlowTheme.of(context)
+                                            .success,
+                                        width: 2.0,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.all(5.0),
+                                      child: Row(
+                                        mainAxisSize: MainAxisSize.max,
+                                        children: [
+                                          Text(
+                                            valueOrDefault<String>(
+                                              dateTimeFormat(
+                                                "d/M",
+                                                _model.dataFim,
+                                                locale:
+                                                    FFLocalizations.of(context)
+                                                        .languageCode,
+                                              ),
+                                              'Data fim',
+                                            ),
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  font: GoogleFonts.inter(
+                                                    fontWeight:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontWeight,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodyMedium
+                                                            .fontStyle,
+                                                  ),
+                                                  color: Colors.black,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontWeight,
+                                                  fontStyle:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .fontStyle,
+                                                ),
+                                          ),
+                                          Icon(
+                                            Icons.calendar_month,
+                                            color: Colors.black,
+                                            size: 24.0,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                FlutterFlowIconButton(
+                                  borderRadius: 8.0,
+                                  fillColor:
+                                      FlutterFlowTheme.of(context).success,
+                                  icon: Icon(
+                                    Icons.check_sharp,
+                                    color: FlutterFlowTheme.of(context).info,
+                                    size: 24.0,
+                                  ),
+                                  onPressed: () async {
+                                    if ((valueOrDefault<bool>(
+                                                currentUserDocument?.isADM,
+                                                false) ==
+                                            true) ||
+                                        (valueOrDefault<bool>(
+                                                currentUserDocument?.admLess,
+                                                false) ==
+                                            true)) {
+                                      _model.filtroDataNutri =
+                                          await queryRelatoriosPdfRecordOnce(
+                                        queryBuilder: (relatoriosPdfRecord) =>
+                                            relatoriosPdfRecord
+                                                .where(
+                                                  'user_cpf',
+                                                  isEqualTo:
+                                                      _model.pacienteData?.uid,
+                                                )
+                                                .where(
+                                                  'created_at',
+                                                  isGreaterThanOrEqualTo:
+                                                      _model.dataFiltrar,
+                                                )
+                                                .where(
+                                                  'created_at',
+                                                  isLessThan: _model.dataFim,
+                                                ),
+                                      );
+                                      _model.listadePdfs = _model
+                                          .filtroDataNutri!
+                                          .map((e) => e.reference)
+                                          .toList()
+                                          .cast<DocumentReference>();
+                                      safeSetState(() {});
+                                    } else {
+                                      _model.filtropacienteData =
+                                          await queryRelatoriosPdfRecordOnce(
+                                        queryBuilder: (relatoriosPdfRecord) =>
+                                            relatoriosPdfRecord
+                                                .where(
+                                                  'user_cpf',
+                                                  isEqualTo: currentUserUid,
+                                                )
+                                                .where(
+                                                  'created_at',
+                                                  isGreaterThanOrEqualTo:
+                                                      _model.dataFiltrar,
+                                                )
+                                                .where(
+                                                  'created_at',
+                                                  isLessThan: _model.dataFim,
+                                                ),
+                                      );
+                                      _model.listadePdfs = _model
+                                          .filtropacienteData!
+                                          .map((e) => e.reference)
+                                          .toList()
+                                          .cast<DocumentReference>();
+                                      safeSetState(() {});
+                                    }
+
+                                    safeSetState(() {});
+                                  },
                                 ),
                               ].divide(SizedBox(width: 5.0)),
                             ),

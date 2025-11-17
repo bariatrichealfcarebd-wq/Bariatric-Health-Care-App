@@ -7,7 +7,7 @@ const secretName =
   "projects/12166217223/secrets/ENCRYPTION_KEY/versions/latest";
 let cachedEncryptionKey;
 const IV_LENGTH = 16;
-
+// inicia a função
 async function getEncryptionKey() {
   if (cachedEncryptionKey) return cachedEncryptionKey;
   try {
@@ -25,7 +25,7 @@ async function getEncryptionKey() {
     throw new HttpsError("internal", "Erro de configuração do servidor.");
   }
 }
-
+// verefica e se o usuario tem o token com vereficação SDK
 exports.encryptData = onCall(async (request) => {
   if (!request.auth || request.auth.token.isADM !== true) {
     throw new HttpsError(
@@ -42,7 +42,7 @@ exports.encryptData = onCall(async (request) => {
         'A função precisa de ser chamada com um argumento "text" do tipo string.',
       );
     }
-
+    //inica a criptografia aes-256-cbc
     const encryptionKey = await getEncryptionKey();
     const iv = crypto.randomBytes(IV_LENGTH);
     const cipher = crypto.createCipheriv(

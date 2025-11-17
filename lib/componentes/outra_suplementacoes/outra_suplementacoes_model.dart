@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/componentes/abas/datepicker_popover/datepicker_popover_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'outra_suplementacoes_widget.dart' show OutraSuplementacoesWidget;
@@ -38,6 +39,9 @@ class OutraSuplementacoesModel
   FFUploadedFile uploadedLocalFile_uploadDataTp2 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataTp2 = '';
+
+  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
 
   @override
   void initState(BuildContext context) {

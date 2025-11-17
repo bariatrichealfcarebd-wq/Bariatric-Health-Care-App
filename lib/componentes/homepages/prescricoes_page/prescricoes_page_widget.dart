@@ -1,6 +1,7 @@
 import '/componentes/abas/menu/menu_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+import '/terminar/notificacao/notificacao_widget.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -89,7 +90,7 @@ class _PrescricoesPageWidgetState extends State<PrescricoesPageWidget> {
                                           insetPadding: EdgeInsets.zero,
                                           backgroundColor: Colors.transparent,
                                           alignment: AlignmentDirectional(
-                                                  0.0, -1.0)
+                                                  0.0, 0.0)
                                               .resolve(
                                                   Directionality.of(context)),
                                           child: GestureDetector(
@@ -143,19 +144,52 @@ class _PrescricoesPageWidgetState extends State<PrescricoesPageWidget> {
                                           .fontStyle,
                                     ),
                               ),
-                              Container(
-                                width: 50.0,
-                                height: 50.0,
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  shape: BoxShape.circle,
-                                ),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, 0.0),
-                                  child: Icon(
-                                    Icons.notifications_outlined,
-                                    color: Color(0xFF4B986C),
-                                    size: 28.0,
+                              Builder(
+                                builder: (context) => InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    await showDialog(
+                                      context: context,
+                                      builder: (dialogContext) {
+                                        return Dialog(
+                                          elevation: 0,
+                                          insetPadding: EdgeInsets.zero,
+                                          backgroundColor: Colors.transparent,
+                                          alignment: AlignmentDirectional(
+                                                  0.0, 0.0)
+                                              .resolve(
+                                                  Directionality.of(context)),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              FocusScope.of(dialogContext)
+                                                  .unfocus();
+                                              FocusManager.instance.primaryFocus
+                                                  ?.unfocus();
+                                            },
+                                            child: NotificacaoWidget(),
+                                          ),
+                                        );
+                                      },
+                                    );
+                                  },
+                                  child: Container(
+                                    width: 50.0,
+                                    height: 50.0,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle,
+                                    ),
+                                    child: Align(
+                                      alignment: AlignmentDirectional(0.0, 0.0),
+                                      child: Icon(
+                                        Icons.notifications_outlined,
+                                        color: Color(0xFF4B986C),
+                                        size: 28.0,
+                                      ),
+                                    ),
                                   ),
                                 ),
                               ),
@@ -281,7 +315,7 @@ class _PrescricoesPageWidgetState extends State<PrescricoesPageWidget> {
                                         highlightColor: Colors.transparent,
                                         onTap: () async {
                                           context.pushNamed(
-                                              TipodesuplementodiarioWidget
+                                              SuplementacaoDiariaWidget
                                                   .routeName);
                                         },
                                         child: Column(
@@ -718,6 +752,57 @@ class _PrescricoesPageWidgetState extends State<PrescricoesPageWidget> {
                                       ),
                                       Text(
                                         'Alimentação',
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodySmall
+                                            .override(
+                                              font: GoogleFonts.inter(
+                                                fontWeight: FontWeight.w500,
+                                                fontStyle:
+                                                    FlutterFlowTheme.of(context)
+                                                        .bodySmall
+                                                        .fontStyle,
+                                              ),
+                                              color: Color(0xFF384E58),
+                                              fontSize: 10.0,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w500,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodySmall
+                                                      .fontStyle,
+                                            ),
+                                      ),
+                                    ].divide(SizedBox(height: 4.0)),
+                                  ),
+                                ),
+                                InkWell(
+                                  splashColor: Colors.transparent,
+                                  focusColor: Colors.transparent,
+                                  hoverColor: Colors.transparent,
+                                  highlightColor: Colors.transparent,
+                                  onTap: () async {
+                                    context.pushNamed(
+                                      AgendaWidget.routeName,
+                                      extra: <String, dynamic>{
+                                        kTransitionInfoKey: TransitionInfo(
+                                          hasTransition: true,
+                                          transitionType:
+                                              PageTransitionType.leftToRight,
+                                        ),
+                                      },
+                                    );
+                                  },
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.calendar_month,
+                                        color: Color(0xFF384E58),
+                                        size: 24.0,
+                                      ),
+                                      Text(
+                                        'Agenda',
                                         style: FlutterFlowTheme.of(context)
                                             .bodySmall
                                             .override(

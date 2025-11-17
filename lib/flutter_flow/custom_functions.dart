@@ -73,3 +73,47 @@ List<String> gerarKeywords(
 
   return palavrasChave;
 }
+
+List<dynamic> prepararDadosGrafico(List<GraficosSintomasRecord>? docs) {
+  // Cria um mapa para contar a frequência
+  // 1. ADICIONE ESTA LINHA AQUI NO TOPO:
+  // Se 'docs' for nulo (erro de rede, etc), usa uma lista vazia []
+  docs = docs ?? [];
+
+  // Cria um mapa para contar a frequência
+  Map<String, int> contador = {};
+
+  for (var doc in docs) {
+    // Acessa o campo nomeSintoma direto do documento
+    var sintoma = doc.nomeSintoma;
+
+    if (sintoma != null && sintoma.isNotEmpty) {
+      // Se já existe, soma 1. Se não, inicia com 1.
+      contador[sintoma] = (contador[sintoma] ?? 0) + 1;
+    }
+  }
+
+  // Transforma no formato que o Gráfico do FlutterFlow exige
+  List<dynamic> resultado = [];
+
+  contador.forEach((key, value) {
+    // --- LÓGICA DE CORTAR O TEXTO ---
+    String nomeExibicao = key;
+
+    // Se o nome for maior que 15 letras, corta e adiciona "..."
+    if (nomeExibicao.length > 15) {
+      nomeExibicao = nomeExibicao.substring(0, 15) + '...';
+    }
+    // --------------------------------
+
+    resultado.add({
+      'name': nomeExibicao, // Usa o nome curto aqui
+      'value': value // A quantidade
+    });
+  });
+
+  // Ordena do maior para o menor para ficar bonito
+  resultado.sort((a, b) => b['value'].compareTo(a['value']));
+
+  return resultado;
+}

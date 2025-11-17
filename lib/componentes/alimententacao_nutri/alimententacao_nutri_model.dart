@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'alimententacao_nutri_widget.dart' show AlimententacaoNutriWidget;
@@ -39,6 +40,9 @@ class AlimententacaoNutriModel
   FFUploadedFile uploadedLocalFile_uploadDataTp5 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataTp5 = '';
+
+  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
 
   @override
   void initState(BuildContext context) {}

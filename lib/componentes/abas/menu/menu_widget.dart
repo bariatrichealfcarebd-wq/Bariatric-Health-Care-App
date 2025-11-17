@@ -300,8 +300,7 @@ class _MenuWidgetState extends State<MenuWidget> {
                   await authManager.signOut();
                   GoRouter.of(context).clearRedirectLocation();
 
-                  context.pushNamedAuth(
-                      HomepageWidget.routeName, context.mounted);
+                  context.goNamedAuth(LoginWidget.routeName, context.mounted);
                 },
                 child: Container(
                   width: double.infinity,

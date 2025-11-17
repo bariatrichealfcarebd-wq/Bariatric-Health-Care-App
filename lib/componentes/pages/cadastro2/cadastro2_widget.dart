@@ -60,7 +60,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
     _model.textController7 ??= TextEditingController();
     _model.textFieldFocusNode7 ??= FocusNode();
 
-    _model.emailTextController ??= TextEditingController();
+    _model.textFieldTextController ??= TextEditingController();
     _model.textFieldFocusNode8 ??= FocusNode();
 
     _model.textFieldSenhaTextController ??= TextEditingController();
@@ -399,7 +399,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                           .bodyMedium
                                           .fontStyle,
                                     ),
-                                maxLength: 8,
+                                maxLength: 10,
                                 buildCounter: (context,
                                         {required currentLength,
                                         required isFocused,
@@ -708,7 +708,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                     .asValidator(context),
                               ),
                             TextFormField(
-                              controller: _model.emailTextController,
+                              controller: _model.textFieldTextController,
                               focusNode: _model.textFieldFocusNode8,
                               textInputAction: TextInputAction.next,
                               obscureText: false,
@@ -775,12 +775,31 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                       required isFocused,
                                       maxLength}) =>
                                   null,
-                              validator: _model.emailTextControllerValidator
+                              validator: _model.textFieldTextControllerValidator
                                   .asValidator(context),
                             ),
                             TextFormField(
                               controller: _model.textFieldSenhaTextController,
                               focusNode: _model.textFieldSenhaFocusNode,
+                              onFieldSubmitted: (_) async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('senha'),
+                                      content: Text(
+                                          'a senha precisa ter 8 caracteres'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              },
                               autofillHints: [AutofillHints.newPassword],
                               textInputAction: TextInputAction.next,
                               obscureText: !_model.textFieldSenhaVisibility,
@@ -1140,7 +1159,8 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         .instance
                                         .httpsCallable('createPatientAccount')
                                         .call({
-                                      "email": _model.emailTextController.text,
+                                      "email":
+                                          _model.textFieldTextController.text,
                                       "password": _model
                                           .confirmPasswordTextController.text,
                                       "nome": _model.textController1.text,
@@ -1164,6 +1184,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                           _model.textController3.text,
                                       "tipoOperacao":
                                           _model.textController7.text,
+                                      "termo": false,
                                     });
                                     _model.cloudFunctionwx2 =
                                         CreatePatientAccountCloudFunctionCallResponse(
@@ -1245,7 +1266,8 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                         .instance
                                         .httpsCallable('createPatientAccount')
                                         .call({
-                                      "email": _model.emailTextController.text,
+                                      "email":
+                                          _model.textFieldTextController.text,
                                       "password": _model
                                           .confirmPasswordTextController.text,
                                       "nome": _model.textController1.text,
@@ -1269,6 +1291,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                                           _model.textController3.text,
                                       "tipoOperacao":
                                           _model.textController7.text,
+                                      "termo": false,
                                     });
                                     _model.cloudFunctionwx1 =
                                         CreatePatientAccountCloudFunctionCallResponse(
@@ -1419,7 +1442,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
                               final user =
                                   await authManager.createAccountWithEmail(
                                 context,
-                                _model.emailTextController.text,
+                                _model.textFieldTextController.text,
                                 _model.textFieldSenhaTextController.text,
                               );
                               if (user == null) {

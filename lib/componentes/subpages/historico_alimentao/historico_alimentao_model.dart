@@ -31,6 +31,8 @@ class HistoricoAlimentaoModel
           int index, Function(DocumentReference) updateFn) =>
       listadePdfs[index] = updateFn(listadePdfs[index]);
 
+  DateTime? dataFim;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in HistoricoAlimentao widget.
@@ -39,11 +41,12 @@ class HistoricoAlimentaoModel
   List<RelatoriosPdfRecord>? filtronutri;
   // Stores action output result for [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
   List<RelatoriosPdfRecord>? filtroteste2;
-  DateTime? datePicked;
-  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
-  List<RelatoriosPdfRecord>? filtronutridata;
-  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
-  List<RelatoriosPdfRecord>? filtrotestdata;
+  DateTime? datePicked1;
+  DateTime? datePicked2;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<RelatoriosPdfRecord>? filtroDataNutri;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<RelatoriosPdfRecord>? filtropacienteData;
   // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.
   List<RelatoriosPdfRecord>? filtronutri3;
   // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.

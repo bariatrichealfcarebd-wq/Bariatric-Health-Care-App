@@ -4,6 +4,10 @@ import 'agenda_widget.dart' show AgendaWidget;
 import 'package:flutter/material.dart';
 
 class AgendaModel extends FlutterFlowModel<AgendaWidget> {
+  ///  Local state fields for this page.
+
+  DocumentReference? dataConsulta;
+
   ///  State fields for stateful widgets in this page.
 
   // State field(s) for Calendar widget.

@@ -22,19 +22,22 @@ class HistoricoModel extends FlutterFlowModel<HistoricoWidget> {
           int index, Function(DocumentReference) updateFn) =>
       relatoriosList[index] = updateFn(relatoriosList[index]);
 
+  DateTime? dataFim;
+
   ///  State fields for stateful widgets in this page.
 
   // Stores action output result for [Backend Call - Read Document] action in Historico widget.
   PacienteRecord? pacienteData;
   // Stores action output result for [Firestore Query - Query a collection] action in Historico widget.
-  List<RelatoriosQuestionarioRecord>? filtronutri;
+  List<RelatoriosQuestionarioRecord>? filtrodaNutri;
   // Stores action output result for [Firestore Query - Query a collection] action in Historico widget.
   List<RelatoriosQuestionarioRecord>? filtroteste;
-  DateTime? datePicked;
-  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
-  List<RelatoriosQuestionarioRecord>? filtronutridata;
-  // Stores action output result for [Firestore Query - Query a collection] action in Row widget.
-  List<RelatoriosQuestionarioRecord>? filtrotestdata;
+  DateTime? datePicked1;
+  DateTime? datePicked2;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<RelatoriosQuestionarioRecord>? filtroDataNutri;
+  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  List<RelatoriosQuestionarioRecord>? filtropacienteData;
 
   @override
   void initState(BuildContext context) {}

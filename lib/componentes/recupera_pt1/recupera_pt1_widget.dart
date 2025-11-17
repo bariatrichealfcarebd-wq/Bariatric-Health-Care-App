@@ -1,9 +1,13 @@
 import '/auth/firebase_auth/auth_util.dart';
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'dart:async';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'recupera_pt1_model.dart';
 export 'recupera_pt1_model.dart';
@@ -28,8 +32,11 @@ class _RecuperaPt1WidgetState extends State<RecuperaPt1Widget> {
     super.initState();
     _model = createModel(context, () => RecuperaPt1Model());
 
-    _model.emailTextController ??= TextEditingController();
-    _model.emailFocusNode ??= FocusNode();
+    _model.emailTextController1 ??= TextEditingController();
+    _model.emailFocusNode1 ??= FocusNode();
+
+    _model.emailTextController2 ??= TextEditingController();
+    _model.emailFocusNode2 ??= FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -181,8 +188,8 @@ class _RecuperaPt1WidgetState extends State<RecuperaPt1Widget> {
                           padding: EdgeInsetsDirectional.fromSTEB(
                               0.0, 32.0, 0.0, 0.0),
                           child: TextFormField(
-                            controller: _model.emailTextController,
-                            focusNode: _model.emailFocusNode,
+                            controller: _model.emailTextController1,
+                            focusNode: _model.emailFocusNode1,
                             autofocus: false,
                             textInputAction: TextInputAction.next,
                             obscureText: false,
@@ -280,7 +287,114 @@ class _RecuperaPt1WidgetState extends State<RecuperaPt1Widget> {
                                 ),
                             keyboardType: TextInputType.emailAddress,
                             cursorColor: Color(0xFF4B986C),
-                            validator: _model.emailTextControllerValidator
+                            validator: _model.emailTextController1Validator
+                                .asValidator(context),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 32.0, 0.0, 0.0),
+                          child: TextFormField(
+                            controller: _model.emailTextController2,
+                            focusNode: _model.emailFocusNode2,
+                            autofocus: false,
+                            textInputAction: TextInputAction.next,
+                            obscureText: false,
+                            decoration: InputDecoration(
+                              labelText: 'CPF',
+                              labelStyle: FlutterFlowTheme.of(context)
+                                  .labelMedium
+                                  .override(
+                                    font: GoogleFonts.plusJakartaSans(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .labelMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF0B191E),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .labelMedium
+                                        .fontStyle,
+                                  ),
+                              hintText: 'Digite seu CPF',
+                              hintStyle: FlutterFlowTheme.of(context)
+                                  .bodyMedium
+                                  .override(
+                                    font: GoogleFonts.plusJakartaSans(
+                                      fontWeight: FontWeight.w500,
+                                      fontStyle: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .fontStyle,
+                                    ),
+                                    color: Color(0xFF384E58),
+                                    fontSize: 14.0,
+                                    letterSpacing: 0.0,
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                              enabledBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFC8D7E4),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFF4B986C),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFC4454D),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              focusedErrorBorder: OutlineInputBorder(
+                                borderSide: BorderSide(
+                                  color: Color(0xFFC4454D),
+                                  width: 1.0,
+                                ),
+                                borderRadius: BorderRadius.circular(12.0),
+                              ),
+                              filled: true,
+                              fillColor: Colors.white,
+                              contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                  16.0, 16.0, 16.0, 16.0),
+                              prefixIcon: Icon(
+                                FontAwesomeIcons.idBadge,
+                                color: Color(0xFF384E58),
+                                size: 20.0,
+                              ),
+                            ),
+                            style: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  font: GoogleFonts.plusJakartaSans(
+                                    fontWeight: FontWeight.w500,
+                                    fontStyle: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .fontStyle,
+                                  ),
+                                  color: Color(0xFF0B191E),
+                                  fontSize: 14.0,
+                                  letterSpacing: 0.0,
+                                  fontWeight: FontWeight.w500,
+                                  fontStyle: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .fontStyle,
+                                ),
+                            keyboardType: TextInputType.emailAddress,
+                            cursorColor: Color(0xFF4B986C),
+                            validator: _model.emailTextController2Validator
                                 .asValidator(context),
                           ),
                         ),
@@ -289,20 +403,68 @@ class _RecuperaPt1WidgetState extends State<RecuperaPt1Widget> {
                               0.0, 32.0, 0.0, 0.0),
                           child: FFButtonWidget(
                             onPressed: () async {
-                              if (_model.emailTextController.text.isEmpty) {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: Text(
-                                      'Email required!',
-                                    ),
-                                  ),
-                                );
-                                return;
-                              }
-                              await authManager.resetPassword(
-                                email: _model.emailTextController.text,
-                                context: context,
+                              unawaited(
+                                () async {
+                                  try {
+                                    final result = await FirebaseFunctions
+                                        .instance
+                                        .httpsCallable(
+                                            'verificarUsuarioParaReset')
+                                        .call({
+                                      "email": _model.emailTextController1.text,
+                                      "cpf": _model.emailTextController2.text,
+                                    });
+                                    _model.verificacaoResult =
+                                        VerificarUsuarioParaResetCloudFunctionCallResponse(
+                                      data: result.data,
+                                      succeeded: true,
+                                      resultAsString: result.data.toString(),
+                                      jsonBody: result.data,
+                                    );
+                                  } on FirebaseFunctionsException catch (error) {
+                                    _model.verificacaoResult =
+                                        VerificarUsuarioParaResetCloudFunctionCallResponse(
+                                      errorCode: error.code,
+                                      succeeded: false,
+                                    );
+                                  }
+                                }(),
                               );
+                              if (_model.verificacaoResult!.succeeded!) {
+                                if (_model.emailTextController1.text.isEmpty) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                      content: Text(
+                                        'Email required!',
+                                      ),
+                                    ),
+                                  );
+                                  return;
+                                }
+                                await authManager.resetPassword(
+                                  email: _model.emailTextController1.text,
+                                  context: context,
+                                );
+                                await showDialog(
+                                  context: context,
+                                  builder: (alertDialogContext) {
+                                    return AlertDialog(
+                                      title: Text('Sucesso'),
+                                      content: Text(
+                                          'Um link foi envidado para seu emaiç'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(alertDialogContext),
+                                          child: Text('Ok'),
+                                        ),
+                                      ],
+                                    );
+                                  },
+                                );
+                              }
+
+                              safeSetState(() {});
                             },
                             text: 'Receber link de redefinição',
                             options: FFButtonOptions(

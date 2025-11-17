@@ -5,10 +5,9 @@ import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import '/terminar/notificacao/notificacao_widget.dart';
 import '/index.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'alimentacao_page_model.dart';
 export 'alimentacao_page_model.dart';
@@ -34,21 +33,6 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
   void initState() {
     super.initState();
     _model = createModel(context, () => AlimentacaoPageModel());
-
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      _model.carregarPdf = await queryRelatoriosPdfRecordOnce(
-        queryBuilder: (relatoriosPdfRecord) => relatoriosPdfRecord
-            .where(
-              'user_cpf',
-              isEqualTo: valueOrDefault(currentUserDocument?.cpf, ''),
-            )
-            .orderBy('created_at', descending: true),
-        singleRecord: true,
-      ).then((s) => s.firstOrNull);
-      _model.pdfshow = _model.carregarPdf?.reference;
-      safeSetState(() {});
-    });
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -86,7 +70,7 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Align(
-                        alignment: AlignmentDirectional(-1.0, 0.0),
+                        alignment: AlignmentDirectional(0.0, 0.0),
                         child: Builder(
                           builder: (context) => InkWell(
                             splashColor: Colors.transparent,
@@ -101,7 +85,7 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
                                     elevation: 0,
                                     insetPadding: EdgeInsets.zero,
                                     backgroundColor: Colors.transparent,
-                                    alignment: AlignmentDirectional(0.0, -1.0)
+                                    alignment: AlignmentDirectional(0.0, 0.0)
                                         .resolve(Directionality.of(context)),
                                     child: GestureDetector(
                                       onTap: () {
@@ -134,19 +118,49 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
                           ),
                         ),
                       ),
-                      Container(
-                        width: 50.0,
-                        height: 50.0,
-                        decoration: BoxDecoration(
-                          color: Colors.white,
-                          shape: BoxShape.circle,
-                        ),
-                        child: Align(
-                          alignment: AlignmentDirectional(0.0, 0.0),
-                          child: Icon(
-                            Icons.notifications_outlined,
-                            color: Color(0xFF4B986C),
-                            size: 28.0,
+                      Builder(
+                        builder: (context) => InkWell(
+                          splashColor: Colors.transparent,
+                          focusColor: Colors.transparent,
+                          hoverColor: Colors.transparent,
+                          highlightColor: Colors.transparent,
+                          onTap: () async {
+                            await showDialog(
+                              context: context,
+                              builder: (dialogContext) {
+                                return Dialog(
+                                  elevation: 0,
+                                  insetPadding: EdgeInsets.zero,
+                                  backgroundColor: Colors.transparent,
+                                  alignment: AlignmentDirectional(0.0, 0.0)
+                                      .resolve(Directionality.of(context)),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      FocusScope.of(dialogContext).unfocus();
+                                      FocusManager.instance.primaryFocus
+                                          ?.unfocus();
+                                    },
+                                    child: NotificacaoWidget(),
+                                  ),
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: 50.0,
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Align(
+                              alignment: AlignmentDirectional(0.0, 0.0),
+                              child: Icon(
+                                Icons.notifications_outlined,
+                                color: Color(0xFF4B986C),
+                                size: 28.0,
+                              ),
+                            ),
                           ),
                         ),
                       ),
@@ -406,169 +420,214 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   16.0, 16.0, 16.0, 16.0),
-                                          child: Column(
-                                            mainAxisSize: MainAxisSize.min,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              if (_model.pdfshow != null)
-                                                Material(
-                                                  color: Colors.transparent,
-                                                  elevation: 1.0,
-                                                  shape: RoundedRectangleBorder(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                  ),
-                                                  child: Container(
-                                                    width: double.infinity,
+                                          child: StreamBuilder<
+                                              List<RelatoriosPdfRecord>>(
+                                            stream: queryRelatoriosPdfRecord(
+                                              queryBuilder:
+                                                  (relatoriosPdfRecord) =>
+                                                      relatoriosPdfRecord
+                                                          .where(
+                                                            'user_cpf',
+                                                            isEqualTo:
+                                                                currentUserUid,
+                                                          )
+                                                          .orderBy('created_at',
+                                                              descending: true),
+                                              singleRecord: true,
+                                            ),
+                                            builder: (context, snapshot) {
+                                              // Customize what your widget looks like when it's loading.
+                                              if (!snapshot.hasData) {
+                                                return Center(
+                                                  child: SizedBox(
+                                                    width: 50.0,
                                                     height: 50.0,
-                                                    decoration: BoxDecoration(
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .alternate,
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                      valueColor:
+                                                          AlwaysStoppedAnimation<
+                                                              Color>(
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .primary,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
+                                              List<RelatoriosPdfRecord>
+                                                  columnRelatoriosPdfRecordList =
+                                                  snapshot.data!;
+                                              // Return an empty Container when the item does not exist.
+                                              if (snapshot.data!.isEmpty) {
+                                                return Container();
+                                              }
+                                              final columnRelatoriosPdfRecord =
+                                                  columnRelatoriosPdfRecordList
+                                                          .isNotEmpty
+                                                      ? columnRelatoriosPdfRecordList
+                                                          .first
+                                                      : null;
+
+                                              return Column(
+                                                mainAxisSize: MainAxisSize.min,
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.center,
+                                                children: [
+                                                  Material(
+                                                    color: Colors.transparent,
+                                                    elevation: 1.0,
+                                                    shape:
+                                                        RoundedRectangleBorder(
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               8.0),
                                                     ),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  12.0,
-                                                                  12.0,
-                                                                  12.0,
-                                                                  12.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .spaceBetween,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          Expanded(
-                                                            flex: 1,
-                                                            child: Flex(
-                                                              direction:
-                                                                  Axis.vertical,
-                                                              mainAxisSize:
-                                                                  MainAxisSize
-                                                                      .max,
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [
-                                                                Expanded(
-                                                                  flex: 1,
-                                                                  child: Row(
-                                                                    mainAxisSize:
-                                                                        MainAxisSize
-                                                                            .min,
-                                                                    mainAxisAlignment:
-                                                                        MainAxisAlignment
-                                                                            .start,
-                                                                    children: [
-                                                                      Icon(
-                                                                        Icons
-                                                                            .picture_as_pdf_rounded,
-                                                                        color: Color(
-                                                                            0xFFFF5963),
-                                                                        size:
-                                                                            24.0,
-                                                                      ),
-                                                                      Opacity(
-                                                                        opacity:
-                                                                            0.5,
-                                                                        child:
-                                                                            Text(
-                                                                          valueOrDefault<
-                                                                              String>(
-                                                                            _model.carregarPdf?.nomeDoArquivo,
-                                                                            'nome_do_arquivo',
-                                                                          ),
-                                                                          textAlign:
-                                                                              TextAlign.center,
-                                                                          style: FlutterFlowTheme.of(context)
-                                                                              .displaySmall
-                                                                              .override(
-                                                                                font: GoogleFonts.interTight(
+                                                    child: Container(
+                                                      width: double.infinity,
+                                                      height: 50.0,
+                                                      decoration: BoxDecoration(
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .alternate,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(8.0),
+                                                      ),
+                                                      child: Padding(
+                                                        padding:
+                                                            EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    12.0,
+                                                                    12.0,
+                                                                    12.0),
+                                                        child: Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.max,
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceBetween,
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .center,
+                                                          children: [
+                                                            Expanded(
+                                                              flex: 1,
+                                                              child: Flex(
+                                                                direction: Axis
+                                                                    .vertical,
+                                                                mainAxisSize:
+                                                                    MainAxisSize
+                                                                        .max,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: [
+                                                                  Expanded(
+                                                                    flex: 1,
+                                                                    child: Row(
+                                                                      mainAxisSize:
+                                                                          MainAxisSize
+                                                                              .min,
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      children:
+                                                                          [
+                                                                        Icon(
+                                                                          Icons
+                                                                              .picture_as_pdf_rounded,
+                                                                          color:
+                                                                              Color(0xFFFF5963),
+                                                                          size:
+                                                                              24.0,
+                                                                        ),
+                                                                        Opacity(
+                                                                          opacity:
+                                                                              0.5,
+                                                                          child:
+                                                                              Text(
+                                                                            valueOrDefault<String>(
+                                                                              columnRelatoriosPdfRecord?.nomeDoArquivo,
+                                                                              'nome do arquivo',
+                                                                            ),
+                                                                            textAlign:
+                                                                                TextAlign.center,
+                                                                            style: FlutterFlowTheme.of(context).displaySmall.override(
+                                                                                  font: GoogleFonts.interTight(
+                                                                                    fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
+                                                                                    fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
+                                                                                  ),
+                                                                                  color: FlutterFlowTheme.of(context).primaryText,
+                                                                                  fontSize: 16.0,
+                                                                                  letterSpacing: 0.0,
                                                                                   fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
                                                                                   fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
                                                                                 ),
-                                                                                color: FlutterFlowTheme.of(context).primaryText,
-                                                                                fontSize: 16.0,
-                                                                                letterSpacing: 0.0,
-                                                                                fontWeight: FlutterFlowTheme.of(context).displaySmall.fontWeight,
-                                                                                fontStyle: FlutterFlowTheme.of(context).displaySmall.fontStyle,
-                                                                              ),
+                                                                          ),
                                                                         ),
-                                                                      ),
-                                                                    ].divide(SizedBox(
-                                                                        width:
-                                                                            8.0)),
+                                                                      ].divide(SizedBox(
+                                                                              width: 8.0)),
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              ],
+                                                                ],
+                                                              ),
                                                             ),
-                                                          ),
-                                                          FlutterFlowIconButton(
-                                                            buttonSize: 40.0,
-                                                            icon: Icon(
-                                                              Icons
-                                                                  .download_rounded,
-                                                              color: FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .success,
-                                                              size: 20.0,
+                                                            FlutterFlowIconButton(
+                                                              buttonSize: 40.0,
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .download_rounded,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .success,
+                                                                size: 20.0,
+                                                              ),
+                                                              onPressed:
+                                                                  () async {
+                                                                var confirmDialogResponse =
+                                                                    await showDialog<
+                                                                            bool>(
+                                                                          context:
+                                                                              context,
+                                                                          builder:
+                                                                              (alertDialogContext) {
+                                                                            return AlertDialog(
+                                                                              title: Text('Tem certeza?'),
+                                                                              content: Text('Você está presente a baixar o arquivo'),
+                                                                              actions: [
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, false),
+                                                                                  child: Text('Não'),
+                                                                                ),
+                                                                                TextButton(
+                                                                                  onPressed: () => Navigator.pop(alertDialogContext, true),
+                                                                                  child: Text('Sim'),
+                                                                                ),
+                                                                              ],
+                                                                            );
+                                                                          },
+                                                                        ) ??
+                                                                        false;
+                                                                if (confirmDialogResponse) {
+                                                                  await launchURL(
+                                                                      columnRelatoriosPdfRecord!
+                                                                          .pdfUrl);
+                                                                }
+                                                              },
                                                             ),
-                                                            onPressed:
-                                                                () async {
-                                                              var confirmDialogResponse =
-                                                                  await showDialog<
-                                                                          bool>(
-                                                                        context:
-                                                                            context,
-                                                                        builder:
-                                                                            (alertDialogContext) {
-                                                                          return AlertDialog(
-                                                                            title:
-                                                                                Text('Tem certeza?'),
-                                                                            content:
-                                                                                Text('Você está presente a baixar o arquivo'),
-                                                                            actions: [
-                                                                              TextButton(
-                                                                                onPressed: () => Navigator.pop(alertDialogContext, false),
-                                                                                child: Text('Não'),
-                                                                              ),
-                                                                              TextButton(
-                                                                                onPressed: () => Navigator.pop(alertDialogContext, true),
-                                                                                child: Text('Sim'),
-                                                                              ),
-                                                                            ],
-                                                                          );
-                                                                        },
-                                                                      ) ??
-                                                                      false;
-                                                              if (confirmDialogResponse) {
-                                                                await launchURL(
-                                                                    _model
-                                                                        .carregarPdf!
-                                                                        .pdfUrl);
-                                                              }
-                                                            },
-                                                          ),
-                                                        ],
+                                                          ],
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                            ].divide(SizedBox(height: 8.0)),
+                                                ].divide(SizedBox(height: 8.0)),
+                                              );
+                                            },
                                           ),
                                         ),
                                       ),
@@ -791,6 +850,64 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
                                                               .fontStyle,
                                                     ),
                                                     color: Color(0xFF4B986C),
+                                                    fontSize: 10.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.w500,
+                                                    fontStyle:
+                                                        FlutterFlowTheme.of(
+                                                                context)
+                                                            .bodySmall
+                                                            .fontStyle,
+                                                  ),
+                                            ),
+                                          ].divide(SizedBox(height: 4.0)),
+                                        ),
+                                      ),
+                                      InkWell(
+                                        splashColor: Colors.transparent,
+                                        focusColor: Colors.transparent,
+                                        hoverColor: Colors.transparent,
+                                        highlightColor: Colors.transparent,
+                                        onTap: () async {
+                                          context.pushNamed(
+                                            AgendaWidget.routeName,
+                                            extra: <String, dynamic>{
+                                              kTransitionInfoKey:
+                                                  TransitionInfo(
+                                                hasTransition: true,
+                                                transitionType:
+                                                    PageTransitionType
+                                                        .leftToRight,
+                                              ),
+                                            },
+                                          );
+                                        },
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Icon(
+                                              Icons.calendar_month,
+                                              color: Color(0xFF384E58),
+                                              size: 24.0,
+                                            ),
+                                            Text(
+                                              'Agenda',
+                                              style: FlutterFlowTheme.of(
+                                                      context)
+                                                  .bodySmall
+                                                  .override(
+                                                    font: GoogleFonts.inter(
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                      fontStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .bodySmall
+                                                              .fontStyle,
+                                                    ),
+                                                    color: Color(0xFF384E58),
                                                     fontSize: 10.0,
                                                     letterSpacing: 0.0,
                                                     fontWeight: FontWeight.w500,

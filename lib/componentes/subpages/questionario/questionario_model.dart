@@ -24,6 +24,8 @@ class QuestionarioModel extends FlutterFlowModel<QuestionarioWidget> {
 
   ///  State fields for stateful widgets in this page.
 
+  // Stores action output result for [Custom Action - gerarRelatorioParaGraficos] action in Button widget.
+  String? gerarGrafico;
   // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
   List<LigacaoSintomaRecord>? documentoParaApagar;
 

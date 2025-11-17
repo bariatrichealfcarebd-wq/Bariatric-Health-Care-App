@@ -20,11 +20,9 @@ import 'package:flutter/services.dart' show rootBundle;
 // Importe o intl para formatação de data
 import 'package:intl/intl.dart';
 
-// MUDANÇA 1: A função agora recebe o 'patientUid' em vez de 'userName' e 'userId'.
-// O 'patientUid' é o campo 'uid' do seu documento de Paciente.
 Future<String> gerarPDFparaStorage(
   List<DocumentReference> selectedItems,
-  String patientUid, // <-- Este é o 'uid' do paciente
+  String patientUid, // <-- alterado para receber apenas id
 ) async {
   try {
     // 1. Obter os dados dos documentos selecionados
@@ -46,31 +44,27 @@ Future<String> gerarPDFparaStorage(
       return Future.error('UID do paciente está ausente.');
     }
 
-    // 2. Gerar o conteúdo do PDF, passando o UID do paciente para pseudonimização
-    // MUDANÇA 2: Passando 'patientUid' em vez de 'userName'
     final pdf = await _generatePdfContent(selectedDocs, patientUid);
-    final Uint8List pdfBytes = await pdf.save();
+    final Uint8List pdfBytes = await pdf.save(); // recebe uid do paciente
 
-    // 3. Fazer o upload para o Firebase Storage usando o UID
-    // MUDANÇA 3: O nome do arquivo é genérico e o caminho usa o UID do paciente.
     final timestamp = DateTime.now().toIso8601String();
-    final fileName = 'relatorio_$timestamp.pdf';
-    // O caminho agora é 'relatorios/[UID_DO_PACIENTE]/[NOME_DO_ARQUIVO]'
-    // Isso facilita apagar todos os relatórios de um usuário
-    final filePath = 'relatorios/$patientUid/$fileName';
+    final fileName =
+        'relatorio_$timestamp.pdf'; // Gera o nome do arquivo no banco de dados
+
+    final filePath =
+        'relatorios/$patientUid/$fileName'; // facilita deleção caso necessario
 
     final ref = FirebaseStorage.instance.ref().child(filePath);
     await ref.putData(pdfBytes);
-    final String downloadUrl = await ref.getDownloadURL();
+    final String downloadUrl =
+        await ref.getDownloadURL(); // pega url e salva no banco de dados
 
-    // 4. Guardar as informações do PDF na coleção de índice
-    // MUDANÇA 4: Removemos 'nome_paciente' e usamos 'user_id' (que é o patientUid)
+    //Guardar as informações do PDF na coleção de índice
     await FirebaseFirestore.instance.collection('relatorios_Questionario').add({
-      // 'nome_paciente': userName, // <-- REMOVIDO (PII)
       'url_pdf': downloadUrl,
       'data_criacao': FieldValue.serverTimestamp(),
       'nome_do_arquivo': fileName,
-      'user_id': patientUid, // <-- Este é o link para o paciente (pseudônimo)
+      'user_id': patientUid,
     });
 
     return downloadUrl;
@@ -80,8 +74,7 @@ Future<String> gerarPDFparaStorage(
   }
 }
 
-// Função auxiliar com todas as personalizações de layout
-// MUDANÇA 5: Recebe 'patientUid' em vez de 'userName'
+// Personalização do PDF
 Future<pw.Document> _generatePdfContent(
     List<DocumentSnapshot> documents, String patientUid) async {
   final pdf = pw.Document();
@@ -108,8 +101,7 @@ Future<pw.Document> _generatePdfContent(
     ];
   }).toList();
 
-  // MUDANÇA 6: Gerar um ID curto e pseudônimo para exibir no PDF
-  // (Ex: usa os últimos 6 caracteres do UID)
+  // Gerar um ID curto e pseudônimo para exibir no PDF
   final shortUid = patientUid.length > 6
       ? patientUid.substring(patientUid.length - 6)
       : patientUid;
@@ -136,7 +128,6 @@ Future<pw.Document> _generatePdfContent(
               style: pw.TextStyle(font: boldFont, fontSize: 20)),
           pw.SizedBox(height: 10),
 
-          // MUDANÇA 7: Substituído o nome pelo ID pseudônimo
           pw.Text('Paciente ID: ...$shortUid',
               style: pw.TextStyle(font: font, fontSize: 14)),
 
@@ -147,7 +138,7 @@ Future<pw.Document> _generatePdfContent(
           pw.Divider(height: 30),
           pw.SizedBox(height: 10),
 
-          // Tabela (sem alteração)
+          // Tabela
           pw.Table(
             border: pw.TableBorder.all(color: PdfColors.grey300),
             columnWidths: {

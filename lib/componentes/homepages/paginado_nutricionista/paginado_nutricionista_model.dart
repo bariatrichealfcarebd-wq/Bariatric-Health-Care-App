@@ -1,3 +1,4 @@
+import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/index.dart';
 import 'paginado_nutricionista_widget.dart' show PaginadoNutricionistaWidget;
@@ -36,6 +37,8 @@ class PaginadoNutricionistaModel
   String? Function(BuildContext, String?)? campoCPFTextControllerValidator;
   // Stores action output result for [Custom Action - buscarPacientesDoNutri] action in campoCPF widget.
   List<DocumentReference>? refsPacientesDaBusca;
+  // Stores action output result for [Backend Call - Read Document] action in Button widget.
+  PacienteRecord? pacienteData;
 
   @override
   void initState(BuildContext context) {}

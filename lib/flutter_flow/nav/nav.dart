@@ -78,13 +78,13 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
       refreshListenable: appStateNotifier,
       navigatorKey: appNavigatorKey,
       errorBuilder: (context, state) =>
-          appStateNotifier.loggedIn ? CarregandoWidget() : HomepageWidget(),
+          appStateNotifier.loggedIn ? CarregandoWidget() : LoginWidget(),
       routes: [
         FFRoute(
           name: '_initialize',
           path: '/',
           builder: (context, _) =>
-              appStateNotifier.loggedIn ? CarregandoWidget() : HomepageWidget(),
+              appStateNotifier.loggedIn ? CarregandoWidget() : LoginWidget(),
         ),
         FFRoute(
           name: HomepageWidget.routeName,
@@ -117,9 +117,9 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => AlimentacaoPageWidget(),
         ),
         FFRoute(
-          name: TipodesuplementodiarioWidget.routeName,
-          path: TipodesuplementodiarioWidget.routePath,
-          builder: (context, params) => TipodesuplementodiarioWidget(),
+          name: SuplementacaoDiariaWidget.routeName,
+          path: SuplementacaoDiariaWidget.routePath,
+          builder: (context, params) => SuplementacaoDiariaWidget(),
         ),
         FFRoute(
           name: SuplementacaoCutaneaWidget.routeName,
@@ -205,6 +205,26 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           name: CarregandoWidget.routeName,
           path: CarregandoWidget.routePath,
           builder: (context, params) => CarregandoWidget(),
+        ),
+        FFRoute(
+          name: AgendaNutriWidget.routeName,
+          path: AgendaNutriWidget.routePath,
+          builder: (context, params) => AgendaNutriWidget(),
+        ),
+        FFRoute(
+          name: ChecagemGraficoWidget.routeName,
+          path: ChecagemGraficoWidget.routePath,
+          builder: (context, params) => ChecagemGraficoWidget(),
+        ),
+        FFRoute(
+          name: GrafIcoPesoWidget.routeName,
+          path: GrafIcoPesoWidget.routePath,
+          builder: (context, params) => GrafIcoPesoWidget(),
+        ),
+        FFRoute(
+          name: PesoRegistroWidget.routeName,
+          path: PesoRegistroWidget.routePath,
+          builder: (context, params) => PesoRegistroWidget(),
         )
       ].map((r) => r.toRoute(appStateNotifier)).toList(),
     );
@@ -377,7 +397,7 @@ class FFRoute {
 
           if (requireAuth && !appStateNotifier.loggedIn) {
             appStateNotifier.setRedirectLocationIfUnset(state.uri.toString());
-            return '/homepage';
+            return '/login';
           }
           return null;
         },

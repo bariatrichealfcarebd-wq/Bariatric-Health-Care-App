@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import 'homepage_model.dart';
 export 'homepage_model.dart';
 
@@ -57,6 +58,8 @@ class _HomepageWidgetState extends State<HomepageWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.watch<FFAppState>();
+
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
@@ -129,68 +132,74 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Flexible(
-                          child: Row(
-                            mainAxisSize: MainAxisSize.max,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Flexible(
-                                child: Text(
-                                  'Eu li e aceito os',
-                                  style: FlutterFlowTheme.of(context)
-                                      .bodyMedium
-                                      .override(
-                                        font: GoogleFonts.inter(
-                                          fontWeight:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontWeight,
-                                          fontStyle:
-                                              FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .fontStyle,
-                                        ),
-                                        letterSpacing: 0.0,
-                                        fontWeight: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontWeight,
-                                        fontStyle: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .fontStyle,
+                          child: Builder(
+                            builder: (context) => InkWell(
+                              splashColor: Colors.transparent,
+                              focusColor: Colors.transparent,
+                              hoverColor: Colors.transparent,
+                              highlightColor: Colors.transparent,
+                              onTap: () async {
+                                await showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return Dialog(
+                                      elevation: 0,
+                                      insetPadding: EdgeInsets.zero,
+                                      backgroundColor: Colors.transparent,
+                                      alignment: AlignmentDirectional(0.0, 0.0)
+                                          .resolve(Directionality.of(context)),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          FocusScope.of(dialogContext)
+                                              .unfocus();
+                                          FocusManager.instance.primaryFocus
+                                              ?.unfocus();
+                                        },
+                                        child: TermopopupWidget(),
                                       ),
-                                ),
-                              ),
-                              Builder(
-                                builder: (context) => InkWell(
-                                  splashColor: Colors.transparent,
-                                  focusColor: Colors.transparent,
-                                  hoverColor: Colors.transparent,
-                                  highlightColor: Colors.transparent,
-                                  onTap: () async {
-                                    await showDialog(
-                                      context: context,
-                                      builder: (dialogContext) {
-                                        return Dialog(
-                                          elevation: 0,
-                                          insetPadding: EdgeInsets.zero,
-                                          backgroundColor: Colors.transparent,
-                                          alignment: AlignmentDirectional(
-                                                  0.0, 0.0)
-                                              .resolve(
-                                                  Directionality.of(context)),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              FocusScope.of(dialogContext)
-                                                  .unfocus();
-                                              FocusManager.instance.primaryFocus
-                                                  ?.unfocus();
-                                            },
-                                            child: TermopopupWidget(),
-                                          ),
-                                        );
-                                      },
                                     );
                                   },
-                                  child: Text(
+                                );
+
+                                if (FFAppState().Termo == true) {
+                                  safeSetState(() {
+                                    _model.checkboxValue = true;
+                                  });
+                                }
+                              },
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      'Eu li e aceito os',
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            font: GoogleFonts.inter(
+                                              fontWeight:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontWeight,
+                                              fontStyle:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .fontStyle,
+                                            ),
+                                            letterSpacing: 0.0,
+                                            fontWeight:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontWeight,
+                                            fontStyle:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMedium
+                                                    .fontStyle,
+                                          ),
+                                    ),
+                                  ),
+                                  Text(
                                     'Termos e condições e LGPD:',
                                     style: FlutterFlowTheme.of(context)
                                         .bodyLarge
@@ -213,48 +222,52 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                                           decoration: TextDecoration.underline,
                                         ),
                                   ),
-                                ),
-                              ),
-                              Theme(
-                                data: ThemeData(
-                                  checkboxTheme: CheckboxThemeData(
-                                    visualDensity: VisualDensity.compact,
-                                    materialTapTargetSize:
-                                        MaterialTapTargetSize.shrinkWrap,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(4.0),
+                                  Theme(
+                                    data: ThemeData(
+                                      checkboxTheme: CheckboxThemeData(
+                                        visualDensity: VisualDensity.compact,
+                                        materialTapTargetSize:
+                                            MaterialTapTargetSize.shrinkWrap,
+                                        shape: RoundedRectangleBorder(
+                                          borderRadius:
+                                              BorderRadius.circular(4.0),
+                                        ),
+                                      ),
+                                      unselectedWidgetColor:
+                                          FlutterFlowTheme.of(context)
+                                              .alternate,
+                                    ),
+                                    child: Checkbox(
+                                      value: _model.checkboxValue ??=
+                                          FFAppState().Termo,
+                                      onChanged: (newValue) async {
+                                        safeSetState(() =>
+                                            _model.checkboxValue = newValue!);
+                                        if (newValue!) {
+                                          _model.termosAceitos = true;
+                                          safeSetState(() {});
+                                        }
+                                      },
+                                      side: (FlutterFlowTheme.of(context)
+                                                  .alternate !=
+                                              null)
+                                          ? BorderSide(
+                                              width: 2,
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .alternate,
+                                            )
+                                          : null,
+                                      activeColor: Color(0xFF50A394),
+                                      checkColor:
+                                          FlutterFlowTheme.of(context).info,
                                     ),
                                   ),
-                                  unselectedWidgetColor:
-                                      FlutterFlowTheme.of(context).alternate,
-                                ),
-                                child: Checkbox(
-                                  value: _model.checkboxValue ??= false,
-                                  onChanged: (newValue) async {
-                                    safeSetState(
-                                        () => _model.checkboxValue = newValue!);
-                                    if (newValue!) {
-                                      _model.termosAceitos =
-                                          _model.checkboxValue!;
-                                      safeSetState(() {});
-                                    }
-                                  },
-                                  side: (FlutterFlowTheme.of(context)
-                                              .alternate !=
-                                          null)
-                                      ? BorderSide(
-                                          width: 2,
-                                          color: FlutterFlowTheme.of(context)
-                                              .alternate,
-                                        )
-                                      : null,
-                                  activeColor: Color(0xFF50A394),
-                                  checkColor: FlutterFlowTheme.of(context).info,
-                                ),
+                                ]
+                                    .divide(SizedBox(width: 4.0))
+                                    .around(SizedBox(width: 4.0)),
                               ),
-                            ]
-                                .divide(SizedBox(width: 4.0))
-                                .around(SizedBox(width: 4.0)),
+                            ),
                           ),
                         ),
                         if (!(isWeb
@@ -266,12 +279,15 @@ class _HomepageWidgetState extends State<HomepageWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   16.0, 12.0, 16.0, 16.0),
                               child: FFButtonWidget(
-                                onPressed: !_model.termosAceitos
+                                onPressed: (FFAppState().Termo == false)
                                     ? null
                                     : () async {
-                                        if (_model.checkboxValue == true) {
-                                          context
-                                              .pushNamed(LoginWidget.routeName);
+                                        if (_model.termosAceitos == true) {
+                                          if (Navigator.of(context).canPop()) {
+                                            context.pop();
+                                          }
+                                          context.pushNamed(
+                                              CarregandoWidget.routeName);
                                         } else {
                                           await showDialog(
                                             context: context,

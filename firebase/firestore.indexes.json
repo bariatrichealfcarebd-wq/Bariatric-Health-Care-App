@@ -1,6 +1,20 @@
 {
   "indexes": [
     {
+      "collectionGroup": "relatorios_pdf",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_cpf",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_at",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
       "collectionGroup": "notificacoes",
       "queryScope": "COLLECTION",
       "fields": [
@@ -19,16 +33,16 @@
       ]
     },
     {
-      "collectionGroup": "relatorios_pdf",
+      "collectionGroup": "graficosSintomas",
       "queryScope": "COLLECTION",
       "fields": [
         {
-          "fieldPath": "user_cpf",
+          "fieldPath": "user_id",
           "order": "ASCENDING"
         },
         {
-          "fieldPath": "created_at",
-          "order": "DESCENDING"
+          "fieldPath": "mes_numero",
+          "order": "ASCENDING"
         }
       ]
     },

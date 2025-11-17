@@ -1,5 +1,6 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/backend/firebase_storage/storage.dart';
 import '/componentes/abas/calendario_pop/calendario_pop_widget.dart';
 import '/componentes/abas/datepicker_popover/datepicker_popover_widget.dart';
@@ -9,6 +10,7 @@ import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import 'package:aligned_dialog/aligned_dialog.dart';
+import 'package:cloud_functions/cloud_functions.dart';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -131,6 +133,7 @@ class _SuplementacaoCutaneaWidgetState
                     height: 610.0,
                     decoration: BoxDecoration(
                       color: FlutterFlowTheme.of(context).secondaryBackground,
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
                     child: Padding(
                       padding:
@@ -675,6 +678,50 @@ class _SuplementacaoCutaneaWidgetState
                                                     createDay:
                                                         getCurrentTimestamp,
                                                   ));
+                                              await showDialog(
+                                                context: context,
+                                                builder: (alertDialogContext) {
+                                                  return AlertDialog(
+                                                    title: Text('Sucesso'),
+                                                    content: Text(
+                                                        'Suplementação criada com sucesso!'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () =>
+                                                            Navigator.pop(
+                                                                alertDialogContext),
+                                                        child: Text('Ok'),
+                                                      ),
+                                                    ],
+                                                  );
+                                                },
+                                              );
+                                              try {
+                                                final result =
+                                                    await FirebaseFunctions
+                                                        .instance
+                                                        .httpsCallable(
+                                                            'enviarNotificacaoGenerica')
+                                                        .call({
+                                                  "destinatarioUid":
+                                                      _model.pacienteData?.uid,
+                                                  "titulo": 'notificação',
+                                                  "mensagem":
+                                                      'nova notificação na aba de suplementação cutânea',
+                                                  "tipo":
+                                                      'SUPLEMENTACAO_CUTANEA',
+                                                });
+                                                _model.cloudFunctionj1a =
+                                                    EnviarNotificacaoGenericaCloudFunctionCallResponse(
+                                                  succeeded: true,
+                                                );
+                                              } on FirebaseFunctionsException catch (error) {
+                                                _model.cloudFunctionj1a =
+                                                    EnviarNotificacaoGenericaCloudFunctionCallResponse(
+                                                  errorCode: error.code,
+                                                  succeeded: false,
+                                                );
+                                              }
                                             }
                                           } else {
                                             await showDialog(
@@ -698,6 +745,8 @@ class _SuplementacaoCutaneaWidgetState
                                             );
                                             context.safePop();
                                           }
+
+                                          safeSetState(() {});
                                         },
                                         text: 'Salvar',
                                         options: FFButtonOptions(

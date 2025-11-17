@@ -14,3 +14,9 @@ exports.onFirstPatientLogin = onFirstPatientLogin.onFirstPatientLogin;
 const marcarNotificacoesComoLidas = require("./marcar_notificacoes_como_lidas.js");
 exports.marcarNotificacoesComoLidas =
   marcarNotificacoesComoLidas.marcarNotificacoesComoLidas;
+const enviarNotificacaoGenerica = require("./enviar_notificacao_generica.js");
+exports.enviarNotificacaoGenerica =
+  enviarNotificacaoGenerica.enviarNotificacaoGenerica;
+const verificarUsuarioParaReset = require("./verificar_usuario_para_reset.js");
+exports.verificarUsuarioParaReset =
+  verificarUsuarioParaReset.verificarUsuarioParaReset;

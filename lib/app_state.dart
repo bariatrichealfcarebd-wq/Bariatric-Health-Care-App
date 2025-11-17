@@ -110,4 +110,10 @@ class FFAppState extends ChangeNotifier {
   set concordaParam(bool value) {
     _concordaParam = value;
   }
+
+  bool _Termo = false;
+  bool get Termo => _Termo;
+  set Termo(bool value) {
+    _Termo = value;
+  }
 }

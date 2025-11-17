@@ -1,12 +1,10 @@
-import '/auth/firebase_auth/auth_util.dart';
-import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
+import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
-import 'package:cloud_functions/cloud_functions.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_keyboard_visibility/flutter_keyboard_visibility.dart';
@@ -502,52 +500,30 @@ class _LoginWidgetState extends State<LoginWidget> {
                             16.0, 12.0, 16.0, 24.0),
                         child: FFButtonWidget(
                           onPressed: () async {
-                            GoRouter.of(context).prepareAuthEvent();
-
-                            final user = await authManager.signInWithEmail(
-                              context,
+                            _model.loginResult = await actions.manualLogin(
                               _model.campoCPFTextController.text,
                               _model.campoSenhaTextController.text,
                             );
-                            if (user == null) {
-                              return;
-                            }
-
-                            if ((valueOrDefault<bool>(
-                                        currentUserDocument?.isADM, false) ==
-                                    true) ||
-                                (valueOrDefault<bool>(
-                                        currentUserDocument?.admLess, false) ==
-                                    true)) {
-                              if (Navigator.of(context).canPop()) {
-                                context.pop();
-                              }
-                              context.pushNamedAuth(
-                                  PaginadoNutricionistaWidget.routeName,
-                                  context.mounted);
+                            if (_model.loginResult == 'SUCCESS') {
+                              context.pushNamed(CarregandoWidget.routeName);
                             } else {
-                              try {
-                                final result = await FirebaseFunctions.instance
-                                    .httpsCallable('onFirstPatientLogin')
-                                    .call({});
-                                _model.primeiroacesso =
-                                    OnFirstPatientLoginCloudFunctionCallResponse(
-                                  succeeded: true,
-                                );
-                              } on FirebaseFunctionsException catch (error) {
-                                _model.primeiroacesso =
-                                    OnFirstPatientLoginCloudFunctionCallResponse(
-                                  errorCode: error.code,
-                                  succeeded: false,
-                                );
-                              }
-
-                              if (Navigator.of(context).canPop()) {
-                                context.pop();
-                              }
-                              context.pushNamedAuth(
-                                  PrescricoesPageWidget.routeName,
-                                  context.mounted);
+                              await showDialog(
+                                context: context,
+                                builder: (alertDialogContext) {
+                                  return AlertDialog(
+                                    title: Text('Erro no Login'),
+                                    content:
+                                        Text('Email ou senha estão incorretas'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () =>
+                                            Navigator.pop(alertDialogContext),
+                                        child: Text('Ok'),
+                                      ),
+                                    ],
+                                  );
+                                },
+                              );
                             }
 
                             safeSetState(() {});

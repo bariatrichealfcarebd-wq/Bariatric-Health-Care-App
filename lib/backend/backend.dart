@@ -19,7 +19,9 @@ import 'schema/relatorios_questionario_record.dart';
 import 'schema/nutri_paciente_record.dart';
 import 'schema/notificacoes_record.dart';
 import 'schema/disponibilidade_record.dart';
-import 'schema/eventos_record.dart';
+import 'schema/agend_eventos_record.dart';
+import 'schema/graficos_sintomas_record.dart';
+import 'schema/paciente_peso_record.dart';
 
 export 'dart:async' show StreamSubscription;
 export 'package:cloud_firestore/cloud_firestore.dart' hide Order;
@@ -42,7 +44,9 @@ export 'schema/relatorios_questionario_record.dart';
 export 'schema/nutri_paciente_record.dart';
 export 'schema/notificacoes_record.dart';
 export 'schema/disponibilidade_record.dart';
-export 'schema/eventos_record.dart';
+export 'schema/agend_eventos_record.dart';
+export 'schema/graficos_sintomas_record.dart';
+export 'schema/paciente_peso_record.dart';
 
 /// Functions to query PacienteRecords (as a Stream and as a Future).
 Future<int> queryPacienteRecordCount({
@@ -563,41 +567,112 @@ Future<List<DisponibilidadeRecord>> queryDisponibilidadeRecordOnce({
       singleRecord: singleRecord,
     );
 
-/// Functions to query EventosRecords (as a Stream and as a Future).
-Future<int> queryEventosRecordCount({
-  DocumentReference? parent,
+/// Functions to query AgendEventosRecords (as a Stream and as a Future).
+Future<int> queryAgendEventosRecordCount({
   Query Function(Query)? queryBuilder,
   int limit = -1,
 }) =>
     queryCollectionCount(
-      EventosRecord.collection(parent),
+      AgendEventosRecord.collection,
       queryBuilder: queryBuilder,
       limit: limit,
     );
 
-Stream<List<EventosRecord>> queryEventosRecord({
-  DocumentReference? parent,
+Stream<List<AgendEventosRecord>> queryAgendEventosRecord({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollection(
-      EventosRecord.collection(parent),
-      EventosRecord.fromSnapshot,
+      AgendEventosRecord.collection,
+      AgendEventosRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,
     );
 
-Future<List<EventosRecord>> queryEventosRecordOnce({
-  DocumentReference? parent,
+Future<List<AgendEventosRecord>> queryAgendEventosRecordOnce({
   Query Function(Query)? queryBuilder,
   int limit = -1,
   bool singleRecord = false,
 }) =>
     queryCollectionOnce(
-      EventosRecord.collection(parent),
-      EventosRecord.fromSnapshot,
+      AgendEventosRecord.collection,
+      AgendEventosRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query GraficosSintomasRecords (as a Stream and as a Future).
+Future<int> queryGraficosSintomasRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      GraficosSintomasRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<GraficosSintomasRecord>> queryGraficosSintomasRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      GraficosSintomasRecord.collection,
+      GraficosSintomasRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<GraficosSintomasRecord>> queryGraficosSintomasRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      GraficosSintomasRecord.collection,
+      GraficosSintomasRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+/// Functions to query PacientePesoRecords (as a Stream and as a Future).
+Future<int> queryPacientePesoRecordCount({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+}) =>
+    queryCollectionCount(
+      PacientePesoRecord.collection,
+      queryBuilder: queryBuilder,
+      limit: limit,
+    );
+
+Stream<List<PacientePesoRecord>> queryPacientePesoRecord({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollection(
+      PacientePesoRecord.collection,
+      PacientePesoRecord.fromSnapshot,
+      queryBuilder: queryBuilder,
+      limit: limit,
+      singleRecord: singleRecord,
+    );
+
+Future<List<PacientePesoRecord>> queryPacientePesoRecordOnce({
+  Query Function(Query)? queryBuilder,
+  int limit = -1,
+  bool singleRecord = false,
+}) =>
+    queryCollectionOnce(
+      PacientePesoRecord.collection,
+      PacientePesoRecord.fromSnapshot,
       queryBuilder: queryBuilder,
       limit: limit,
       singleRecord: singleRecord,

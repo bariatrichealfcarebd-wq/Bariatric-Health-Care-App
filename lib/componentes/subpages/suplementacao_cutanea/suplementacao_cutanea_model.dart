@@ -1,4 +1,5 @@
 import '/backend/backend.dart';
+import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/componentes/abas/datepicker_popover/datepicker_popover_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import 'suplementacao_cutanea_widget.dart' show SuplementacaoCutaneaWidget;
@@ -34,6 +35,9 @@ class SuplementacaoCutaneaModel
   FFUploadedFile uploadedLocalFile_uploadDataP6v =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataP6v = '';
+
+  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
 
   @override
   void initState(BuildContext context) {

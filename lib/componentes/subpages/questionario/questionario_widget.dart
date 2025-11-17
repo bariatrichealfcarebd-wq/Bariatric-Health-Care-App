@@ -945,6 +945,12 @@ class _QuestionarioWidgetState extends State<QuestionarioWidget> {
                         FFAppState().sintomasSelecionados.toList(),
                         currentUserUid,
                       );
+                      _model.gerarGrafico =
+                          await actions.gerarRelatorioParaGraficos(
+                        FFAppState().sintomasSelecionados.toList(),
+                        currentUserUid,
+                      );
+                      _shouldSetState = true;
                       _model.documentoParaApagar =
                           await queryLigacaoSintomaRecordOnce(
                         queryBuilder: (ligacaoSintomaRecord) =>
@@ -970,7 +976,7 @@ class _QuestionarioWidgetState extends State<QuestionarioWidget> {
                           return AlertDialog(
                             title: Text('Cadastrados com Sucesso'),
                             content:
-                                Text('os itens selecionado foram enviados '),
+                                Text('Os itens selecionado foram enviados '),
                             actions: [
                               TextButton(
                                 onPressed: () =>

@@ -107,6 +107,11 @@ class PacienteRecord extends FirestoreRecord {
   String get dataOperacao => _dataOperacao ?? '';
   bool hasDataOperacao() => _dataOperacao != null;
 
+  // "termos" field.
+  bool? _termos;
+  bool get termos => _termos ?? false;
+  bool hasTermos() => _termos != null;
+
   void _initializeFields() {
     _nome = snapshotData['Nome'] as String?;
     _senha = snapshotData['Senha'] as String?;
@@ -126,6 +131,7 @@ class PacienteRecord extends FirestoreRecord {
     _telefone = snapshotData['telefone'] as String?;
     _tipoOperacao = snapshotData['tipoOperacao'] as String?;
     _dataOperacao = snapshotData['dataOperacao'] as String?;
+    _termos = snapshotData['termos'] as bool?;
   }
 
   static CollectionReference get collection =>
@@ -176,6 +182,7 @@ class PacienteRecord extends FirestoreRecord {
           'telefone': snapshot.data['telefone'],
           'tipoOperacao': snapshot.data['tipoOperacao'],
           'dataOperacao': snapshot.data['dataOperacao'],
+          'termos': snapshot.data['termos'],
         },
         PacienteRecord.collection.doc(snapshot.objectID),
       );
@@ -229,6 +236,7 @@ Map<String, dynamic> createPacienteRecordData({
   String? telefone,
   String? tipoOperacao,
   String? dataOperacao,
+  bool? termos,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -249,6 +257,7 @@ Map<String, dynamic> createPacienteRecordData({
       'telefone': telefone,
       'tipoOperacao': tipoOperacao,
       'dataOperacao': dataOperacao,
+      'termos': termos,
     }.withoutNulls,
   );
 
@@ -278,7 +287,8 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e1?.especializacao == e2?.especializacao &&
         e1?.telefone == e2?.telefone &&
         e1?.tipoOperacao == e2?.tipoOperacao &&
-        e1?.dataOperacao == e2?.dataOperacao;
+        e1?.dataOperacao == e2?.dataOperacao &&
+        e1?.termos == e2?.termos;
   }
 
   @override
@@ -300,7 +310,8 @@ class PacienteRecordDocumentEquality implements Equality<PacienteRecord> {
         e?.especializacao,
         e?.telefone,
         e?.tipoOperacao,
-        e?.dataOperacao
+        e?.dataOperacao,
+        e?.termos
       ]);
 
   @override
