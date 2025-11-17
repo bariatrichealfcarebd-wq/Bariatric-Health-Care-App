@@ -31,11 +31,3 @@ O aplicativo está atualmente em **fase de testes (Beta)** e sob desenvolvimento
 
 O projeto foi construído para rodar no _framework_ **Flutter**.
 
-### Pré-requisitos
-
-1.  Ter o **Flutter** instalado e configurado em sua máquina.
-2.  Garantir que você esteja utilizando o canal de lançamento **`stable`** do Flutter.
-
-```bash
-flutter channel stable
-flutter doctor
