@@ -4,6 +4,8 @@ import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: subpágina da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import 'dart:async';
 import '/custom_code/actions/index.dart' as actions;
@@ -36,7 +38,7 @@ class _RecuperaPt1WidgetState extends State<RecuperaPt1Widget> {
     super.initState();
     _model = createModel(context, () => RecuperaPt1Model());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.temNet = await actions.checkInternet();
       if (_model.temNet == false) {

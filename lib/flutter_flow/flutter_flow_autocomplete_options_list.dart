@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:substring_highlight/substring_highlight.dart';

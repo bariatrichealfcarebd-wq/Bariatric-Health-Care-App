@@ -2,12 +2,14 @@ import '/backend/backend.dart';
 import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'questionario_widget.dart' show QuestionarioWidget;
 import 'package:flutter/material.dart';
 
 class QuestionarioModel extends FlutterFlowModel<QuestionarioWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
   /// defini se foi expandido
   bool isExpandable = false;
 
@@ -25,15 +27,15 @@ class QuestionarioModel extends FlutterFlowModel<QuestionarioWidget> {
 
   bool popupAlimentacao = false;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in Questionario widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in Questionario widget.
   bool? temNet;
-  // Stores action output result for [Custom Action - gerarRelatorioParaGraficos] action in Button widget.
+  // Armazena o resultado da ação [Custom Action - gerarRelatorioParaGraficos] action in Button widget.
   String? gerarGrafico;
-  // Stores action output result for [Firestore Query - Query a collection] action in Button widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in Button widget.
   List<LigacaoSintomaRecord>? documentoParaApagar;
-  // Stores action output result for [Cloud Function - enviarNotificacaoParaPaciente] action in Button widget.
+  // Armazena o resultado da ação [Cloud Function - enviarNotificacaoParaPaciente] action in Button widget.
   EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionndj;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

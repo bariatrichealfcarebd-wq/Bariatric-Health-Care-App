@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'lat_lng.dart';
 
 class FFPlace {

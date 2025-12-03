@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ComponenteCalendarioModel
     extends FlutterFlowModel<ComponenteCalendarioWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   FFUploadedFile? ficheiroCarregado;
 
@@ -13,21 +13,21 @@ class ComponenteCalendarioModel
 
   DateTime? horaCarregada;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Backend Call - Read Document] action in ComponenteCalendario widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in ComponenteCalendario widget.
   AgendEventosRecord? agendadados;
-  // State field(s) for Data widget.
+  // Campo(s) de estado para Data widget.
   FocusNode? dataFocusNode;
   TextEditingController? dataTextController;
   String? Function(BuildContext, String?)? dataTextControllerValidator;
   DateTime? datePicked1;
-  // State field(s) for Hora widget.
+  // Campo(s) de estado para Hora widget.
   FocusNode? horaFocusNode;
   TextEditingController? horaTextController;
   String? Function(BuildContext, String?)? horaTextControllerValidator;
   DateTime? datePicked2;
-  // State field(s) for Descr widget.
+  // Campo(s) de estado para Descr widget.
   FocusNode? descrFocusNode;
   TextEditingController? descrTextController;
   String? Function(BuildContext, String?)? descrTextControllerValidator;

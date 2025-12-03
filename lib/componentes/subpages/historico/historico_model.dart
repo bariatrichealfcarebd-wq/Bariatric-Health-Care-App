@@ -1,12 +1,14 @@
 import '/backend/backend.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: subpágina da aplicação
 import '/index.dart';
 import 'historico_widget.dart' show HistoricoWidget;
 import 'package:flutter/material.dart';
 
 class HistoricoModel extends FlutterFlowModel<HistoricoWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   bool confirmar = false;
 
@@ -26,21 +28,21 @@ class HistoricoModel extends FlutterFlowModel<HistoricoWidget> {
 
   DateTime? dataFim;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in Historico widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in Historico widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in Historico widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in Historico widget.
   PacienteRecord? pacienteData;
-  // Stores action output result for [Firestore Query - Query a collection] action in Historico widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in Historico widget.
   List<RelatoriosQuestionarioRecord>? filtrodaNutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in Historico widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in Historico widget.
   List<RelatoriosQuestionarioRecord>? filtroteste;
   DateTime? datePicked1;
   DateTime? datePicked2;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in IconButton widget.
   List<RelatoriosQuestionarioRecord>? filtroDataNutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in IconButton widget.
   List<RelatoriosQuestionarioRecord>? filtropacienteData;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

@@ -7,6 +7,8 @@ import '/backend/backend.dart';
 import 'package:stream_transform/stream_transform.dart';
 import 'firebase_auth_manager.dart';
 
+// codigo gerado automaticamente pelo flutterflow: utilitários de autenticação firebase
+
 export 'firebase_auth_manager.dart';
 
 final _authManager = FirebaseAuthManager();
@@ -30,8 +32,7 @@ String get currentJwtToken => _currentJwtToken ?? '';
 
 bool get currentUserEmailVerified => currentUser?.emailVerified ?? false;
 
-/// Create a Stream that listens to the current user's JWT Token, since Firebase
-/// generates a new token every hour.
+// Stream para atualizar o token JWT do usuário, renovado a cada hora
 String? _currentJwtToken;
 final jwtTokenStream = FirebaseAuth.instance
     .idTokenChanges()

@@ -1,38 +1,40 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'perfil_widget.dart' show PerfilWidget;
 import 'package:flutter/material.dart';
 
 class PerfilModel extends FlutterFlowModel<PerfilWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   bool editar = false;
 
   /// selecionar o dia e ele vai guardar
   DateTime? datee;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // State field(s) for nome widget.
+  // Campo(s) de estado para nome widget.
   FocusNode? nomeFocusNode;
   TextEditingController? nomeTextController;
   String? Function(BuildContext, String?)? nomeTextControllerValidator;
-  // State field(s) for data widget.
+  // Campo(s) de estado para data widget.
   FocusNode? dataFocusNode1;
   TextEditingController? dataTextController1;
   String? Function(BuildContext, String?)? dataTextController1Validator;
-  // State field(s) for data widget.
+  // Campo(s) de estado para data widget.
   FocusNode? dataFocusNode2;
   TextEditingController? dataTextController2;
   String? Function(BuildContext, String?)? dataTextController2Validator;
-  // State field(s) for data widget.
+  // Campo(s) de estado para data widget.
   FocusNode? dataFocusNode3;
   TextEditingController? dataTextController3;
   String? Function(BuildContext, String?)? dataTextController3Validator;
-  // State field(s) for data widget.
+  // Campo(s) de estado para data widget.
   FocusNode? dataFocusNode4;
   TextEditingController? dataTextController4;
   String? Function(BuildContext, String?)? dataTextController4Validator;
-  // State field(s) for email widget.
+  // Campo(s) de estado para email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;

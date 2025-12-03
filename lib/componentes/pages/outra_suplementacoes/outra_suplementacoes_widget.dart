@@ -8,6 +8,8 @@ import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/flutter_flow/upload_data.dart';
 import '/custom_code/actions/index.dart' as actions;
@@ -43,7 +45,7 @@ class _OutraSuplementacoesWidgetState extends State<OutraSuplementacoesWidget> {
     super.initState();
     _model = createModel(context, () => OutraSuplementacoesModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();

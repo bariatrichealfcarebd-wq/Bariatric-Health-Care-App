@@ -6,6 +6,8 @@ import '/componentes/abas/notificacao/notificacao_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página inicial
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
@@ -38,7 +40,7 @@ class _AlimentacaoPageWidgetState extends State<AlimentacaoPageWidget> {
     super.initState();
     _model = createModel(context, () => AlimentacaoPageModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();

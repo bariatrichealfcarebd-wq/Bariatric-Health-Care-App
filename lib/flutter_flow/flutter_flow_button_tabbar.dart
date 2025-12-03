@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'dart:math' as math;
 import 'dart:ui' show lerpDouble;
 

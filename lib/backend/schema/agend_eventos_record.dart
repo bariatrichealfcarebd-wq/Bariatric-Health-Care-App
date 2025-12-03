@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class AgendEventosRecord extends FirestoreRecord {
   AgendEventosRecord._(
     DocumentReference reference,
@@ -15,22 +17,18 @@ class AgendEventosRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "Data" field.
   DateTime? _data;
   DateTime? get data => _data;
   bool hasData() => _data != null;
 
-  // "Hora" field.
   DateTime? _hora;
   DateTime? get hora => _hora;
   bool hasHora() => _hora != null;
 
-  // "uid_Paaciente" field.
   String? _uidPaaciente;
   String get uidPaaciente => _uidPaaciente ?? '';
   bool hasUidPaaciente() => _uidPaaciente != null;
 
-  // "descricao" field.
   String? _descricao;
   String get descricao => _descricao ?? '';
   bool hasDescricao() => _descricao != null;

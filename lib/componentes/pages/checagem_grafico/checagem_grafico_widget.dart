@@ -4,6 +4,8 @@ import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_drop_down.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/form_field_controller.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -35,7 +37,7 @@ class _ChecagemGraficoWidgetState extends State<ChecagemGraficoWidget> {
     super.initState();
     _model = createModel(context, () => ChecagemGraficoModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||

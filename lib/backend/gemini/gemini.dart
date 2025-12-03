@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:google_generative_ai/google_generative_ai.dart';
 import 'package:http/http.dart' as http;
 import '/flutter_flow/flutter_flow_util.dart';
+import 'gemini_secrets.dart';
 
-const _kGeminiApiKey = 'AIzaSyB_zl0YeCCSn9VRKXGkgOu1Qq4GEOgPmnE';
+// Chave da API obtida do arquivo de segredos
+const _kGeminiApiKey = kGeminiApiKey;
 
 Future<String?> geminiGenerateText(
   BuildContext context,

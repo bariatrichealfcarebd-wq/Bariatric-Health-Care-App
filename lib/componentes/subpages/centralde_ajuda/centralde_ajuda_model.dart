@@ -1,15 +1,17 @@
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: subpágina da aplicação
 import '/index.dart';
 import 'centralde_ajuda_widget.dart' show CentraldeAjudaWidget;
 import 'package:flutter/material.dart';
 
 class CentraldeAjudaModel extends FlutterFlowModel<CentraldeAjudaWidget> {
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in CentraldeAjuda widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in CentraldeAjuda widget.
   bool? temNet;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;

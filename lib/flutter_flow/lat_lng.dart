@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 class LatLng {
   const LatLng(this.latitude, this.longitude);
   final double latitude;

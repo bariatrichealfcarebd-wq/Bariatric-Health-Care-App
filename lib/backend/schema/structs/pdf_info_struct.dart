@@ -15,14 +15,12 @@ class PdfInfoStruct extends FFFirebaseStruct {
         _url = url,
         super(firestoreUtilData);
 
-  // "nome" field.
   String? _nome;
   String get nome => _nome ?? '';
   set nome(String? val) => _nome = val;
 
   bool hasNome() => _nome != null;
 
-  // "url" field.
   String? _url;
   String get url => _url ?? '';
   set url(String? val) => _url = val;

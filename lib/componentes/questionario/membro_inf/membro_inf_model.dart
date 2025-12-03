@@ -1,10 +1,12 @@
 import '/componentes/abas/item_sintoma/item_sintoma_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: questionário
 import 'membro_inf_widget.dart' show MembroInfWidget;
 import 'package:flutter/material.dart';
 
 class MembroInfModel extends FlutterFlowModel<MembroInfWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   bool? ativo = false;
 
@@ -20,7 +22,7 @@ class MembroInfModel extends FlutterFlowModel<MembroInfWidget> {
 
   DocumentReference? referenciaLigacao;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
   // Models for ItemSintoma dynamic component.
   late FlutterFlowDynamicModels<ItemSintomaModel> itemSintomaModels;

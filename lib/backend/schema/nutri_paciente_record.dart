@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema da coleção Nutri_Paciente no Firestore
+
 class NutriPacienteRecord extends FirestoreRecord {
   NutriPacienteRecord._(
     DocumentReference reference,
@@ -15,12 +17,10 @@ class NutriPacienteRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "uid_Paciente" field.
   String? _uidPaciente;
   String get uidPaciente => _uidPaciente ?? '';
   bool hasUidPaciente() => _uidPaciente != null;
 
-  // "uid_Nutri" field.
   String? _uidNutri;
   String get uidNutri => _uidNutri ?? '';
   bool hasUidNutri() => _uidNutri != null;

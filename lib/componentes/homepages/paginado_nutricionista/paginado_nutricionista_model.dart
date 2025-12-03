@@ -1,13 +1,15 @@
 import '/backend/backend.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página inicial
 import '/index.dart';
 import 'paginado_nutricionista_widget.dart' show PaginadoNutricionistaWidget;
 import 'package:flutter/material.dart';
 
 class PaginadoNutricionistaModel
     extends FlutterFlowModel<PaginadoNutricionistaWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   String nomePaciente = 'Aguardando paciente...';
 
@@ -28,19 +30,19 @@ class PaginadoNutricionistaModel
 
   DocumentReference? pacienteTemp;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in PaginadoNutricionista widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in PaginadoNutricionista widget.
   bool? temNet;
-  // State field(s) for campoCPF widget.
+  // Campo(s) de estado para campoCPF widget.
   final campoCPFKey = GlobalKey();
   FocusNode? campoCPFFocusNode;
   TextEditingController? campoCPFTextController;
   String? campoCPFSelectedOption;
   String? Function(BuildContext, String?)? campoCPFTextControllerValidator;
-  // Stores action output result for [Custom Action - buscarPacientesDoNutri] action in campoCPF widget.
+  // Armazena o resultado da ação [Custom Action - buscarPacientesDoNutri] action in campoCPF widget.
   List<DocumentReference>? refsPacientesDaBusca;
-  // Stores action output result for [Backend Call - Read Document] action in Button widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in Button widget.
   PacienteRecord? pacienteData;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

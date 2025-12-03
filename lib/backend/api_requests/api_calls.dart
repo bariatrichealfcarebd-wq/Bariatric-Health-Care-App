@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 import '/flutter_flow/flutter_flow_util.dart';
+import '/backend/gemini/gemini_secrets.dart';
 import 'api_manager.dart';
 
 export 'api_manager.dart' show ApiCallResponse;
@@ -68,7 +69,7 @@ class ApigeminiCall {
       callType: ApiCallType.POST,
       headers: {
         'Content-Type': 'application/json',
-        'X-goog-api-key': 'AIzaSyB_zl0YeCCSn9VRKXGkgOu1Qq4GEOgPmnE',
+        'X-goog-api-key': kGeminiApiKey,
       },
       params: {},
       body: ffApiRequestBody,

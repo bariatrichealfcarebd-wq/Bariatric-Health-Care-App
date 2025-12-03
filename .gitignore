@@ -36,3 +36,4 @@ ios/.symlinks/
 # Misc
 *.log
 *.DS_Store
+lib/backend/gemini/gemini_secrets.dart

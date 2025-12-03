@@ -6,17 +6,17 @@ import 'assistente_gemini_widget.dart' show AssistenteGeminiWidget;
 import 'package:flutter/material.dart';
 
 class AssistenteGeminiModel extends FlutterFlowModel<AssistenteGeminiWidget> {
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página
 
-  // Stores action output result for [Custom Action - checkInternet] action in assistenteGemini widget.
+  // Armazena o resultado da verificação de internet
   bool? temNet;
-  // State field(s) for TextField widget.
+  // Campos de controle para o campo de texto
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;
-  // Stores action output result for [Backend Call - API (APIGEMINI)] action in IconButton widget.
+  // Armazena a resposta da API Gemini
   ApiCallResponse? respostaAPI;
-  // Model for NoInternetPopuP component.
+  // Modelo para o componente de popup sem internet
   late NoInternetPopuPModel noInternetPopuPModel;
 
   @override

@@ -4,6 +4,8 @@ import '/componentes/abas/termopopup/termopopup_widget.dart';
 import '/componentes/abas/termopopuptermos/termopopuptermos_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/index.dart';
 import 'package:flutter/material.dart';

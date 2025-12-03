@@ -1,16 +1,18 @@
 import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'dados_nutricionsta_widget.dart' show DadosNutricionstaWidget;
 import 'package:flutter/material.dart';
 
 class DadosNutricionstaModel extends FlutterFlowModel<DadosNutricionstaWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   String? filtroNutri;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Firestore Query - Query a collection] action in DadosNutricionsta widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in DadosNutricionsta widget.
   PacienteRecord? filtroRelacao;
 
   @override

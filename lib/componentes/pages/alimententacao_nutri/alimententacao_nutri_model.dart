@@ -2,13 +2,15 @@ import '/backend/backend.dart';
 import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'alimententacao_nutri_widget.dart' show AlimententacaoNutriWidget;
 import 'package:flutter/material.dart';
 
 class AlimententacaoNutriModel
     extends FlutterFlowModel<AlimententacaoNutriWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   List<String> arquivoParaEnviar = [];
   void addToArquivoParaEnviar(String item) => arquivoParaEnviar.add(item);
@@ -27,24 +29,24 @@ class AlimententacaoNutriModel
 
   String? nomeDoArquivo;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in AlimententacaoNutri widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in AlimententacaoNutri widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in AlimententacaoNutri widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in AlimententacaoNutri widget.
   PacienteRecord? pacienteData;
   bool isDataUploading_uploadDataLd1 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd1 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
 
-  // Stores action output result for [Bottom Sheet - pdfChange] action in Container widget.
+  // Armazena o resultado da ação [Bottom Sheet - pdfChange] action in Container widget.
   String? arquivoNome;
   bool isDataUploading_uploadDataTp5 = false;
   FFUploadedFile uploadedLocalFile_uploadDataTp5 =
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataTp5 = '';
 
-  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  // Armazena o resultado da ação [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
   EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

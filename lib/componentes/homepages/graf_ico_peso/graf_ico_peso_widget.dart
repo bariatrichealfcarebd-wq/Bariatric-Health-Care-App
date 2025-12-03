@@ -5,6 +5,8 @@ import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/componentes/abas/notificacao/notificacao_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página inicial
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
@@ -38,7 +40,7 @@ class _GrafIcoPesoWidgetState extends State<GrafIcoPesoWidget> {
     super.initState();
     _model = createModel(context, () => GrafIcoPesoModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();

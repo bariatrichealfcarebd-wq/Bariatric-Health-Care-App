@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class RelatoriosQuestionarioRecord extends FirestoreRecord {
   RelatoriosQuestionarioRecord._(
     DocumentReference reference,
@@ -15,27 +17,22 @@ class RelatoriosQuestionarioRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "nome_paciente" field.
   String? _nomePaciente;
   String get nomePaciente => _nomePaciente ?? '';
   bool hasNomePaciente() => _nomePaciente != null;
 
-  // "url_pdf" field.
   String? _urlPdf;
   String get urlPdf => _urlPdf ?? '';
   bool hasUrlPdf() => _urlPdf != null;
 
-  // "data_criacao" field.
   DateTime? _dataCriacao;
   DateTime? get dataCriacao => _dataCriacao;
   bool hasDataCriacao() => _dataCriacao != null;
 
-  // "nome_do_arquivo" field.
   String? _nomeDoArquivo;
   String get nomeDoArquivo => _nomeDoArquivo ?? '';
   bool hasNomeDoArquivo() => _nomeDoArquivo != null;
 
-  // "user_id" field.
   String? _userId;
   String get userId => _userId ?? '';
   bool hasUserId() => _userId != null;

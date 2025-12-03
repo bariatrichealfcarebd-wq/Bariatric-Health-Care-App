@@ -1,12 +1,14 @@
 import '/flutter_flow/flutter_flow_calendar.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'calendario_pop_widget.dart' show CalendarioPopWidget;
 import 'package:flutter/material.dart';
 
 class CalendarioPopModel extends FlutterFlowModel<CalendarioPopWidget> {
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // State field(s) for Calendar widget.
+  // Campo(s) de estado para Calendar widget.
   DateTimeRange? calendarSelectedDay;
 
   @override

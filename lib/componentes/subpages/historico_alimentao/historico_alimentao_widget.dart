@@ -4,6 +4,8 @@ import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: subpágina da aplicação
 import '/custom_code/actions/index.dart' as actions;
 import '/custom_code/widgets/index.dart' as custom_widgets;
 import '/index.dart';
@@ -35,7 +37,7 @@ class _HistoricoAlimentaoWidgetState extends State<HistoricoAlimentaoWidget> {
     super.initState();
     _model = createModel(context, () => HistoricoAlimentaoModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();

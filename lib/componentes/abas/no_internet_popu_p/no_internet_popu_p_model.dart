@@ -1,11 +1,13 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'no_internet_popu_p_widget.dart' show NoInternetPopuPWidget;
 import 'package:flutter/material.dart';
 
 class NoInternetPopuPModel extends FlutterFlowModel<NoInternetPopuPWidget> {
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Custom Action - checkInternet] action in Button widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in Button widget.
   bool? temNet;
 
   @override

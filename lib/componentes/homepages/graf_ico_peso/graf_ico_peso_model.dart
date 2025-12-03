@@ -1,22 +1,24 @@
 import '/backend/backend.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página inicial
 import '/index.dart';
 import 'graf_ico_peso_widget.dart' show GrafIcoPesoWidget;
 import 'package:flutter/material.dart';
 
 class GrafIcoPesoModel extends FlutterFlowModel<GrafIcoPesoWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   DateTime? data;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in GrafIcoPeso widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in GrafIcoPeso widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in GrafIcoPeso widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in GrafIcoPeso widget.
   PacienteRecord? pacienteData;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController;
   String? Function(BuildContext, String?)? textControllerValidator;

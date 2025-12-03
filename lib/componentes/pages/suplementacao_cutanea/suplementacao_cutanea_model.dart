@@ -3,13 +3,15 @@ import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.d
 import '/componentes/abas/datepicker_popover/datepicker_popover_widget.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'suplementacao_cutanea_widget.dart' show SuplementacaoCutaneaWidget;
 import 'package:flutter/material.dart';
 
 class SuplementacaoCutaneaModel
     extends FlutterFlowModel<SuplementacaoCutaneaWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   DateTime? dataSelecionada;
 
@@ -17,19 +19,19 @@ class SuplementacaoCutaneaModel
 
   FFUploadedFile? ficheiroCarregado;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in SuplementacaoCutanea widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in SuplementacaoCutanea widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in SuplementacaoCutanea widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in SuplementacaoCutanea widget.
   PacienteRecord? pacienteData;
-  // Stores action output result for [Firestore Query - Query a collection] action in SuplementacaoCutanea widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in SuplementacaoCutanea widget.
   SuplementacaoRecord? filtranutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in SuplementacaoCutanea widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in SuplementacaoCutanea widget.
   SuplementacaoRecord? filtropaciente;
   // Model for datepickerPopover component.
   late DatepickerPopoverModel datepickerPopoverModel;
-  // Stores action output result for [Alert Dialog - Custom Dialog] action in datepickerPopover widget.
+  // Armazena o resultado da ação [Alert Dialog - Custom Dialog] action in datepickerPopover widget.
   DateTime? selectedDate;
   bool isDataUploading_uploadDataLd = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd =
@@ -40,7 +42,7 @@ class SuplementacaoCutaneaModel
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataP6v = '';
 
-  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  // Armazena o resultado da ação [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
   EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

@@ -7,27 +7,27 @@ import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 
 class EditarSuplementaoDiariaModel
     extends FlutterFlowModel<EditarSuplementaoDiariaWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   FFUploadedFile? ficheiroCarregado;
 
   DateTime? dataCarregada;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Backend Call - Read Document] action in EditarSuplementaoDiaria widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in EditarSuplementaoDiaria widget.
   SuplementacaodiariaRecord? dataDiaria;
-  // State field(s) for Tipo widget.
+  // Campo(s) de estado para Tipo widget.
   FocusNode? tipoFocusNode;
   TextEditingController? tipoTextController;
   String? Function(BuildContext, String?)? tipoTextControllerValidator;
-  // State field(s) for dData widget.
+  // Campo(s) de estado para dData widget.
   FocusNode? dDataFocusNode;
   TextEditingController? dDataTextController;
   late MaskTextInputFormatter dDataMask;
   String? Function(BuildContext, String?)? dDataTextControllerValidator;
   DateTime? datePicked;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;

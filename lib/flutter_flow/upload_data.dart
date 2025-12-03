@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'dart:async';
 
 import 'package:file_picker/file_picker.dart';

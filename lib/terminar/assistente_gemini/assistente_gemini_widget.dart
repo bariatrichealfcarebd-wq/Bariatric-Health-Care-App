@@ -35,7 +35,7 @@ class _AssistenteGeminiWidgetState extends State<AssistenteGeminiWidget> {
     super.initState();
     _model = createModel(context, () => AssistenteGeminiModel());
 
-    // On page load action.
+    // Ação ao carregar a página: Verifica conexão e autenticação
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();
