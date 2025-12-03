@@ -1,0 +1,152 @@
+{
+  "indexes": [
+    {
+      "collectionGroup": "relatorios_pdf",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_cpf",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_at",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "notificacoes",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "destinatarioUid",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "lida",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "AgendEventos",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "uid_Paaciente",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "Data",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "graficosSintomas",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "ano",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "mes_numero",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Paciente_Peso",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "uid_Paciente",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data_registro",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "Suplementacaodiaria",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "id_User",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "creat_day",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "suplementacao",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "id_User",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "create_day",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "outrasSuplementacao",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "id_User",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "create_day",
+          "order": "DESCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "relatorios_Questionario",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_id",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "data_criacao",
+          "order": "ASCENDING"
+        }
+      ]
+    },
+    {
+      "collectionGroup": "relatorios_pdf",
+      "queryScope": "COLLECTION",
+      "fields": [
+        {
+          "fieldPath": "user_cpf",
+          "order": "ASCENDING"
+        },
+        {
+          "fieldPath": "created_at",
+          "order": "ASCENDING"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,50 @@
+// Export pages
+export '/componentes/pages/homepage/homepage_widget.dart' show HomepageWidget;
+export '/componentes/pages/login/login_widget.dart' show LoginWidget;
+export '/componentes/homepages/prescricoes_page/prescricoes_page_widget.dart'
+    show PrescricoesPageWidget;
+export '/componentes/homepages/questions_page/questions_page_widget.dart'
+    show QuestionsPageWidget;
+export '/componentes/homepages/alimentacao_page/alimentacao_page_widget.dart'
+    show AlimentacaoPageWidget;
+export '/componentes/pages/suplementacao_diaria/suplementacao_diaria_widget.dart'
+    show SuplementacaoDiariaWidget;
+export '/componentes/pages/suplementacao_cutanea/suplementacao_cutanea_widget.dart'
+    show SuplementacaoCutaneaWidget;
+export '/componentes/pages/outra_suplementacoes/outra_suplementacoes_widget.dart'
+    show OutraSuplementacoesWidget;
+export '/componentes/subpages/historico/historico_widget.dart'
+    show HistoricoWidget;
+export '/componentes/subpages/recupera_pt1/recupera_pt1_widget.dart'
+    show RecuperaPt1Widget;
+export '/componentes/subpages/recuperar_pt2/recuperar_pt2_widget.dart'
+    show RecuperarPt2Widget;
+export '/componentes/subpages/centralde_ajuda/centralde_ajuda_widget.dart'
+    show CentraldeAjudaWidget;
+export '/componentes/pages/seguranaca_privacidade/seguranaca_privacidade_widget.dart'
+    show SeguranacaPrivacidadeWidget;
+export '/componentes/homepages/paginado_nutricionista/paginado_nutricionista_widget.dart'
+    show PaginadoNutricionistaWidget;
+export '/componentes/pages/questionario/questionario_widget.dart'
+    show QuestionarioWidget;
+export '/componentes/pages/alimententacao_nutri/alimententacao_nutri_widget.dart'
+    show AlimententacaoNutriWidget;
+export '/componentes/subpages/historico_alimentao/historico_alimentao_widget.dart'
+    show HistoricoAlimentaoWidget;
+export '/componentes/subpages/historico_sup/historico_sup_widget.dart'
+    show HistoricoSupWidget;
+export '/componentes/pages/cadastro2/cadastro2_widget.dart'
+    show Cadastro2Widget;
+export '/componentes/homepages/agenda/agenda_widget.dart' show AgendaWidget;
+export '/componentes/subpages/nutris_ativos/nutris_ativos_widget.dart'
+    show NutrisAtivosWidget;
+export '/componentes/pages/carregando/carregando_widget.dart'
+    show CarregandoWidget;
+export '/componentes/pages/agenda_nutri/agenda_nutri_widget.dart'
+    show AgendaNutriWidget;
+export '/componentes/pages/checagem_grafico/checagem_grafico_widget.dart'
+    show ChecagemGraficoWidget;
+export '/componentes/homepages/graf_ico_peso/graf_ico_peso_widget.dart'
+    show GrafIcoPesoWidget;
+export '/terminar/assistente_gemini/assistente_gemini_widget.dart'
+    show AssistenteGeminiWidget;
