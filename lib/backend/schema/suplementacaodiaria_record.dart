@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class SuplementacaodiariaRecord extends FirestoreRecord {
   SuplementacaodiariaRecord._(
     DocumentReference reference,
@@ -15,32 +17,26 @@ class SuplementacaodiariaRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "tipoSuplementacao" field.
   String? _tipoSuplementacao;
   String get tipoSuplementacao => _tipoSuplementacao ?? '';
   bool hasTipoSuplementacao() => _tipoSuplementacao != null;
 
-  // "id_User" field.
   String? _idUser;
   String get idUser => _idUser ?? '';
   bool hasIdUser() => _idUser != null;
 
-  // "anexo" field.
   String? _anexo;
   String get anexo => _anexo ?? '';
   bool hasAnexo() => _anexo != null;
 
-  // "creat_day" field.
   DateTime? _creatDay;
   DateTime? get creatDay => _creatDay;
   bool hasCreatDay() => _creatDay != null;
 
-  // "creat_suple" field.
   DateTime? _creatSuple;
   DateTime? get creatSuple => _creatSuple;
   bool hasCreatSuple() => _creatSuple != null;
 
-  // "nomeArquivo" field.
   String? _nomeArquivo;
   String get nomeArquivo => _nomeArquivo ?? '';
   bool hasNomeArquivo() => _nomeArquivo != null;

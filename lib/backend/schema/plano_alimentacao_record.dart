@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class PlanoAlimentacaoRecord extends FirestoreRecord {
   PlanoAlimentacaoRecord._(
     DocumentReference reference,
@@ -15,12 +17,10 @@ class PlanoAlimentacaoRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "user_id" field.
   String? _userId;
   String get userId => _userId ?? '';
   bool hasUserId() => _userId != null;
 
-  // "pdf_alimentacao" field.
   String? _pdfAlimentacao;
   String get pdfAlimentacao => _pdfAlimentacao ?? '';
   bool hasPdfAlimentacao() => _pdfAlimentacao != null;

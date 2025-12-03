@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 /// Nutri vai registrar o peso do paciente
 class PacientePesoRecord extends FirestoreRecord {
   PacientePesoRecord._(
@@ -16,17 +18,14 @@ class PacientePesoRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "peso" field.
   double? _peso;
   double get peso => _peso ?? 0.0;
   bool hasPeso() => _peso != null;
 
-  // "uid_Paciente" field.
   String? _uidPaciente;
   String get uidPaciente => _uidPaciente ?? '';
   bool hasUidPaciente() => _uidPaciente != null;
 
-  // "data_registro" field.
   DateTime? _dataRegistro;
   DateTime? get dataRegistro => _dataRegistro;
   bool hasDataRegistro() => _dataRegistro != null;

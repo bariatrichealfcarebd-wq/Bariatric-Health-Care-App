@@ -12,6 +12,8 @@ import 'flutter_flow/flutter_flow_util.dart';
 import 'flutter_flow/internationalization.dart';
 import 'flutter_flow/firebase_app_check_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: ponto de entrada da aplicação
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   GoRouter.optionURLReflectsImperativeAPIs = true;
@@ -19,7 +21,8 @@ void main() async {
 
   await initFirebase();
 
-  final appState = FFAppState(); // Initialize FFAppState
+  // Inicializa o estado persistente do aplicativo
+  final appState = FFAppState();
   await appState.initializePersistedState();
 
   await initializeFirebaseAppCheck();
@@ -31,7 +34,7 @@ void main() async {
 }
 
 class MyApp extends StatefulWidget {
-  // This widget is the root of your application.
+  // Widget raiz da aplicação
   @override
   State<MyApp> createState() => _MyAppState();
 

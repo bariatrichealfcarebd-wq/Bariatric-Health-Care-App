@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema da coleção Paciente no Firestore
+
 class PacienteRecord extends FirestoreRecord {
   PacienteRecord._(
     DocumentReference reference,
@@ -15,107 +17,86 @@ class PacienteRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "Nome" field.
   String? _nome;
   String get nome => _nome ?? '';
   bool hasNome() => _nome != null;
 
-  // "Senha" field.
   String? _senha;
   String get senha => _senha ?? '';
   bool hasSenha() => _senha != null;
 
-  // "CPF" field.
   String? _cpf;
   String get cpf => _cpf ?? '';
   bool hasCpf() => _cpf != null;
 
-  // "email" field.
   String? _email;
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
-  // "display_name" field.
   String? _displayName;
   String get displayName => _displayName ?? '';
   bool hasDisplayName() => _displayName != null;
 
-  // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
-  // "phone_number" field.
   String? _phoneNumber;
   String get phoneNumber => _phoneNumber ?? '';
   bool hasPhoneNumber() => _phoneNumber != null;
 
-  // "created_time" field.
   DateTime? _createdTime;
   DateTime? get createdTime => _createdTime;
   bool hasCreatedTime() => _createdTime != null;
 
-  // "photo_url" field.
   String? _photoUrl;
   String get photoUrl => _photoUrl ?? '';
   bool hasPhotoUrl() => _photoUrl != null;
 
-  // "searchKeywords" field.
   List<String>? _searchKeywords;
   List<String> get searchKeywords => _searchKeywords ?? const [];
   bool hasSearchKeywords() => _searchKeywords != null;
 
-  // "admLess" field.
   bool? _admLess;
   bool get admLess => _admLess ?? false;
   bool hasAdmLess() => _admLess != null;
 
-  // "isADM" field.
   bool? _isADM;
   bool get isADM => _isADM ?? false;
   bool hasIsADM() => _isADM != null;
 
-  // "primeiroLoginRealizado" field.
   bool? _primeiroLoginRealizado;
   bool get primeiroLoginRealizado => _primeiroLoginRealizado ?? false;
   bool hasPrimeiroLoginRealizado() => _primeiroLoginRealizado != null;
 
-  // "crn" field.
   String? _crn;
   String get crn => _crn ?? '';
   bool hasCrn() => _crn != null;
 
-  // "especializacao" field.
   String? _especializacao;
   String get especializacao => _especializacao ?? '';
   bool hasEspecializacao() => _especializacao != null;
 
-  // "telefone" field.
   String? _telefone;
   String get telefone => _telefone ?? '';
   bool hasTelefone() => _telefone != null;
 
-  // "tipoOperacao" field.
   String? _tipoOperacao;
   String get tipoOperacao => _tipoOperacao ?? '';
   bool hasTipoOperacao() => _tipoOperacao != null;
 
-  // "dataOperacao" field.
   String? _dataOperacao;
   String get dataOperacao => _dataOperacao ?? '';
   bool hasDataOperacao() => _dataOperacao != null;
 
-  // "codigoPaciente" field.
   String? _codigoPaciente;
   String get codigoPaciente => _codigoPaciente ?? '';
   bool hasCodigoPaciente() => _codigoPaciente != null;
 
-  // "termo" field.
   bool? _termo;
   bool get termo => _termo ?? false;
   bool hasTermo() => _termo != null;
 
-  // "uid_Nutri" field.
   String? _uidNutri;
   String get uidNutri => _uidNutri ?? '';
   bool hasUidNutri() => _uidNutri != null;

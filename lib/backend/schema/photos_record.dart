@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class PhotosRecord extends FirestoreRecord {
   PhotosRecord._(
     DocumentReference reference,
@@ -15,7 +17,6 @@ class PhotosRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "image" field.
   String? _image;
   String get image => _image ?? '';
   bool hasImage() => _image != null;
