@@ -4,6 +4,8 @@ import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.d
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
 import 'package:cloud_functions/cloud_functions.dart';
@@ -33,7 +35,7 @@ class _CarregandoWidgetState extends State<CarregandoWidget> {
     super.initState();
     _model = createModel(context, () => CarregandoModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       _model.temNet = await actions.checkInternet();
       if (_model.temNet == false) {

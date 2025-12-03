@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class GraficosSintomasRecord extends FirestoreRecord {
   GraficosSintomasRecord._(
     DocumentReference reference,
@@ -15,42 +17,34 @@ class GraficosSintomasRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "nomeSintoma" field.
   String? _nomeSintoma;
   String get nomeSintoma => _nomeSintoma ?? '';
   bool hasNomeSintoma() => _nomeSintoma != null;
 
-  // "user_id" field.
   String? _userId;
   String get userId => _userId ?? '';
   bool hasUserId() => _userId != null;
 
-  // "mes_nome" field.
   String? _mesNome;
   String get mesNome => _mesNome ?? '';
   bool hasMesNome() => _mesNome != null;
 
-  // "mes_numero" field.
   int? _mesNumero;
   int get mesNumero => _mesNumero ?? 0;
   bool hasMesNumero() => _mesNumero != null;
 
-  // "ano" field.
   int? _ano;
   int get ano => _ano ?? 0;
   bool hasAno() => _ano != null;
 
-  // "data_criacao" field.
   DateTime? _dataCriacao;
   DateTime? get dataCriacao => _dataCriacao;
   bool hasDataCriacao() => _dataCriacao != null;
 
-  // "id_sintoma" field.
   String? _idSintoma;
   String get idSintoma => _idSintoma ?? '';
   bool hasIdSintoma() => _idSintoma != null;
 
-  // "id_nutriente" field.
   List<String>? _idNutriente;
   List<String> get idNutriente => _idNutriente ?? const [];
   bool hasIdNutriente() => _idNutriente != null;

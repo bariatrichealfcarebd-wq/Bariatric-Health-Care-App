@@ -1,15 +1,17 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'pdf_change_widget.dart' show PdfChangeWidget;
 import 'package:flutter/material.dart';
 
 class PdfChangeModel extends FlutterFlowModel<PdfChangeWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   String? nomeDoArquivo;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // State field(s) for Nome widget.
+  // Campo(s) de estado para Nome widget.
   FocusNode? nomeFocusNode;
   TextEditingController? nomeTextController;
   String? Function(BuildContext, String?)? nomeTextControllerValidator;

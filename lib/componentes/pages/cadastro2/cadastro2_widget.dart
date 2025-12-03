@@ -3,6 +3,8 @@ import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.d
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/flutter_flow/custom_functions.dart' as functions;
@@ -38,7 +40,7 @@ class _Cadastro2WidgetState extends State<Cadastro2Widget> {
     super.initState();
     _model = createModel(context, () => Cadastro2Model());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||

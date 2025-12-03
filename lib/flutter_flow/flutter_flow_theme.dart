@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 // ignore_for_file: overridden_fields, annotate_overrides
 
 import 'package:flutter/material.dart';

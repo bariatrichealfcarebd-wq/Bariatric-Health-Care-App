@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'dart:convert';
 import 'dart:math' as math;
 

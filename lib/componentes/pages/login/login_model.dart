@@ -1,21 +1,23 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'login_widget.dart' show LoginWidget;
 import 'package:flutter/material.dart';
 
 class LoginModel extends FlutterFlowModel<LoginWidget> {
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // State field(s) for campoCPF widget.
+  // Campo(s) de estado para campoCPF widget.
   FocusNode? campoCPFFocusNode;
   TextEditingController? campoCPFTextController;
   String? Function(BuildContext, String?)? campoCPFTextControllerValidator;
-  // State field(s) for CampoSenha widget.
+  // Campo(s) de estado para CampoSenha widget.
   FocusNode? campoSenhaFocusNode;
   TextEditingController? campoSenhaTextController;
   late bool campoSenhaVisibility;
   String? Function(BuildContext, String?)? campoSenhaTextControllerValidator;
-  // Stores action output result for [Custom Action - manualLogin] action in Button widget.
+  // Armazena o resultado da ação [Custom Action - manualLogin] action in Button widget.
   String? loginResult;
 
   @override

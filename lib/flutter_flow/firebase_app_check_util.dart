@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'package:firebase_app_check/firebase_app_check.dart';
 
 Future initializeFirebaseAppCheck() => FirebaseAppCheck.instance.activate(

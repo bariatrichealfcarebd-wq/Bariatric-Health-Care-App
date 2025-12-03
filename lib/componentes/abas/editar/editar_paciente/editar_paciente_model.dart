@@ -5,32 +5,32 @@ import 'editar_paciente_widget.dart' show EditarPacienteWidget;
 import 'package:flutter/material.dart';
 
 class EditarPacienteModel extends FlutterFlowModel<EditarPacienteWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   DateTime? dataCarregada;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Backend Call - Read Document] action in editarPaciente widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in editarPaciente widget.
   PacienteRecord? dadosPaciente;
-  // State field(s) for tipoOperacao widget.
+  // Campo(s) de estado para tipoOperacao widget.
   FocusNode? tipoOperacaoFocusNode;
   TextEditingController? tipoOperacaoTextController;
   String? Function(BuildContext, String?)? tipoOperacaoTextControllerValidator;
-  // State field(s) for data widget.
+  // Campo(s) de estado para data widget.
   FocusNode? dataFocusNode;
   TextEditingController? dataTextController;
   String? Function(BuildContext, String?)? dataTextControllerValidator;
   DateTime? datePicked;
-  // State field(s) for nome widget.
+  // Campo(s) de estado para nome widget.
   FocusNode? nomeFocusNode;
   TextEditingController? nomeTextController;
   String? Function(BuildContext, String?)? nomeTextControllerValidator;
-  // State field(s) for email widget.
+  // Campo(s) de estado para email widget.
   FocusNode? emailFocusNode;
   TextEditingController? emailTextController;
   String? Function(BuildContext, String?)? emailTextControllerValidator;
-  // Stores action output result for [Cloud Function - updatePatientAccount] action in Button widget.
+  // Armazena o resultado da ação [Cloud Function - updatePatientAccount] action in Button widget.
   UpdatePatientAccountCloudFunctionCallResponse? cloudFunctionblc;
 
   @override

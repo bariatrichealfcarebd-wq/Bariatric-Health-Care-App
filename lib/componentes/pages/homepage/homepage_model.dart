@@ -1,16 +1,18 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'homepage_widget.dart' show HomepageWidget;
 import 'package:flutter/material.dart';
 
 class HomepageModel extends FlutterFlowModel<HomepageWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   bool termosAceitos = false;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // State field(s) for Checkbox widget.
+  // Campo(s) de estado para Checkbox widget.
   bool? checkboxValue;
 
   @override

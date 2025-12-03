@@ -1,9 +1,11 @@
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'termo_perm_pop_up_widget.dart' show TermoPermPopUpWidget;
 import 'package:flutter/material.dart';
 
 class TermoPermPopUpModel extends FlutterFlowModel<TermoPermPopUpWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   bool concorda = false;
 

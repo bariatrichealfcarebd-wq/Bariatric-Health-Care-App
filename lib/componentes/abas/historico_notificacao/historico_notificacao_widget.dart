@@ -3,6 +3,8 @@ import '/backend/backend.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: componente de interface do usuário
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'historico_notificacao_model.dart';

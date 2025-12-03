@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class RelatoriosPdfRecord extends FirestoreRecord {
   RelatoriosPdfRecord._(
     DocumentReference reference,
@@ -15,22 +17,18 @@ class RelatoriosPdfRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "pdf_url" field.
   String? _pdfUrl;
   String get pdfUrl => _pdfUrl ?? '';
   bool hasPdfUrl() => _pdfUrl != null;
 
-  // "user_cpf" field.
   String? _userCpf;
   String get userCpf => _userCpf ?? '';
   bool hasUserCpf() => _userCpf != null;
 
-  // "created_at" field.
   DateTime? _createdAt;
   DateTime? get createdAt => _createdAt;
   bool hasCreatedAt() => _createdAt != null;
 
-  // "nome_do_arquivo" field.
   String? _nomeDoArquivo;
   String get nomeDoArquivo => _nomeDoArquivo ?? '';
   bool hasNomeDoArquivo() => _nomeDoArquivo != null;

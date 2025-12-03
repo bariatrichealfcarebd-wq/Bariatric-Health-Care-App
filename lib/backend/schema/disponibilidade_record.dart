@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class DisponibilidadeRecord extends FirestoreRecord {
   DisponibilidadeRecord._(
     DocumentReference reference,
@@ -15,12 +17,10 @@ class DisponibilidadeRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "id" field.
   String? _id;
   String get id => _id ?? '';
   bool hasId() => _id != null;
 
-  // "data" field.
   DateTime? _data;
   DateTime? get data => _data;
   bool hasData() => _data != null;

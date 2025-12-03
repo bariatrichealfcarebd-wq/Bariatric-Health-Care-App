@@ -3,13 +3,15 @@ import '/backend/custom_cloud_functions/custom_cloud_function_response_manager.d
 import '/componentes/abas/datepicker_popover/datepicker_popover_widget.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/index.dart';
 import 'outra_suplementacoes_widget.dart' show OutraSuplementacoesWidget;
 import 'package:flutter/material.dart';
 
 class OutraSuplementacoesModel
     extends FlutterFlowModel<OutraSuplementacoesWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   DateTime? dia;
 
@@ -17,23 +19,23 @@ class OutraSuplementacoesModel
 
   FFUploadedFile? ficharioCarregado;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in OutraSuplementacoes widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in OutraSuplementacoes widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in OutraSuplementacoes widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in OutraSuplementacoes widget.
   PacienteRecord? pacienteData;
-  // Stores action output result for [Firestore Query - Query a collection] action in OutraSuplementacoes widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in OutraSuplementacoes widget.
   OutrasSuplementacaoRecord? filtronutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in OutraSuplementacoes widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in OutraSuplementacoes widget.
   OutrasSuplementacaoRecord? filtropaciente;
-  // State field(s) for nomeSup widget.
+  // Campo(s) de estado para nomeSup widget.
   FocusNode? nomeSupFocusNode;
   TextEditingController? nomeSupTextController;
   String? Function(BuildContext, String?)? nomeSupTextControllerValidator;
   // Model for datepickerPopover component.
   late DatepickerPopoverModel datepickerPopoverModel;
-  // Stores action output result for [Alert Dialog - Custom Dialog] action in datepickerPopover widget.
+  // Armazena o resultado da ação [Alert Dialog - Custom Dialog] action in datepickerPopover widget.
   DateTime? selectedDate;
   bool isDataUploading_uploadDataLd2 = false;
   FFUploadedFile uploadedLocalFile_uploadDataLd2 =
@@ -44,7 +46,7 @@ class OutraSuplementacoesModel
       FFUploadedFile(bytes: Uint8List.fromList([]), originalFilename: '');
   String uploadedFileUrl_uploadDataTp2 = '';
 
-  // Stores action output result for [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
+  // Armazena o resultado da ação [Cloud Function - enviarNotificacaoGenerica] action in Button widget.
   EnviarNotificacaoGenericaCloudFunctionCallResponse? cloudFunctionj1a;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

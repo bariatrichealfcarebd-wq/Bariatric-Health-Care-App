@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'dart:convert';
 import 'dart:typed_data' show Uint8List;
 

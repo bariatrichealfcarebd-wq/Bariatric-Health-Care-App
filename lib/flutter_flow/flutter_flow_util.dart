@@ -1,3 +1,5 @@
+// codigo gerado automaticamente pelo flutterflow: utilitários e configurações
+
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';

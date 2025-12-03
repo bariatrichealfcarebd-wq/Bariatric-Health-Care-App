@@ -11,6 +11,8 @@ import '/componentes/questionario/olhose_cabeca/olhose_cabeca_widget.dart';
 import '/componentes/questionario/pele/pele_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
@@ -43,7 +45,7 @@ class _QuestionarioWidgetState extends State<QuestionarioWidget> {
     super.initState();
     _model = createModel(context, () => QuestionarioModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         _model.temNet = await actions.checkInternet();

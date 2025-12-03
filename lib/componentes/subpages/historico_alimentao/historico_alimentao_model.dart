@@ -1,13 +1,15 @@
 import '/backend/backend.dart';
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: subpágina da aplicação
 import '/index.dart';
 import 'historico_alimentao_widget.dart' show HistoricoAlimentaoWidget;
 import 'package:flutter/material.dart';
 
 class HistoricoAlimentaoModel
     extends FlutterFlowModel<HistoricoAlimentaoWidget> {
-  ///  Local state fields for this page.
+  // Campos de estado local para esta página.
 
   List<dynamic> listaDePdfs = [];
   void addToListaDePdfs(dynamic item) => listaDePdfs.add(item);
@@ -35,25 +37,25 @@ class HistoricoAlimentaoModel
 
   DateTime? dataFim;
 
-  ///  State fields for stateful widgets in this page.
+  // Campos de estado para os widgets desta página.
 
-  // Stores action output result for [Custom Action - checkInternet] action in HistoricoAlimentao widget.
+  // Armazena o resultado da ação [Custom Action - checkInternet] action in HistoricoAlimentao widget.
   bool? temNet;
-  // Stores action output result for [Backend Call - Read Document] action in HistoricoAlimentao widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in HistoricoAlimentao widget.
   PacienteRecord? pacienteData;
-  // Stores action output result for [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
   List<RelatoriosPdfRecord>? filtronutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in HistoricoAlimentao widget.
   List<RelatoriosPdfRecord>? filtroteste2;
   DateTime? datePicked1;
   DateTime? datePicked2;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in IconButton widget.
   List<RelatoriosPdfRecord>? filtroDataNutri;
-  // Stores action output result for [Firestore Query - Query a collection] action in IconButton widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in IconButton widget.
   List<RelatoriosPdfRecord>? filtropacienteData;
-  // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in Icon widget.
   List<RelatoriosPdfRecord>? filtronutri3;
-  // Stores action output result for [Firestore Query - Query a collection] action in Icon widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in Icon widget.
   List<RelatoriosPdfRecord>? filtroteste3;
   // Model for NoInternetPopuP component.
   late NoInternetPopuPModel noInternetPopuPModel;

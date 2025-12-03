@@ -4,6 +4,8 @@ import '/componentes/abas/editar/componente_calendario/componente_calendario_wid
 import '/componentes/abas/no_internet_popu_p/no_internet_popu_p_widget.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: página da aplicação
 import '/flutter_flow/flutter_flow_widgets.dart';
 import '/custom_code/actions/index.dart' as actions;
 import '/index.dart';
@@ -36,7 +38,7 @@ class _AgendaNutriWidgetState extends State<AgendaNutriWidget> {
     super.initState();
     _model = createModel(context, () => AgendaNutriModel());
 
-    // On page load action.
+    // Ação ao carregar a página.
     SchedulerBinding.instance.addPostFrameCallback((_) async {
       if (currentUserReference != null) {
         if ((valueOrDefault<bool>(currentUserDocument?.isADM, false) == true) ||

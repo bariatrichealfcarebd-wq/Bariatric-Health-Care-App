@@ -6,26 +6,26 @@ import 'package:flutter/material.dart';
 
 class EditarOutrosSuplementosModel
     extends FlutterFlowModel<EditarOutrosSuplementosWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   FFUploadedFile? ficheiroCarregado;
 
   DateTime? dataCarregada;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Backend Call - Read Document] action in EditarOutrosSuplementos widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in EditarOutrosSuplementos widget.
   OutrasSuplementacaoRecord? dataOutras;
-  // State field(s) for Tipo widget.
+  // Campo(s) de estado para Tipo widget.
   FocusNode? tipoFocusNode;
   TextEditingController? tipoTextController;
   String? Function(BuildContext, String?)? tipoTextControllerValidator;
-  // State field(s) for Data widget.
+  // Campo(s) de estado para Data widget.
   FocusNode? dataFocusNode;
   TextEditingController? dataTextController;
   String? Function(BuildContext, String?)? dataTextControllerValidator;
   DateTime? datePicked;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode;
   TextEditingController? textController3;
   String? Function(BuildContext, String?)? textController3Validator;

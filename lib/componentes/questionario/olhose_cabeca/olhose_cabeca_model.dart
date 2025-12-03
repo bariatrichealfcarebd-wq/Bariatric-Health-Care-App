@@ -1,11 +1,13 @@
 import '/backend/backend.dart';
 import '/componentes/abas/item_sintoma/item_sintoma_widget.dart';
 import '/flutter_flow/flutter_flow_util.dart';
+
+// codigo gerado automaticamente pelo flutterflow: questionário
 import 'olhose_cabeca_widget.dart' show OlhoseCabecaWidget;
 import 'package:flutter/material.dart';
 
 class OlhoseCabecaModel extends FlutterFlowModel<OlhoseCabecaWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   bool? ativo = false;
 
@@ -21,9 +23,9 @@ class OlhoseCabecaModel extends FlutterFlowModel<OlhoseCabecaWidget> {
 
   DocumentReference? referenciaLigacao;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Firestore Query - Query a collection] action in OlhoseCabeca widget.
+  // Armazena o resultado da ação [Firestore Query - Query a collection] action in OlhoseCabeca widget.
   List<LigacaoSintomaRecord>? sintomasDoUsuario;
   // Models for ItemSintoma dynamic component.
   late FlutterFlowDynamicModels<ItemSintomaModel> itemSintomaModels;

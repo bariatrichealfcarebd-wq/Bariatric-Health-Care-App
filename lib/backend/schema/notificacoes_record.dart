@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class NotificacoesRecord extends FirestoreRecord {
   NotificacoesRecord._(
     DocumentReference reference,
@@ -15,32 +17,26 @@ class NotificacoesRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "destinatarioUid" field.
   String? _destinatarioUid;
   String get destinatarioUid => _destinatarioUid ?? '';
   bool hasDestinatarioUid() => _destinatarioUid != null;
 
-  // "remetenteUid" field.
   String? _remetenteUid;
   String get remetenteUid => _remetenteUid ?? '';
   bool hasRemetenteUid() => _remetenteUid != null;
 
-  // "mensagem" field.
   String? _mensagem;
   String get mensagem => _mensagem ?? '';
   bool hasMensagem() => _mensagem != null;
 
-  // "tipo" field.
   String? _tipo;
   String get tipo => _tipo ?? '';
   bool hasTipo() => _tipo != null;
 
-  // "lida" field.
   bool? _lida;
   bool get lida => _lida ?? false;
   bool hasLida() => _lida != null;
 
-  // "data" field.
   DateTime? _data;
   DateTime? get data => _data;
   bool hasData() => _data != null;

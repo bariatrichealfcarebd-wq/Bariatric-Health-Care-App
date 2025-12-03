@@ -6,22 +6,22 @@ import 'package:flutter/material.dart';
 
 class EditarSuplementoCutaneoModel
     extends FlutterFlowModel<EditarSuplementoCutaneoWidget> {
-  ///  Local state fields for this component.
+  // Campos de estado local para este componente.
 
   FFUploadedFile? ficheiroCarregado;
 
   DateTime? dataCarregada;
 
-  ///  State fields for stateful widgets in this component.
+  // Campos de estado para os widgets deste componente.
 
-  // Stores action output result for [Backend Call - Read Document] action in EditarSuplementoCutaneo widget.
+  // Armazena o resultado da ação [Backend Call - Read Document] action in EditarSuplementoCutaneo widget.
   SuplementacaoRecord? dataCut;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode1;
   TextEditingController? textController1;
   String? Function(BuildContext, String?)? textController1Validator;
   DateTime? datePicked;
-  // State field(s) for TextField widget.
+  // Campo(s) de estado para TextField widget.
   FocusNode? textFieldFocusNode2;
   TextEditingController? textController2;
   String? Function(BuildContext, String?)? textController2Validator;

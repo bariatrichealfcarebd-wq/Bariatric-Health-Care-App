@@ -7,6 +7,8 @@ import '/backend/schema/util/firestore_util.dart';
 import 'index.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 
+// codigo gerado automaticamente pelo flutterflow: esquema de dados firestore
+
 class NutrientesRecord extends FirestoreRecord {
   NutrientesRecord._(
     DocumentReference reference,
@@ -15,32 +17,26 @@ class NutrientesRecord extends FirestoreRecord {
     _initializeFields();
   }
 
-  // "nome" field.
   String? _nome;
   String get nome => _nome ?? '';
   bool hasNome() => _nome != null;
 
-  // "sigla" field.
   String? _sigla;
   String get sigla => _sigla ?? '';
   bool hasSigla() => _sigla != null;
 
-  // "email" field.
   String? _email;
   String get email => _email ?? '';
   bool hasEmail() => _email != null;
 
-  // "uid" field.
   String? _uid;
   String get uid => _uid ?? '';
   bool hasUid() => _uid != null;
 
-  // "tipousuario" field.
   String? _tipousuario;
   String get tipousuario => _tipousuario ?? '';
   bool hasTipousuario() => _tipousuario != null;
 
-  // "telefone" field.
   String? _telefone;
   String get telefone => _telefone ?? '';
   bool hasTelefone() => _telefone != null;
