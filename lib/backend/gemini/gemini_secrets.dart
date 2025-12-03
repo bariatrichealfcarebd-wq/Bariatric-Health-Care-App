@@ -1,3 +1,3 @@
-// codigo gerado automaticamente pelo flutterflow: segredos da API
 
-const String kGeminiApiKey = 'AIzaSyB_zl0YeCCSn9VRKXGkgOu1Qq4GEOgPmnE';
+
+const String kGeminiApiKey = 'AIzaSyDCyxhM6z7kJqr64AYjgk2ZdK6QmppdC2Y';
